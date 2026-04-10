@@ -228,14 +228,12 @@ html, body {
 }
 
 /* ── Profil altimétrique ────────────────────────────────────── */
-#elevation-canvas {
+#day-elevation-canvas {
   width: 100%;
-  height: 140px;
-  margin-top: 16px;
-  border-radius: 10px;
+  height: 120px;
   background: var(--surface-2);
+  display: block;
 }
-#elevation-canvas.hidden { display: none; }
 
 /* ── Météo ──────────────────────────────────────────────────── */
 #meteo-content {
@@ -406,6 +404,36 @@ html, body {
   gap: 8px;
 }
 
+.gpx-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 10px;
+  background: var(--surface-3);
+  color: var(--on-surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-secondary:active { background: var(--surface-2); }
+
+.gpx-group + .gpx-group { margin-top: 14px; }
+
+.gpx-group-header {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--on-surface-dim);
+  padding: 0 2px 6px;
+}
+
 .gpx-item {
   display: flex;
   align-items: center;
@@ -413,14 +441,29 @@ html, body {
   padding: 12px 14px;
   background: var(--surface-3);
   border-radius: 10px;
-  border-left: 3px solid transparent;
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: background 0.15s;
 }
-.gpx-item.active { border-left-color: var(--primary-light); }
+.gpx-item:active { background: var(--surface-2); }
 
-.gpx-item-name  { flex: 1; font-size: 14px; }
-.gpx-item-meta  { font-size: 12px; color: var(--on-surface-dim); text-align: right; }
+.gpx-checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary-light);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.gpx-color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.gpx-item-info { flex: 1; min-width: 0; }
+.gpx-item-name { font-size: 14px; }
+.gpx-item-meta { font-size: 12px; color: var(--on-surface-dim); }
 
 /* ── Bouton primaire ────────────────────────────────────────── */
 .btn-primary {
@@ -457,6 +500,254 @@ html, body {
 @keyframes toast-in {
   from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Panneau détail étape ───────────────────────────────────── */
+#day-detail-panel {
+  position: fixed;
+  inset: var(--header-h) 0 calc(var(--nav-h) + var(--safe-b)) 0;
+  background: var(--surface);
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+}
+#day-detail-panel.hidden { display: none; }
+
+#day-detail-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+#btn-close-day {
+  background: none;
+  border: none;
+  color: var(--primary-light);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+#btn-close-day:active { opacity: 0.6; }
+
+#day-detail-title {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#day-detail-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#day-map {
+  width: 100%;
+  height: 220px;
+  background: #1e2a1e;
+}
+
+#day-detail-stats {
+  display: flex;
+  gap: 0;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 4px;
+  gap: 2px;
+  border-right: 1px solid var(--border);
+}
+.detail-stat:last-child { border-right: none; }
+
+.detail-stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--on-surface);
+}
+.detail-stat-label {
+  font-size: 10px;
+  color: var(--on-surface-dim);
+  text-align: center;
+}
+
+#day-detail-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Étapes : stages & jours ────────────────────────────────── */
+#stages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-bottom: 12px;
+}
+
+.stage-group { margin-bottom: 24px; }
+
+.stage-header {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--on-surface-dim);
+  padding: 0 2px 8px;
+}
+
+.day-card {
+  background: var(--surface-2);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.day-card:active { background: var(--surface-3); }
+
+.day-card-header {
+  padding: 14px;
+}
+
+.day-header-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.day-number {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-light);
+  white-space: nowrap;
+}
+
+.day-kpis {
+  flex: 1;
+  font-size: 12px;
+  color: var(--on-surface-dim);
+}
+
+.day-chevron {
+  flex-shrink: 0;
+  color: var(--on-surface-dim);
+  transition: transform 0.2s;
+}
+.day-card.open .day-chevron { transform: rotate(90deg); }
+
+.day-route {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+/* Détail expansible */
+.day-card-detail {
+  padding: 0 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.day-card-detail.hidden { display: none; }
+
+.day-description {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--on-surface);
+  font-style: italic;
+}
+
+.day-terrain {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--on-surface-dim);
+  padding: 8px 10px;
+  background: var(--surface-3);
+  border-radius: 8px;
+}
+
+.day-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--on-surface-dim);
+  margin-bottom: 6px;
+}
+
+.day-section-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--on-surface);
+}
+
+/* Hébergements */
+.day-accom-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.day-accom-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.accom-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.accom-refuge { background: #42a5f5; }
+.accom-hotel  { background: #ffa726; }
+.accom-gite   { background: #66bb6a; }
+.accom-other  { background: var(--on-surface-dim); }
+
+.accom-name     { font-weight: 600; color: var(--on-surface); }
+.accom-location { color: var(--on-surface-dim); }
+
+.accom-off-route {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background: rgba(255, 111, 0, 0.18);
+  color: var(--accent);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Notes / avertissements */
+.day-notes {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #ffd54f;
+  padding: 8px 10px;
+  background: rgba(255, 193, 7, 0.08);
+  border-left: 3px solid #ffa726;
+  border-radius: 0 8px 8px 0;
 }
 
 /* ── Surcharges Leaflet ─────────────────────────────────────── */

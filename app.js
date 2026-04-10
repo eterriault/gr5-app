@@ -12,12 +12,41 @@ console.log('[GR5] app.js chargé, Leaflet présent :', typeof L !== 'undefined'
 /* ═══════════════════════════════════════════════════════════════
    CONFIGURATION
    ══════════════════════════════════════════════════════════════ */
+const TRACE_COLORS = ['#e53935','#1e88e5','#43a047','#fb8c00','#8e24aa','#00acc1','#e91e63','#f4511e'];
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITAIRES ICÔNES CARTE
+   ══════════════════════════════════════════════════════════════ */
+function makeHebergeIcon(h) {
+  const emojis  = { refuge: '🏔', gite: '🏠', camping: '⛺', hotel: '🏨' };
+  const emoji   = emojis[h.type] ?? '🏠';
+  const unverified = h.coords_verified === false;
+  return L.divIcon({
+    className: '',
+    html: `<div style="position:relative;display:inline-block;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.6))">
+      <div style="font-size:18px;line-height:1">${emoji}</div>
+      ${unverified ? `<div style="
+        position:absolute;top:-4px;right:-6px;
+        background:#ffa726;color:#1a1a1a;
+        font-size:8px;font-weight:800;
+        border-radius:50%;width:12px;height:12px;
+        display:flex;align-items:center;justify-content:center;line-height:1
+      ">?</div>` : ''}
+    </div>`,
+    iconSize:   [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor:[0, -14],
+  });
+}
+
 const CONFIG = {
-  // Carte : centré sur le milieu du GR5 (secteur Modane)
-  mapCenter: [45.20, 6.68],
-  mapZoom: 9,
-  tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  tileAttribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  // Carte : centré sur le début du Stage 1 (secteur Thonon–Abondance)
+  mapCenter: [46.20, 6.72],
+  mapZoom: 10,
+  tileUrl: 'https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0'
+          + '&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image%2Fpng'
+          + '&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+  tileAttribution: '© <a href="https://www.geoportail.gouv.fr/">IGN</a>',
   maxZoom: 18,
 
   // Trace GPX
@@ -44,8 +73,8 @@ const state = {
   gpsWatchId: null,
   currentPosition: null,      // { lat, lon, accuracy, altitude }
 
-  traces: [],                 // [{ name, filename, points, distance, ascent, layer }]
-  activeTraceIndex: -1,
+  traces: [],                 // [{ name, filename, points, distance, ascent, color, layer }]
+  visibleTraces: new Set(),   // indices des traces actuellement affichées sur la carte
 
   hebergements: [],
   ravitaillement: [],
@@ -68,7 +97,6 @@ const MapModule = {
     L.tileLayer(CONFIG.tileUrl, {
       attribution: CONFIG.tileAttribution,
       maxZoom: CONFIG.maxZoom,
-      crossOrigin: true,       // requis pour que le SW intercepte les tuiles
     }).addTo(state.map);
 
     L.control.zoom({ position: 'topleft' }).addTo(state.map);
@@ -118,33 +146,26 @@ const MapModule = {
   showHebergements(hebergements) {
     state.hebergeMarkers.clearLayers();
 
-    const icons = { refuge: '🏔', gite: '🏠', camping: '⛺', hotel: '🏨' };
-
     hebergements.forEach(h => {
-      const emoji  = icons[h.type] ?? '🏠';
-      const icon   = L.divIcon({
-        className: '',
-        html: `<div style="
-          font-size:18px; line-height:1;
-          filter: drop-shadow(0 1px 3px rgba(0,0,0,0.6));
-        ">${emoji}</div>`,
-        iconSize:   [22, 22],
-        iconAnchor: [11, 11],
-        popupAnchor:[0, -12],
-      });
-
-      const ouverture = h.ouverture ? `<br><small>${h.ouverture}</small>` : '';
-      const tel       = h.telephone
+      const tel      = h.telephone
         ? `<br><a href="tel:${h.telephone.replace(/\s/g,'')}" style="color:#81c784">${h.telephone}</a>`
         : '';
-      const dp        = h.demi_pension ? ' · demi-pension' : '';
+      const dp       = h.demi_pension ? ' · demi-pension' : '';
+      const places   = h.places ? ` · ${h.places} places` : '';
+      const bivouac  = h.bivouac ? `<br>🏕 ${h.bivouac}` : '';
+      const unverif  = h.coords_verified === false
+        ? `<br><span style="color:#ffa726;font-size:11px">⚠ Position approximative</span>`
+        : '';
 
-      L.marker([h.lat, h.lon], { icon })
+      L.marker([h.lat, h.lon], { icon: makeHebergeIcon(h) })
         .bindPopup(`
           <strong>${h.nom}</strong><br>
-          ${h.altitude} m · ${h.places} places${dp}
-          ${tel}${ouverture}
+          ${h.altitude} m${places}${dp}
+          ${tel}
+          ${h.ouverture ? `<br><small>${h.ouverture}</small>` : ''}
+          ${bivouac}
           ${h.notes ? `<br><em style="font-size:11px">${h.notes}</em>` : ''}
+          ${unverif}
         `, { maxWidth: 220 })
         .addTo(state.hebergeMarkers);
     });
@@ -236,12 +257,13 @@ const GPXModule = {
     return trace;
   },
 
-  async loadFromURL(url) {
+  async loadFromURL(url, meta = {}) {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status} — ${url}`);
     const xml   = await res.text();
     const trace = this.parse(xml);
     trace.filename = url.split('/').pop();
+    Object.assign(trace, meta);
     this._register(trace);
     return trace;
   },
@@ -249,9 +271,11 @@ const GPXModule = {
   // ── Enregistrement + layer Leaflet ─────────────────────────
 
   _register(trace) {
+    const color   = TRACE_COLORS[state.traces.length % TRACE_COLORS.length];
     const latlngs = trace.points.map(p => [p.lat, p.lon]);
+    trace.color = color;
     trace.layer = L.polyline(latlngs, {
-      color:   CONFIG.gpxColor,
+      color,
       weight:  CONFIG.gpxWeight,
       opacity: CONFIG.gpxOpacity,
     });
@@ -260,27 +284,68 @@ const GPXModule = {
     UIModule.addGPXItem(trace, index);
   },
 
-  // ── Activation d'une trace ──────────────────────────────────
+  // ── Visibilité des traces ───────────────────────────────────
 
-  setActive(index) {
-    // Retire toutes les traces de la carte
-    state.traces.forEach(t => state.map.removeLayer(t.layer));
-
+  setVisible(index, visible) {
     const trace = state.traces[index];
     if (!trace) return;
-
-    trace.layer.addTo(state.map);
-    state.map.fitBounds(trace.layer.getBounds(), { padding: [20, 20] });
-    state.activeTraceIndex = index;
-
-    document.getElementById('section-name').textContent = trace.name;
+    if (visible) {
+      trace.layer.addTo(state.map);
+      state.visibleTraces.add(index);
+    } else {
+      state.map.removeLayer(trace.layer);
+      state.visibleTraces.delete(index);
+    }
     UIModule.updateGPXList();
-    ElevationModule.draw(trace);
-    StatsModule.update(trace);
   },
 
-  getActive() {
-    return state.traces[state.activeTraceIndex] ?? null;
+  showAll() {
+    state.traces.forEach((t, i) => {
+      t.layer.addTo(state.map);
+      state.visibleTraces.add(i);
+    });
+    this._fitVisible();
+    UIModule.updateGPXList();
+  },
+
+  hideAll() {
+    state.traces.forEach((t, i) => {
+      state.map.removeLayer(t.layer);
+      state.visibleTraces.delete(i);
+    });
+    UIModule.updateGPXList();
+  },
+
+  _fitVisible() {
+    const layers = [...state.visibleTraces].map(i => state.traces[i].layer);
+    if (layers.length === 0) return;
+    state.map.fitBounds(L.featureGroup(layers).getBounds(), { padding: [20, 20] });
+  },
+
+  getVisible() {
+    return [...state.visibleTraces].sort((a, b) => a - b).map(i => state.traces[i]);
+  },
+
+  // ── Extraction d'un tronçon par coordonnées ─────────────────
+
+  sliceByCoords(trace, fromCoords, toCoords) {
+    const from = { lat: fromCoords[0], lon: fromCoords[1] };
+    const to   = { lat: toCoords[0],   lon: toCoords[1] };
+
+    let fromIdx = 0, toIdx = trace.points.length - 1;
+    let minFrom = Infinity, minTo = Infinity;
+
+    trace.points.forEach((p, i) => {
+      const dFrom = Geo.haversine(p, from);
+      const dTo   = Geo.haversine(p, to);
+      if (dFrom < minFrom) { minFrom = dFrom; fromIdx = i; }
+      if (dTo   < minTo)   { minTo   = dTo;   toIdx   = i; }
+    });
+
+    if (fromIdx > toIdx) [fromIdx, toIdx] = [toIdx, fromIdx];
+
+    const points = trace.points.slice(fromIdx, toIdx + 1);
+    return { ...trace, points, distance: Geo.traceDistance(points), ascent: Geo.traceAscent(points) };
   },
 };
 
@@ -288,11 +353,10 @@ const GPXModule = {
    MODULE PROFIL ALTIMÉTRIQUE
    ══════════════════════════════════════════════════════════════ */
 const ElevationModule = {
-  draw(trace) {
-    const canvas = document.getElementById('elevation-canvas');
+  draw(trace, canvasId = 'day-elevation-canvas') {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
     const ctx    = canvas.getContext('2d');
-
-    canvas.classList.remove('hidden');
 
     // Redimensionnement HiDPI
     const W = canvas.offsetWidth;
@@ -476,6 +540,193 @@ const WeatherModule = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
+   MODULE ÉTAPES (données Dillon)
+   ══════════════════════════════════════════════════════════════ */
+const StagesModule = {
+
+  async loadAll() {
+    const stages = [];
+    for (let i = 1; i <= 6; i++) {
+      try {
+        const r = await fetch(`./data/stages/stage_${i}.json`);
+        if (!r.ok) continue;
+        const stage = await r.json();
+        stages.push(stage);
+        console.log(`[Stages] Stage ${i} chargé — ${stage.days.length} jours`);
+      } catch (e) {
+        console.warn(`[Stages] Stage ${i} ignoré :`, e);
+      }
+    }
+    console.log(`[Stages] ${stages.length} stage(s) — rendu en cours`);
+    try {
+      this._render(stages);
+    } catch (e) {
+      console.error('[Stages] Erreur dans _render :', e);
+    }
+  },
+
+  _dayMap: null,
+  _dayPolyline: null,
+
+  _render(stages) {
+    const container = document.getElementById('stages-list');
+    container.innerHTML = '';
+
+    if (stages.length === 0) {
+      container.innerHTML = '<p class="placeholder">Aucune étape disponible.</p>';
+      return;
+    }
+
+    stages.forEach(stage => {
+      const group = document.createElement('div');
+      group.className = 'stage-group';
+      group.innerHTML = `<div class="stage-header">Stage ${stage.stage} — ${stage.name}</div>`;
+      stage.days.forEach(day => group.appendChild(this._buildDayCard(day)));
+      container.appendChild(group);
+    });
+  },
+
+  _buildDayCard(day) {
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    const timeStr = this._formatTime(day.time_hours);
+    card.innerHTML = `
+      <div class="day-card-header">
+        <div class="day-header-top">
+          <span class="day-number">Jour ${day.day}</span>
+          <span class="day-kpis">${day.distance_km} km · ${timeStr} · ↑${day.ascent_m} m</span>
+          <svg class="day-chevron" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+          </svg>
+        </div>
+        <div class="day-route">${day.from} → ${day.to}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => this._openDetail(day));
+    return card;
+  },
+
+  _openDetail(day) {
+    // En-tête
+    document.getElementById('day-detail-title').textContent =
+      `Jour ${day.day} — ${day.from} → ${day.to}`;
+
+    // Stats
+    const timeStr = this._formatTime(day.time_hours);
+    document.getElementById('day-detail-stats').innerHTML = `
+      <div class="detail-stat">
+        <span class="detail-stat-value">${day.distance_km}</span>
+        <span class="detail-stat-label">km</span>
+      </div>
+      <div class="detail-stat">
+        <span class="detail-stat-value">${timeStr}</span>
+        <span class="detail-stat-label">durée</span>
+      </div>
+      <div class="detail-stat">
+        <span class="detail-stat-value">↑${day.ascent_m}</span>
+        <span class="detail-stat-label">m D+</span>
+      </div>
+      <div class="detail-stat">
+        <span class="detail-stat-value">↓${day.descent_m}</span>
+        <span class="detail-stat-label">m D-</span>
+      </div>
+    `;
+
+    // Contenu détaillé
+    document.getElementById('day-detail-info').innerHTML = this._buildDetailHTML(day);
+
+    // Affiche le panel
+    document.getElementById('day-detail-panel').classList.remove('hidden');
+
+    // Trace GPX slicée
+    const mainTrace = state.traces.find(t => t.filename === 'GR5-GTA-route-only-614km.gpx');
+    if (mainTrace && day.from_coords && day.to_coords) {
+      const sliced = GPXModule.sliceByCoords(mainTrace, day.from_coords, day.to_coords);
+      if (sliced.points.length > 1) {
+        ElevationModule.draw(sliced);
+        this._updateDayMap(sliced);
+      }
+    } else {
+      this._updateDayMap(null);
+    }
+  },
+
+  _buildDetailHTML(day) {
+    const parts = [];
+    if (day.description) parts.push(`<p class="day-description">${day.description}</p>`);
+    if (day.terrain)     parts.push(`<p class="day-terrain">${day.terrain}</p>`);
+    if (day.food_drink)  parts.push(`
+      <div class="day-section">
+        <div class="day-section-label">Ravitaillement</div>
+        <p class="day-section-text">${day.food_drink}</p>
+      </div>`);
+    if (day.accommodation?.length) parts.push(`
+      <div class="day-section">
+        <div class="day-section-label">Hébergements</div>
+        <ul class="day-accom-list">
+          ${day.accommodation.map(a => `
+            <li class="day-accom-item">
+              <span class="accom-dot accom-${a.type ?? 'other'}"></span>
+              <span class="accom-name">${a.name}</span>
+              <span class="accom-location">— ${a.location}</span>
+              ${a.off_route ? '<span class="accom-off-route">hors-itinéraire</span>' : ''}
+            </li>`).join('')}
+        </ul>
+      </div>`);
+    if (day.notes) parts.push(`<div class="day-notes">${day.notes}</div>`);
+    return parts.join('');
+  },
+
+  _updateDayMap(trace) {
+    if (!this._dayMap) {
+      this._dayMap = L.map('day-map', {
+        zoomControl: false,
+        attributionControl: false,
+      });
+      L.tileLayer(CONFIG.tileUrl, { maxZoom: CONFIG.maxZoom }).addTo(this._dayMap);
+      L.control.zoom({ position: 'topright' }).addTo(this._dayMap);
+    }
+
+    if (this._dayPolyline) {
+      this._dayMap.removeLayer(this._dayPolyline);
+      this._dayPolyline = null;
+    }
+
+    if (!trace) return;
+
+    const latlngs = trace.points.map(p => [p.lat, p.lon]);
+    this._dayPolyline = L.polyline(latlngs, {
+      color: CONFIG.gpxColor,
+      weight: 4,
+      opacity: 0.9,
+    }).addTo(this._dayMap);
+
+    // Refuges sur la mini-carte
+    const bounds = this._dayPolyline.getBounds().pad(0.15);
+    state.hebergements
+      .filter(h => h.type === 'refuge' && bounds.contains([h.lat, h.lon]))
+      .forEach(h => {
+        const unverif = h.coords_verified === false
+          ? `<br><span style="color:#ffa726;font-size:11px">⚠ Position approximative</span>` : '';
+        L.marker([h.lat, h.lon], { icon: makeHebergeIcon(h) })
+          .bindPopup(`<strong>${h.nom}</strong><br>${h.altitude} m${h.off_route ? '<br><em>hors-itinéraire</em>' : ''}${unverif}`, { maxWidth: 180 })
+          .addTo(this._dayMap);
+      });
+
+    setTimeout(() => {
+      this._dayMap.invalidateSize();
+      this._dayMap.fitBounds(this._dayPolyline.getBounds(), { padding: [24, 24] });
+    }, 50);
+  },
+
+  _formatTime(hours) {
+    const h = Math.floor(hours);
+    const m = Math.round((hours - h) * 60);
+    return m > 0 ? `${h}h${String(m).padStart(2, '0')}` : `${h}h`;
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════════
    MODULE DONNÉES STATIQUES
    ══════════════════════════════════════════════════════════════ */
 const DataModule = {
@@ -496,8 +747,11 @@ const DataModule = {
       console.log(`[Data] ${state.ravitaillement.length} points ravitaillement chargés.`);
     }
 
-    // Essaie de charger l'index des traces GPX disponibles
+    // Charge l'index des traces GPX disponibles
     await this._loadTracesIndex();
+
+    // Charge les étapes Dillon
+    await StagesModule.loadAll();
   },
 
   async _fetchJSON(url) {
@@ -535,12 +789,9 @@ const DataModule = {
     try {
       const index = await this._fetchJSON('./data/traces/index.json');
       for (const entry of index) {
-        await GPXModule.loadFromURL(`./data/traces/${entry.filename}`);
+        await GPXModule.loadFromURL(`./data/traces/${entry.filename}`, { variant: entry.variant });
       }
-      // Active automatiquement la première trace
-      if (state.traces.length > 0 && state.activeTraceIndex === -1) {
-        GPXModule.setActive(0);
-      }
+      if (state.traces.length > 0) GPXModule.showAll();
     } catch {
       // Pas d'index, c'est normal au démarrage sans traces
     }
@@ -602,6 +853,11 @@ const UIModule = {
       }
     });
 
+    // ── Fermer panneau détail étape ────────────────────────
+    document.getElementById('btn-close-day').addEventListener('click', () => {
+      document.getElementById('day-detail-panel').classList.add('hidden');
+    });
+
     // ── Ouvrir/fermer modal GPX ────────────────────────────
     document.getElementById('btn-open-gpx').addEventListener('click', () =>
       document.getElementById('gpx-modal').classList.remove('hidden')
@@ -609,6 +865,8 @@ const UIModule = {
     document.getElementById('btn-close-gpx-modal').addEventListener('click', () =>
       document.getElementById('gpx-modal').classList.add('hidden')
     );
+    document.getElementById('btn-gpx-all').addEventListener('click', () => GPXModule.showAll());
+    document.getElementById('btn-gpx-none').addEventListener('click', () => GPXModule.hideAll());
     document.getElementById('gpx-modal').addEventListener('click', e => {
       if (e.target === e.currentTarget) e.currentTarget.classList.add('hidden');
     });
@@ -627,8 +885,7 @@ const UIModule = {
         }
       }
       if (loaded > 0) {
-        // Active la première trace si aucune n'est active
-        if (state.activeTraceIndex === -1) GPXModule.setActive(0);
+        GPXModule.showAll();
         this.toast(`${loaded} trace(s) importée(s).`);
       }
       e.target.value = '';  // permet de recharger le même fichier
@@ -656,9 +913,6 @@ const UIModule = {
 
     // Chargements à la demande
     if (tabName === 'meteo') this._onOpenMeteo();
-    if (tabName === 'etapes' && state.activeTraceIndex !== -1) {
-      ElevationModule.draw(GPXModule.getActive());
-    }
   },
 
   _onOpenMeteo() {
@@ -680,25 +934,48 @@ const UIModule = {
   },
 
   addGPXItem(trace, index) {
-    document.getElementById('gpx-empty-msg')?.remove();
     const list = document.getElementById('gpx-list');
-    const item = document.createElement('div');
+    document.getElementById('gpx-empty-msg')?.remove();
+
+    // Trouve ou crée le groupe correspondant au variant
+    const LABELS = { commun: 'Tronc commun', menton: '→ Menton (GR52)', nice: '→ Nice (GR5)' };
+    const ORDER  = { commun: 0, nice: 1, menton: 2 };
+    const variant = trace.variant ?? 'other';
+    const groupId = `gpx-group-${variant}`;
+
+    let group = document.getElementById(groupId);
+    if (!group) {
+      group = document.createElement('div');
+      group.className = 'gpx-group';
+      group.id = groupId;
+      group.innerHTML = `<div class="gpx-group-header">${LABELS[variant] ?? 'Importés'}</div>`;
+
+      const myOrder = ORDER[variant] ?? 99;
+      const sibling = [...list.querySelectorAll('.gpx-group')]
+        .find(g => (ORDER[g.id.replace('gpx-group-', '')] ?? 99) > myOrder);
+      list.insertBefore(group, sibling ?? null);
+    }
+
+    const item = document.createElement('label');
     item.className = 'gpx-item';
     item.dataset.index = index;
     item.innerHTML = `
-      <div class="gpx-item-name">${trace.name}</div>
-      <div class="gpx-item-meta">${trace.distance} km&nbsp;&nbsp;+${trace.ascent} m</div>
+      <input type="checkbox" class="gpx-checkbox" data-index="${index}">
+      <span class="gpx-color-dot" style="background:${trace.color}"></span>
+      <div class="gpx-item-info">
+        <div class="gpx-item-name">${trace.name}</div>
+        <div class="gpx-item-meta">${trace.distance} km&nbsp;&nbsp;+${trace.ascent} m</div>
+      </div>
     `;
-    item.addEventListener('click', () => {
-      GPXModule.setActive(index);
-      document.getElementById('gpx-modal').classList.add('hidden');
+    item.querySelector('.gpx-checkbox').addEventListener('change', e => {
+      GPXModule.setVisible(index, e.target.checked);
     });
-    list.appendChild(item);
+    group.appendChild(item);
   },
 
   updateGPXList() {
-    document.querySelectorAll('.gpx-item').forEach(item => {
-      item.classList.toggle('active', +item.dataset.index === state.activeTraceIndex);
+    document.querySelectorAll('.gpx-checkbox').forEach(cb => {
+      cb.checked = state.visibleTraces.has(+cb.dataset.index);
     });
   },
 

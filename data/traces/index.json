@@ -1,52 +1,62 @@
 [
   {
-    "filename": "gr5-section-01-thonon-abondance.gpx",
-    "name": "Section 1 — Thonon → Abondance",
-    "km_approx": 42
+    "filename": "GR5-GTA-route-only-614km.gpx",
+    "name": "GR5-GTA — Thonon-les-Bains → Nice (tracé complet)",
+    "km_approx": 614,
+    "variant": "commun"
   },
   {
-    "filename": "gr5-section-02-abondance-morzine.gpx",
-    "name": "Section 2 — Abondance → Morzine",
-    "km_approx": 48
+    "filename": "Part 10 - FR Reyvroz to Les Houches.gpx",
+    "name": "Part 10 — Reyvroz → Les Houches",
+    "km_approx": 113,
+    "variant": "commun"
   },
   {
-    "filename": "gr5-section-03-morzine-samoens.gpx",
-    "name": "Section 3 — Morzine → Samoëns",
-    "km_approx": 40
+    "filename": "Part 10a - FR Thonon-les-Bains to Reyvroz (off route).gpx",
+    "name": "Part 10a — Thonon-les-Bains → Reyvroz (hors itinéraire)",
+    "km_approx": 13,
+    "variant": "commun"
   },
   {
-    "filename": "gr5-section-04-samoens-chamonix.gpx",
-    "name": "Section 4 — Samoëns → Chamonix",
-    "km_approx": 55
+    "filename": "Part 11 -  FR Les Houches to Bessans.gpx",
+    "name": "Part 11 — Les Houches → Bessans",
+    "km_approx": 120,
+    "variant": "commun"
   },
   {
-    "filename": "gr5-section-05-chamonix-bourg-st-maurice.gpx",
-    "name": "Section 5 — Chamonix → Bourg-Saint-Maurice",
-    "km_approx": 78
+    "filename": "Part 12 - FR Bessans to Montgenevre.gpx",
+    "name": "Part 12 — Bessans → Montgenèvre",
+    "km_approx": 121,
+    "variant": "commun"
   },
   {
-    "filename": "gr5-section-06-bourg-st-maurice-lanslebourg.gpx",
-    "name": "Section 6 — Bourg-Saint-Maurice → Lanslebourg",
-    "km_approx": 108
+    "filename": "Part 13 - FR Montgenevre to St Dalmas-le-Selvage.gpx",
+    "name": "Part 13 — Montgenèvre → St-Dalmas-le-Selvage",
+    "km_approx": 120,
+    "variant": "commun"
   },
   {
-    "filename": "gr5-section-07-lanslebourg-briancon.gpx",
-    "name": "Section 7 — Lanslebourg → Briançon",
-    "km_approx": 84
+    "filename": "Part 14 - FR St Dalmas-le-Selvage to St Dalmas.gpx",
+    "name": "Part 14 — St-Dalmas-le-Selvage → St-Dalmas",
+    "km_approx": 65,
+    "variant": "menton"
   },
   {
-    "filename": "gr5-section-08-briancon-guillestre.gpx",
-    "name": "Section 8 — Briançon → Guillestre",
-    "km_approx": 38
+    "filename": "Part 15 - FR GR52 St Dalmas to Menton.gpx",
+    "name": "Part 15 — GR52 St-Dalmas → Menton",
+    "km_approx": 95,
+    "variant": "menton"
   },
   {
-    "filename": "gr5-section-09-guillestre-st-martin-vesubie.gpx",
-    "name": "Section 9 — Guillestre → Saint-Martin-Vésubie",
-    "km_approx": 75
+    "filename": "Part 16 - FR  to Menton Centre.gpx",
+    "name": "Part 16 — Menton Centre",
+    "km_approx": 3,
+    "variant": "menton"
   },
   {
-    "filename": "gr5-section-10-st-martin-vesubie-menton.gpx",
-    "name": "Section 10 — Saint-Martin-Vésubie → Menton",
-    "km_approx": 47
+    "filename": "Part 15a - FR alternative route GR5 St Dalmas to Nice.gpx",
+    "name": "Part 15a — GR5 St-Dalmas → Nice",
+    "km_approx": 59,
+    "variant": "nice"
   }
 ]

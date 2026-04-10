@@ -1,0 +1,136 @@
+{
+  "stage": 1,
+  "name": "Lac Léman to Les Houches",
+  "days": [
+    {
+      "day": 1,
+      "from": "Thonon-les-Bains",
+      "from_coords": [46.3701, 6.4785],
+      "to": "Chevenoz",
+      "to_coords": [46.3146, 6.6136],
+      "distance_km": 25,
+      "ascent_m": 1090,
+      "descent_m": 545,
+      "time_hours": 7,
+      "maps": ["3428 ET", "3528 ET"],
+      "terrain": null,
+      "description": "Le GR5 depuis Thonon-les-Bains prend deux jours plus longs mais plus faciles pour rejoindre La Chapelle d'Abondance, comparé à l'approche directe en une journée depuis St-Gingolph. La première journée est assez facile, traversant une campagne douce et des forêts, avec des vues occasionnelles sur le sommet imposant de la Dent d'Oche et peut-être le Mont Blanc au loin. Les pentes sont abruptes de chaque côté de la vallée de la Dranse. De petits villages offrent quelques services.",
+      "food_drink": "Restaurants aux hôtels d'Armoy. Cafés à Reyvroz. Bar, restaurant et café hors-itinéraire à Vourlaz. Épicerie et bar hors-itinéraire à Chevenoz.",
+      "accommodation": [
+        { "name": "Nombreuses options", "location": "Thonon-les-Bains", "type": null, "off_route": false },
+        { "name": "Hôtel", "location": "Armoy", "type": "hotel", "off_route": false },
+        { "name": "L'Ermitage", "location": "Armoy", "type": "hotel", "off_route": false },
+        { "name": "Gîte", "location": "Chevenoz", "type": "gite", "off_route": false }
+      ],
+      "notes": null
+    },
+    {
+      "day": 2,
+      "from": "Chevenoz",
+      "from_coords": [46.3146, 6.6136],
+      "to": "La Chapelle d'Abondance",
+      "to_coords": [46.2686, 6.7394],
+      "distance_km": 22,
+      "ascent_m": 1730,
+      "descent_m": 1625,
+      "time_hours": 9,
+      "maps": ["3528 ET"],
+      "terrain": null,
+      "description": "Après une première journée facile, le GR5 grimpe sur des pentes boisées avant de longer des crêtes herbeuses et fleuries. Le sentier saute d'un col à l'autre, passant près du sommet imposant de la Dent d'Oche. Juste avant le Col de Bise, il rejoint la variante montant plus directement depuis St-Gingolph, puis une route unique conduit aux Chalets de Bise. Un dernier col est franchi avant la descente sur La Chapelle d'Abondance.",
+      "food_drink": "Restaurants aux Chalets de Bise. Nombreuses options à La Chapelle d'Abondance.",
+      "accommodation": [
+        { "name": "Refuge de la Dent d'Oche", "location": "Dent d'Oche", "type": "refuge", "off_route": true },
+        { "name": "Refuge des Chalets de Bise", "location": "Chalets de Bise", "type": "refuge", "off_route": false },
+        { "name": "Hôtels et gîtes", "location": "La Chapelle d'Abondance", "type": null, "off_route": false }
+      ],
+      "notes": null
+    },
+    {
+      "day": 3,
+      "from": "La Chapelle d'Abondance",
+      "from_coords": [46.2686, 6.7394],
+      "to": "Châsery",
+      "to_coords": [46.237, 6.881],
+      "distance_km": 20,
+      "ascent_m": 1493,
+      "descent_m": 545,
+      "time_hours": 8,
+      "maps": ["3528 ET"],
+      "terrain": "Chemin en bord de rivière, suivi de sentiers forestiers escarpés laissant place à des pentes plus ouvertes. Chemins et sentiers plus faciles en fin de journée.",
+      "description": "Le Mont de Grange est une grande montagne qu'il faut une demi-journée pour contourner. La majeure partie de la montée est boisée et les vues limitées. Les pentes supérieures sont ouvertes et pâturées par des vaches ; un épaulement en altitude au-dessus de Lenleveur offre une variante par la crête vers le sommet, pour celles qui ont le temps et l'énergie. La seconde moitié du parcours emprunte de bons chemins, montant progressivement hors de France vers la Suisse.",
+      "food_drink": "Restaurant hors-itinéraire à Thollentar. Restaurants au Col de Bassachaux et au Refuge de Châsery.",
+      "accommodation": [
+        { "name": "Refuge de Trébentaz", "location": "Trébentaz", "type": "refuge", "off_route": true },
+        { "name": "Refuge du Col de Bassachaux", "location": "Col de Bassachaux", "type": "refuge", "off_route": false },
+        { "name": "Refuge de Châsery", "location": "Châsery", "type": "refuge", "off_route": false }
+      ],
+      "notes": null
+    },
+    {
+      "day": 4,
+      "from": "Châsery",
+      "from_coords": [46.237, 6.881],
+      "to": "Samoëns",
+      "to_coords": [46.0761, 6.7222],
+      "distance_km": 25,
+      "ascent_m": 670,
+      "descent_m": 1940,
+      "time_hours": 6.75,
+      "maps": ["3528 ET", "3530 ET"],
+      "terrain": "Alpages, cols élevés et forêts. Principalement sur bons chemins, laissant place aux routes en fin de journée. Quelques liaisons peuvent être accidentées.",
+      "description": "Le GR5 à travers la Suisse longe des chemins clairs et bien tracés, passant d'un col à l'autre avant de repasser en France. La majeure partie du trajet vers Samoëns emprunte des chemins, mais certains sont très raides et quelques liaisons sont accidentées. Malgré la longueur de l'étape, la distance se couvre assez rapidement. En fin de journée, la petite ville animée de Samoëns offre tout le confort voulu aux randonneuses.",
+      "food_drink": "Restaurants ou buvettes sur le tronçon suisse à Chaux Palin, Lapisa et La Pierre. Restaurant au Col de la Golèse. Nombreuses options à Samoëns.",
+      "accommodation": [
+        { "name": "Gîte", "location": "Chaux Palin", "type": "gite", "off_route": false },
+        { "name": "Gîte", "location": "La Pierre", "type": "gite", "off_route": false },
+        { "name": "Refuge de Chardonnière", "location": "Chardonnière", "type": "refuge", "off_route": true },
+        { "name": "Refuge de la Golèse", "location": "Col de la Golèse", "type": "refuge", "off_route": false },
+        { "name": "Nombreuses options", "location": "Samoëns", "type": null, "off_route": false }
+      ],
+      "notes": "Balisage peu cohérent en Suisse : quelques traits rouge/blanc, mais aussi losanges jaunes bordés de noir. Les panneaux ne mentionnent pas toujours le GR5 — suivre les indications Col de Coux. Les euros sont acceptés dans ce secteur."
+    },
+    {
+      "day": 5,
+      "from": "Samoëns",
+      "from_coords": [46.0761, 6.7222],
+      "to": "Refuge de Moëde Anterne",
+      "to_coords": [46.0078, 6.7756],
+      "distance_km": 23,
+      "ascent_m": 1800,
+      "descent_m": 505,
+      "time_hours": 8,
+      "maps": ["3530 ET"],
+      "terrain": "Marche facile en bord de rivière, puis échelles métalliques dans les Gorges des Tines. Montée en forêt vers l'alpage et hauts cols sur bons sentiers.",
+      "description": "La marche en bord de rivière mène à une montée assistée par des échelles dans les Gorges des Tines. Le sentier longe ensuite la spectaculaire Cascade du Rouget et les chutes jumelles de la Sauffaz et de la Pleureuse de la Sauffaz. La montée continue vers un agréable alpage menant au Refuge d'Anterne avec des aperçus du Mont Blanc. Certaines randonneuses s'arrêteront là ; d'autres continueront jusqu'au Refuge de Moëde Anterne par le Col d'Anterne.",
+      "food_drink": "Restaurants hors-itinéraire à Sixt-Fer-à-Cheval et Salvagny. Également à la Cascade du Rouget, à Lignon, au Refuge d'Anterne et au Refuge de Moëde Anterne.",
+      "accommodation": [
+        { "name": "Nombreuses options", "location": "Samoëns", "type": null, "off_route": false },
+        { "name": "Refuge", "location": "Sixt-Fer-à-Cheval", "type": "refuge", "off_route": true },
+        { "name": "Gîte", "location": "Salvagny", "type": "gite", "off_route": true },
+        { "name": "Refuge d'Anterne", "location": "Anterne", "type": "refuge", "off_route": false },
+        { "name": "Refuge de Moëde Anterne", "location": "Moëde Anterne", "type": "refuge", "off_route": false }
+      ],
+      "notes": null
+    },
+    {
+      "day": 6,
+      "from": "Refuge de Moëde Anterne",
+      "from_coords": [46.0078, 6.7756],
+      "to": "Les Houches",
+      "to_coords": [45.8883, 6.7997],
+      "distance_km": 21,
+      "ascent_m": 1000,
+      "descent_m": 1990,
+      "time_hours": 7,
+      "maps": ["3530 ET"],
+      "terrain": null,
+      "description": "L'objectif du jour est de gravir le Brévent, mais cela doit être évité si un orage est imminent ou s'il y a de la neige ou de la glace sur les pentes rocheuses et raides. Par mauvais temps, descendre dans la vallée jusqu'à Servoz, où bus et trains rejoignent Les Houches. Une fois engagée vers le Brévent, les seules options sont de continuer ou de faire demi-tour. Par beau temps, les vues sur le Mont Blanc sont sans égal — mais le sommet doit être partagé avec les touristes qui arrivent par téléphérique.",
+      "food_drink": null,
+      "accommodation": [
+        { "name": "Refuge de Moëde Anterne", "location": "Moëde Anterne", "type": "refuge", "off_route": false },
+        { "name": "Nombreuses options", "location": "Les Houches", "type": null, "off_route": false }
+      ],
+      "notes": null
+    }
+  ]
+}
