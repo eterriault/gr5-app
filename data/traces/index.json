@@ -1,0 +1,52 @@
+[
+  {
+    "filename": "gr5-section-01-thonon-abondance.gpx",
+    "name": "Section 1 — Thonon → Abondance",
+    "km_approx": 42
+  },
+  {
+    "filename": "gr5-section-02-abondance-morzine.gpx",
+    "name": "Section 2 — Abondance → Morzine",
+    "km_approx": 48
+  },
+  {
+    "filename": "gr5-section-03-morzine-samoens.gpx",
+    "name": "Section 3 — Morzine → Samoëns",
+    "km_approx": 40
+  },
+  {
+    "filename": "gr5-section-04-samoens-chamonix.gpx",
+    "name": "Section 4 — Samoëns → Chamonix",
+    "km_approx": 55
+  },
+  {
+    "filename": "gr5-section-05-chamonix-bourg-st-maurice.gpx",
+    "name": "Section 5 — Chamonix → Bourg-Saint-Maurice",
+    "km_approx": 78
+  },
+  {
+    "filename": "gr5-section-06-bourg-st-maurice-lanslebourg.gpx",
+    "name": "Section 6 — Bourg-Saint-Maurice → Lanslebourg",
+    "km_approx": 108
+  },
+  {
+    "filename": "gr5-section-07-lanslebourg-briancon.gpx",
+    "name": "Section 7 — Lanslebourg → Briançon",
+    "km_approx": 84
+  },
+  {
+    "filename": "gr5-section-08-briancon-guillestre.gpx",
+    "name": "Section 8 — Briançon → Guillestre",
+    "km_approx": 38
+  },
+  {
+    "filename": "gr5-section-09-guillestre-st-martin-vesubie.gpx",
+    "name": "Section 9 — Guillestre → Saint-Martin-Vésubie",
+    "km_approx": 75
+  },
+  {
+    "filename": "gr5-section-10-st-martin-vesubie-menton.gpx",
+    "name": "Section 10 — Saint-Martin-Vésubie → Menton",
+    "km_approx": 47
+  }
+]

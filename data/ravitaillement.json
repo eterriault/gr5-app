@@ -1,0 +1,155 @@
+[
+  {
+    "id": "r01",
+    "nom": "Thonon-les-Bains",
+    "lat": 46.370,
+    "lon": 6.480,
+    "km_depuis_thonon": 0,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Départ du GR5. Plein ravitaillement recommandé. Gare SNCF."
+  },
+  {
+    "id": "r02",
+    "nom": "Abondance",
+    "lat": 46.285,
+    "lon": 6.726,
+    "km_depuis_thonon": 38,
+    "services": ["epicerie", "boulangerie", "pharmacie", "atm"],
+    "notes": "Abbaye remarquable. Supérette ouverte le dimanche matin en saison."
+  },
+  {
+    "id": "r03",
+    "nom": "Châtel",
+    "lat": 46.267,
+    "lon": 6.842,
+    "km_depuis_thonon": 52,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Station ski. Bien ravitaillé en été. Supermarchés Casino et Sherpa."
+  },
+  {
+    "id": "r04",
+    "nom": "Morzine",
+    "lat": 46.179,
+    "lon": 6.710,
+    "km_depuis_thonon": 90,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Grande station. Supermarché bien achalandé. Médecin disponible."
+  },
+  {
+    "id": "r05",
+    "nom": "Samoëns",
+    "lat": 46.077,
+    "lon": 6.727,
+    "km_depuis_thonon": 115,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Beau village. Marché le mercredi matin. Carrefour Market."
+  },
+  {
+    "id": "r06",
+    "nom": "Les Houches",
+    "lat": 45.889,
+    "lon": 6.797,
+    "km_depuis_thonon": 158,
+    "services": ["epicerie", "boulangerie", "atm"],
+    "notes": "Entrée dans la vallée de Chamonix. Bien ravitaillé."
+  },
+  {
+    "id": "r07",
+    "nom": "Chamonix-Mont-Blanc",
+    "lat": 45.923,
+    "lon": 6.869,
+    "km_depuis_thonon": 170,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Grande ville. Tous commerces. Matériel montagne (Intersport, Snell Sports). Hôpital."
+  },
+  {
+    "id": "r08",
+    "nom": "Bourg-Saint-Maurice",
+    "lat": 45.619,
+    "lon": 6.769,
+    "km_depuis_thonon": 248,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Carrefour Market, Sherpa. Gare TGV vers Paris. Point de resupply idéal."
+  },
+  {
+    "id": "r09",
+    "nom": "Landry / Peisey-Nancroix",
+    "lat": 45.558,
+    "lon": 6.738,
+    "km_depuis_thonon": 268,
+    "services": ["epicerie", "boulangerie"],
+    "notes": "Petit village. Épicerie saisonnière. Boulangerie le matin seulement."
+  },
+  {
+    "id": "r10",
+    "nom": "Lanslebourg-Mont-Cenis",
+    "lat": 45.294,
+    "lon": 6.879,
+    "km_depuis_thonon": 356,
+    "services": ["epicerie", "boulangerie", "pharmacie", "atm"],
+    "notes": "Hiver/été. Sherpa bien fourni pour les lyophilisés. Dernier ATM avant Briançon."
+  },
+  {
+    "id": "r11",
+    "nom": "Modane",
+    "lat": 45.196,
+    "lon": 6.660,
+    "km_depuis_thonon": 375,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Intermarché. Gare SNCF (ligne Lyon-Turin). Point de resupply important."
+  },
+  {
+    "id": "r12",
+    "nom": "Névache",
+    "lat": 45.016,
+    "lon": 6.607,
+    "km_depuis_thonon": 415,
+    "services": ["epicerie", "boulangerie"],
+    "notes": "Village très isolé. Épicerie limitée. Faire le plein à Briançon."
+  },
+  {
+    "id": "r13",
+    "nom": "Briançon",
+    "lat": 44.896,
+    "lon": 6.634,
+    "km_depuis_thonon": 440,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Grande ville fortifiée (UNESCO). Tous commerces. Decathlon, matériel montagne. Hôpital."
+  },
+  {
+    "id": "r14",
+    "nom": "Guillestre",
+    "lat": 44.659,
+    "lon": 6.651,
+    "km_depuis_thonon": 478,
+    "services": ["epicerie", "boulangerie", "pharmacie", "atm"],
+    "notes": "Petite ville du Queyras. Spar ou Casino. Marché le lundi."
+  },
+  {
+    "id": "r15",
+    "nom": "Saint-Martin-Vésubie",
+    "lat": 44.069,
+    "lon": 7.252,
+    "km_depuis_thonon": 553,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Porte du Mercantour. Spar bien fourni. Dernier grand ravitaillement avant Menton."
+  },
+  {
+    "id": "r16",
+    "nom": "Sospel",
+    "lat": 43.877,
+    "lon": 7.447,
+    "km_depuis_thonon": 585,
+    "services": ["epicerie", "boulangerie", "atm"],
+    "notes": "Charmant village. Intermarché Express. À 20 km de Menton."
+  },
+  {
+    "id": "r17",
+    "nom": "Menton",
+    "lat": 43.777,
+    "lon": 7.502,
+    "km_depuis_thonon": 600,
+    "services": ["supermarche", "boulangerie", "pharmacie", "atm"],
+    "notes": "Arrivée ! Tous commerces. Gare SNCF. Train Nice et retour."
+  }
+]
