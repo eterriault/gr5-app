@@ -100,7 +100,17 @@ const MapModule = {
     }).addTo(state.map);
 
     L.control.zoom({ position: 'topleft' }).addTo(state.map);
+    L.control.scale({ position: 'bottomleft', imperial: false }).addTo(state.map);
     state.hebergeMarkers = L.layerGroup().addTo(state.map);
+
+    // Clic → coordonnées GPS discrètes
+    const coordsEl = document.getElementById('map-coords');
+    state.map.on('click', (e) => {
+      const { lat, lng } = e.latlng;
+      coordsEl.textContent = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+      coordsEl.classList.remove('hidden');
+    });
+
     console.log('[GR5] MapModule.init() OK');
 
     // Safari iOS décharge parfois la carte lors du retour au premier plan
@@ -353,28 +363,95 @@ const GPXModule = {
    MODULE PROFIL ALTIMÉTRIQUE
    ══════════════════════════════════════════════════════════════ */
 const ElevationModule = {
+  // État interne
+  _trace:  null,
+  _canvas: null,
+  _W: 0, _H: 0,
+  _minEle: 0, _range: 1,
+  _pad: { t: 8, r: 8, b: 28, l: 40 },
+  onHover: null,   // callback(point | null) branché par StagesModule
+
   draw(trace, canvasId = 'day-elevation-canvas') {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
-    const ctx    = canvas.getContext('2d');
 
     // Redimensionnement HiDPI
-    const W = canvas.offsetWidth;
-    const H = canvas.offsetHeight;
+    const W   = canvas.offsetWidth;
+    const H   = canvas.offsetHeight;
     const dpr = window.devicePixelRatio || 1;
     canvas.width  = W * dpr;
     canvas.height = H * dpr;
-    ctx.scale(dpr, dpr);
+    canvas.getContext('2d').scale(dpr, dpr);
 
-    const pts    = trace.points;
-    const eles   = pts.map(p => p.ele);
+    const eles   = trace.points.map(p => p.ele);
     const minEle = Math.min(...eles);
-    const maxEle = Math.max(...eles);
-    const range  = maxEle - minEle || 1;
+    const range  = Math.max(...eles) - minEle;
 
-    const pad = { t: 8, r: 8, b: 24, l: 40 };
-    const cW  = W - pad.l - pad.r;
-    const cH  = H - pad.t - pad.b;
+    // Pas de données d'altitude
+    if (range === 0) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#888';
+      ctx.font = '13px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText("Données d'altitude non disponibles", W / 2, H / 2);
+      return;
+    }
+
+    // Stocker pour les redraws
+    this._trace  = trace;
+    this._canvas = canvas;
+    this._W      = W;
+    this._H      = H;
+    this._minEle = minEle;
+    this._range  = range;
+
+    // Événements souris / tactile
+    canvas.onmousemove  = (e) => this._onPointer(e.clientX, e.clientY);
+    canvas.onmouseleave = ()  => this._onPointerEnd();
+    canvas.ontouchmove  = (e) => { e.preventDefault(); this._onPointer(e.touches[0].clientX, e.touches[0].clientY); };
+    canvas.ontouchend   = ()  => this._onPointerEnd();
+
+    this._render(null);
+  },
+
+  _onPointer(clientX, clientY) {
+    const rect = this._canvas.getBoundingClientRect();
+    const cssX = clientX - rect.left;
+    const pad  = this._pad;
+    const cW   = this._W - pad.l - pad.r;
+    const t    = Math.max(0, Math.min(1, (cssX - pad.l) / cW));
+    const idx  = Math.round(t * (this._trace.points.length - 1));
+    this._render(idx);
+    this.onHover?.(this._trace.points[idx]);
+  },
+
+  _onPointerEnd() {
+    this._render(null);
+    this.onHover?.(null);
+  },
+
+  _render(crosshairIdx) {
+    const canvas = this._canvas;
+    if (!canvas) return;
+    const ctx  = canvas.getContext('2d');
+    const W    = this._W;
+    const H    = this._H;
+    const pad  = this._pad;
+    const cW   = W - pad.l - pad.r;
+    const cH   = H - pad.t - pad.b;
+    const pts  = this._trace.points;
+    const minE = this._minEle;
+    const rng  = this._range;
+
+    // Distances cumulées pour positionner les points par km réel
+    const cumKm = [0];
+    for (let i = 1; i < pts.length; i++)
+      cumKm.push(cumKm[i - 1] + Geo.haversine(pts[i - 1], pts[i]));
+    const totalKm = cumKm[cumKm.length - 1];
+
+    const px = (i) => pad.l + (cumKm[i] / totalKm) * cW;
+    const py = (p) => pad.t + cH - ((p.ele - minE) / rng) * cH;
 
     ctx.clearRect(0, 0, W, H);
 
@@ -384,13 +461,8 @@ const ElevationModule = {
     grad.addColorStop(1, 'rgba(46,125,50,0.05)');
     ctx.fillStyle = grad;
     ctx.beginPath();
-
-    pts.forEach((p, i) => {
-      const x = pad.l + (i / (pts.length - 1)) * cW;
-      const y = pad.t + cH - ((p.ele - minEle) / range) * cH;
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    });
-    ctx.lineTo(pad.l + cW, pad.t + cH);
+    pts.forEach((p, i) => i === 0 ? ctx.moveTo(px(i), py(p)) : ctx.lineTo(px(i), py(p)));
+    ctx.lineTo(px(pts.length - 1), pad.t + cH);
     ctx.lineTo(pad.l, pad.t + cH);
     ctx.closePath();
     ctx.fill();
@@ -399,44 +471,85 @@ const ElevationModule = {
     ctx.strokeStyle = '#43a047';
     ctx.lineWidth   = 1.5;
     ctx.beginPath();
-    pts.forEach((p, i) => {
-      const x = pad.l + (i / (pts.length - 1)) * cW;
-      const y = pad.t + cH - ((p.ele - minEle) / range) * cH;
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    });
+    pts.forEach((p, i) => i === 0 ? ctx.moveTo(px(i), py(p)) : ctx.lineTo(px(i), py(p)));
     ctx.stroke();
 
     // Étiquettes altitude
     ctx.fillStyle = '#888';
-    ctx.font = `${10 * dpr / dpr}px -apple-system, sans-serif`;
+    ctx.font      = '10px -apple-system, sans-serif';
     ctx.textAlign = 'right';
-    ctx.fillText(`${Math.round(maxEle)} m`, pad.l - 4, pad.t + 6);
-    ctx.fillText(`${Math.round(minEle)} m`, pad.l - 4, pad.t + cH);
+    ctx.fillText(`${Math.round(minE + rng)} m`, pad.l - 4, pad.t + 6);
+    ctx.fillText(`${Math.round(minE)} m`,        pad.l - 4, pad.t + cH);
 
-    // Indicateur position GPS sur le profil
+    // Étiquettes km sur l'axe X — coche à chaque km, label tous les 5km
+    const labelStep = totalKm <= 10 ? 2 : 5;
+    ctx.font = '9px -apple-system, sans-serif';
+    for (let km = 0; km <= Math.ceil(totalKm); km++) {
+      if (km > totalKm) break;
+      const x       = pad.l + (km / totalKm) * cW;
+      const isMajor = km % labelStep === 0;
+      ctx.strokeStyle = isMajor ? '#666' : '#444';
+      ctx.lineWidth   = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, pad.t + cH);
+      ctx.lineTo(x, pad.t + cH + (isMajor ? 4 : 2));
+      ctx.stroke();
+      if (isMajor) {
+        ctx.fillStyle = '#888';
+        ctx.textAlign = km === 0 ? 'left' : 'center';
+        ctx.fillText(`${km} km`, x, pad.t + cH + 14);
+      }
+    }
+
+    // Position GPS actuelle
     if (state.currentPosition) {
-      this.drawPositionMarker(ctx, trace, pad, cW, cH, minEle, range);
+      let minDist = Infinity, gpsIdx = 0;
+      pts.forEach((p, i) => {
+        const d = Geo.haversine(state.currentPosition, p);
+        if (d < minDist) { minDist = d; gpsIdx = i; }
+      });
+      ctx.fillStyle = '#1976d2';
+      ctx.beginPath();
+      ctx.arc(px(gpsIdx), py(pts[gpsIdx]), 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Crosshair hover
+    if (crosshairIdx !== null) {
+      const pt = pts[crosshairIdx];
+      const x  = px(crosshairIdx);
+      const y  = py(pt);
+
+      // Ligne verticale
+      ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+      ctx.lineWidth   = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(x, pad.t);
+      ctx.lineTo(x, pad.t + cH);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Point sur la courbe
+      ctx.fillStyle   = '#fff';
+      ctx.strokeStyle = '#43a047';
+      ctx.lineWidth   = 2;
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Label altitude
+      const label = `${Math.round(pt.ele)} m`;
+      ctx.font      = 'bold 11px system-ui, sans-serif';
+      ctx.textAlign = x > W / 2 ? 'right' : 'left';
+      ctx.fillStyle = '#fff';
+      ctx.fillText(label, x + (x > W / 2 ? -8 : 8), Math.max(pad.t + 12, y - 6));
     }
   },
 
   drawPositionMarker(ctx, trace, pad, cW, cH, minEle, range) {
-    const pos = state.currentPosition;
-    // Trouve le point de la trace le plus proche de la position GPS
-    let minDist = Infinity;
-    let closestIdx = 0;
-    trace.points.forEach((p, i) => {
-      const d = Geo.haversine(pos, p);
-      if (d < minDist) { minDist = d; closestIdx = i; }
-    });
-
-    const pts = trace.points;
-    const x = pad.l + (closestIdx / (pts.length - 1)) * cW;
-    const y = pad.t + cH - ((pts[closestIdx].ele - minEle) / range) * cH;
-
-    ctx.fillStyle = '#1976d2';
-    ctx.beginPath();
-    ctx.arc(x, y, 5, 0, Math.PI * 2);
-    ctx.fill();
+    // Gardé pour compatibilité — appelé nulle part, logique intégrée dans _render
   },
 };
 
@@ -581,7 +694,23 @@ const StagesModule = {
       const group = document.createElement('div');
       group.className = 'stage-group';
       group.innerHTML = `<div class="stage-header">Stage ${stage.stage} — ${stage.name}</div>`;
-      stage.days.forEach(day => group.appendChild(this._buildDayCard(day)));
+
+      // Group days by day number (variants share same day number)
+      const byDayNum = new Map();
+      stage.days.forEach(day => {
+        if (!byDayNum.has(day.day)) byDayNum.set(day.day, []);
+        byDayNum.get(day.day).push(day);
+      });
+
+      [...byDayNum.keys()].sort((a, b) => a - b).forEach(dayNum => {
+        const variants = byDayNum.get(dayNum);
+        if (variants.length === 1) {
+          group.appendChild(this._buildDayCard(variants[0]));
+        } else {
+          group.appendChild(this._buildVariantCard(dayNum, variants, stage));
+        }
+      });
+
       container.appendChild(group);
     });
   },
@@ -606,10 +735,58 @@ const StagesModule = {
     return card;
   },
 
+  _buildVariantCard(dayNum, variants, stage) {
+    const card = document.createElement('div');
+    card.className = 'day-card variant-card';
+    let activeIdx = 0;
+
+    const render = () => {
+      const day = variants[activeIdx];
+      const timeStr = this._formatTime(day.time_hours);
+      const variantMeta = stage.variants?.find(v => v.id === day.variant);
+
+      card.innerHTML = `
+        <div class="day-card-header">
+          <div class="day-header-top">
+            <span class="day-number">Jour ${dayNum}</span>
+            <div class="variant-tabs">
+              ${variants.map((v, i) => `
+                <button class="variant-tab${i === activeIdx ? ' active' : ''}" data-idx="${i}">
+                  ${v.variant ?? String(i + 1)}
+                </button>`).join('')}
+            </div>
+            <svg class="day-chevron" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+              <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+            </svg>
+          </div>
+          <div class="day-route">${day.from} → ${day.to}</div>
+          ${variantMeta ? `<div class="variant-name">${variantMeta.name}</div>` : ''}
+          <div class="day-kpis-row">${day.distance_km} km · ${timeStr} · ↑${day.ascent_m} m</div>
+        </div>
+      `;
+
+      card.querySelectorAll('.variant-tab').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          activeIdx = parseInt(btn.dataset.idx);
+          render();
+        });
+      });
+
+      card.querySelector('.day-card-header').addEventListener('click', () => {
+        this._openDetail(variants[activeIdx]);
+      });
+    };
+
+    render();
+    return card;
+  },
+
   _openDetail(day) {
     // En-tête
+    const variantSuffix = day.variant ? ` (variante ${day.variant})` : '';
     document.getElementById('day-detail-title').textContent =
-      `Jour ${day.day} — ${day.from} → ${day.to}`;
+      `Jour ${day.day}${variantSuffix} — ${day.from} → ${day.to}`;
 
     // Stats
     const timeStr = this._formatTime(day.time_hours);
@@ -638,16 +815,39 @@ const StagesModule = {
     // Affiche le panel
     document.getElementById('day-detail-panel').classList.remove('hidden');
 
-    // Trace GPX slicée
-    const mainTrace = state.traces.find(t => t.filename === 'GR5-GTA-route-only-614km.gpx');
-    if (mainTrace && day.from_coords && day.to_coords) {
-      const sliced = GPXModule.sliceByCoords(mainTrace, day.from_coords, day.to_coords);
-      if (sliced.points.length > 1) {
-        ElevationModule.draw(sliced);
-        this._updateDayMap(sliced);
+    // Trace GPX : fichier dédié si spécifié, sinon trace principale
+    // Dans les deux cas, on découpe par from_coords/to_coords si disponibles
+    let trace = null;
+    const sourceTrace = day.gpx_file
+      ? state.traces.find(t => t.filename === day.gpx_file) ?? null
+      : state.traces.find(t => t.filename === 'GR5-GTA-route-only-614km.gpx') ?? null;
+
+    if (sourceTrace) {
+      if (day.from_coords && day.to_coords) {
+        const sliced = GPXModule.sliceByCoords(sourceTrace, day.from_coords, day.to_coords);
+        if (sliced.points.length > 1) trace = sliced;
+      } else {
+        trace = sourceTrace;
       }
+    }
+
+    // Stats GPX (calculées depuis la trace)
+    const gpxEl = document.getElementById('day-gpx-stats');
+    if (trace && trace.points.length > 1) {
+      gpxEl.textContent = `GPX : ${trace.distance} km · ↑${trace.ascent} m`;
+      gpxEl.classList.remove('hidden');
     } else {
-      this._updateDayMap(null);
+      gpxEl.classList.add('hidden');
+    }
+
+    // Callback hover élévation → marker sur mini-carte
+    ElevationModule.onHover = (pt) => this._updateHoverMarker(pt);
+
+    if (trace && trace.points.length > 1) {
+      ElevationModule.draw(trace);
+      this._updateDayMap(trace, day);
+    } else {
+      this._updateDayMap(null, day);
     }
   },
 
@@ -677,7 +877,7 @@ const StagesModule = {
     return parts.join('');
   },
 
-  _updateDayMap(trace) {
+  _updateDayMap(trace, day) {
     if (!this._dayMap) {
       this._dayMap = L.map('day-map', {
         zoomControl: false,
@@ -685,12 +885,26 @@ const StagesModule = {
       });
       L.tileLayer(CONFIG.tileUrl, { maxZoom: CONFIG.maxZoom }).addTo(this._dayMap);
       L.control.zoom({ position: 'topright' }).addTo(this._dayMap);
+      L.control.scale({ position: 'bottomright', imperial: false }).addTo(this._dayMap);
+
+      // Clic → coordonnées GPS discrètes
+      const dayCoords = document.getElementById('day-map-coords');
+      this._dayMap.on('click', (e) => {
+        const { lat, lng } = e.latlng;
+        dayCoords.textContent = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+        dayCoords.classList.remove('hidden');
+      });
     }
 
+    // Nettoyer les anciens markers et la polyline
     if (this._dayPolyline) {
       this._dayMap.removeLayer(this._dayPolyline);
       this._dayPolyline = null;
     }
+    if (this._dayMarkers) {
+      this._dayMarkers.forEach(m => this._dayMap.removeLayer(m));
+    }
+    this._dayMarkers = [];
 
     if (!trace) return;
 
@@ -701,17 +915,31 @@ const StagesModule = {
       opacity: 0.9,
     }).addTo(this._dayMap);
 
-    // Refuges sur la mini-carte
+    // Refuges dans les bounds de la trace
     const bounds = this._dayPolyline.getBounds().pad(0.15);
+    const shownIds = new Set();
     state.hebergements
       .filter(h => h.type === 'refuge' && bounds.contains([h.lat, h.lon]))
       .forEach(h => {
-        const unverif = h.coords_verified === false
-          ? `<br><span style="color:#ffa726;font-size:11px">⚠ Position approximative</span>` : '';
-        L.marker([h.lat, h.lon], { icon: makeHebergeIcon(h) })
-          .bindPopup(`<strong>${h.nom}</strong><br>${h.altitude} m${h.off_route ? '<br><em>hors-itinéraire</em>' : ''}${unverif}`, { maxWidth: 180 })
-          .addTo(this._dayMap);
+        shownIds.add(h.id);
+        this._dayMarkers.push(this._addRefugeMarker(h));
       });
+
+    // Refuges listés dans day.accommodation mais hors bounds (ex: hors-itinéraire)
+    if (day?.accommodation) {
+      day.accommodation
+        .filter(a => a.type === 'refuge')
+        .forEach(a => {
+          const h = state.hebergements.find(
+            hh => hh.type === 'refuge' && !shownIds.has(hh.id) &&
+                  hh.nom.toLowerCase().includes(a.name.toLowerCase().split(' ').slice(-2).join(' ').toLowerCase())
+          );
+          if (h) {
+            shownIds.add(h.id);
+            this._dayMarkers.push(this._addRefugeMarker(h));
+          }
+        });
+    }
 
     setTimeout(() => {
       this._dayMap.invalidateSize();
@@ -719,10 +947,113 @@ const StagesModule = {
     }, 50);
   },
 
+  _addRefugeMarker(h) {
+    const unverif = h.coords_verified === false
+      ? `<br><span style="color:#ffa726;font-size:11px">⚠ Position approximative</span>` : '';
+    const marker = L.marker([h.lat, h.lon], { icon: makeHebergeIcon(h) })
+      .bindPopup(`<strong>${h.nom}</strong><br>${h.altitude} m${h.off_route ? '<br><em>hors-itinéraire</em>' : ''}${unverif}`, { maxWidth: 180 })
+      .addTo(this._dayMap);
+    return marker;
+  },
+
+  _hoverMarker: null,
+
+  _updateHoverMarker(pt) {
+    if (!this._dayMap) return;
+    if (pt) {
+      if (!this._hoverMarker) {
+        this._hoverMarker = L.circleMarker([pt.lat, pt.lon], {
+          radius: 7,
+          color: '#fff',
+          weight: 2,
+          fillColor: '#43a047',
+          fillOpacity: 1,
+          interactive: false,
+        }).addTo(this._dayMap);
+      } else {
+        this._hoverMarker.setLatLng([pt.lat, pt.lon]);
+      }
+    } else {
+      if (this._hoverMarker) {
+        this._dayMap.removeLayer(this._hoverMarker);
+        this._hoverMarker = null;
+      }
+    }
+  },
+
   _formatTime(hours) {
     const h = Math.floor(hours);
     const m = Math.round((hours - h) * 60);
     return m > 0 ? `${h}h${String(m).padStart(2, '0')}` : `${h}h`;
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   MODULE HÉBERGEMENTS
+   ══════════════════════════════════════════════════════════════ */
+const HebModule = {
+
+  render(hebs) {
+    const container = document.getElementById('heb-list');
+    if (!hebs?.length) {
+      container.innerHTML = '<p class="placeholder">Aucun hébergement enregistré.</p>';
+      return;
+    }
+
+    // Refuges en premier, puis gîtes, puis hôtels, puis le reste
+    const order = { refuge: 0, gite: 1, hotel: 2 };
+    const sorted = [...hebs].sort((a, b) => {
+      const o = (order[a.type] ?? 9) - (order[b.type] ?? 9);
+      return o !== 0 ? o : (a.stage ?? 99) - (b.stage ?? 99) || String(a.day).localeCompare(String(b.day));
+    });
+
+    container.innerHTML = sorted.map(h => this._buildCard(h)).join('');
+  },
+
+  _buildCard(h) {
+    const typeLabel = { refuge: 'Refuge', gite: 'Gîte', hotel: 'Hôtel' }[h.type] ?? h.type ?? '?';
+    const unverif = h.coords_verified === false
+      ? `<span class="heb-badge heb-badge-warn">⚠ coords approx.</span>` : '';
+    const offRoute = h.off_route
+      ? `<span class="heb-badge heb-badge-off">hors-itinéraire</span>` : '';
+    const dayRef = h.stage != null
+      ? `<span class="heb-meta">Stage ${h.stage}${h.day != null ? ` · Jour ${h.day}` : ''}</span>` : '';
+
+    const rows = [];
+    if (h.altitude)      rows.push(`<tr><td>Altitude</td><td>${h.altitude} m</td></tr>`);
+    if (h.places)        rows.push(`<tr><td>Places</td><td>${h.places}</td></tr>`);
+    if (h.ouverture)     rows.push(`<tr><td>Ouverture</td><td>${h.ouverture}</td></tr>`);
+    if (h.bivouac)       rows.push(`<tr><td>Bivouac</td><td>${h.bivouac}</td></tr>`);
+    if (h.demi_pension)  rows.push(`<tr><td>Demi-pension</td><td>${h.tarif_demi_pension ? h.tarif_demi_pension + ' €' : 'oui'}</td></tr>`);
+    if (h.telephone)     rows.push(`<tr><td>Téléphone</td><td><a href="tel:${h.telephone}">${h.telephone}</a>${h.telephone_resa ? ` · résa : <a href="tel:${h.telephone_resa}">${h.telephone_resa}</a>` : ''}</td></tr>`);
+    if (h.email)         rows.push(`<tr><td>Email</td><td><a href="mailto:${h.email}">${h.email}</a></td></tr>`);
+    if (h.site_web)      rows.push(`<tr><td>Site web</td><td><a href="${h.site_web}" target="_blank" rel="noopener">Ouvrir ↗</a></td></tr>`);
+    if (h.notes)         rows.push(`<tr><td colspan="2" class="heb-notes">${h.notes}</td></tr>`);
+
+    return `
+      <div class="heb-card" id="heb-${h.id}">
+        <div class="heb-card-header">
+          <div class="heb-name">${h.nom}</div>
+          <div class="heb-badges">
+            <span class="heb-badge heb-badge-type heb-type-${h.type ?? 'other'}">${typeLabel}</span>
+            ${offRoute}${unverif}
+          </div>
+          ${dayRef}
+        </div>
+        ${rows.length ? `<table class="heb-table">${rows.join('')}</table>` : ''}
+      </div>`;
+  },
+
+  showAndScrollTo(id) {
+    UIModule.switchTab('hebergements');
+    setTimeout(() => {
+      const el = document.getElementById(`heb-${id}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.classList.add('heb-highlight');
+        setTimeout(() => el.classList.remove('heb-highlight'), 1500);
+      }
+    }, 50);
   },
 };
 

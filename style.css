@@ -96,6 +96,31 @@ html, body {
 /* Fond de carte sombre (avant chargement des tuiles) */
 .leaflet-container { background: #1e2a1e; }
 
+/* ── Coordonnées GPS au clic ────────────────────────────────── */
+.map-coords {
+  position: absolute;
+  bottom: 28px;
+  left: 8px;
+  z-index: 500;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  color: #e0e0e0;
+  font-size: 11px;
+  font-family: 'SF Mono', 'Fira Mono', monospace;
+  padding: 3px 7px;
+  border-radius: 4px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.map-coords.hidden { display: none; }
+
+/* Sur la grande carte, positionnée au-dessus de l'échelle Leaflet */
+#map-coords {
+  position: fixed;
+  bottom: calc(var(--nav-h) + var(--safe-b) + 28px);
+  left: 8px;
+}
+
 /* ── Boutons flottants ──────────────────────────────────────── */
 #map-controls {
   position: fixed;
@@ -558,8 +583,16 @@ html, body {
   display: flex;
   gap: 0;
   background: var(--surface-2);
+}
+
+#day-gpx-stats {
+  font-size: 11px;
+  color: var(--on-surface-dim);
+  background: var(--surface-2);
+  padding: 4px 14px 8px;
   border-bottom: 1px solid var(--border);
 }
+#day-gpx-stats.hidden { display: none; }
 
 .detail-stat {
   flex: 1;
@@ -655,6 +688,43 @@ html, body {
   font-size: 15px;
   font-weight: 600;
   color: var(--on-surface);
+}
+
+/* Variant tabs */
+.variant-tabs {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+}
+
+.variant-tab {
+  padding: 2px 9px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--on-surface-dim);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  line-height: 1.6;
+}
+.variant-tab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.variant-name {
+  font-size: 12px;
+  color: var(--on-surface-dim);
+  margin-top: 2px;
+}
+
+.day-kpis-row {
+  font-size: 12px;
+  color: var(--on-surface-dim);
+  margin-top: 4px;
 }
 
 /* Détail expansible */

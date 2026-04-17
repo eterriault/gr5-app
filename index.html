@@ -32,6 +32,7 @@
 
   <!-- ── Carte Leaflet ─────────────────────────────────────── -->
   <div id="map"></div>
+  <div id="map-coords" class="map-coords hidden"></div>
 
   <!-- ── Boutons flottants sur la carte ────────────────────── -->
   <div id="map-controls">
@@ -63,6 +64,12 @@
       </svg>
       Étapes
     </button>
+    <button class="nav-tab" data-tab="hebergements">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/>
+      </svg>
+      Refuges
+    </button>
     <button class="nav-tab" data-tab="meteo">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/>
@@ -90,6 +97,10 @@
       <div id="stages-list">
         <p class="placeholder">Chargement des étapes…</p>
       </div>
+    </div>
+
+    <div id="tab-hebergements" class="tab-content">
+      <div id="heb-list"><p class="placeholder">Chargement…</p></div>
     </div>
 
     <div id="tab-meteo" class="tab-content">
@@ -156,9 +167,12 @@
       <div id="day-detail-title"></div>
     </div>
     <div id="day-detail-scroll">
-      <div id="day-map"></div>
+      <div id="day-map" style="position:relative">
+        <div id="day-map-coords" class="map-coords hidden"></div>
+      </div>
       <canvas id="day-elevation-canvas"></canvas>
       <div id="day-detail-stats"></div>
+      <div id="day-gpx-stats" class="hidden"></div>
       <div id="day-detail-info"></div>
     </div>
   </div>

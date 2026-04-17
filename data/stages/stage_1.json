@@ -1,13 +1,28 @@
 {
   "stage": 1,
   "name": "Lac Léman to Les Houches",
+  "variants": [
+    {
+      "id": "A",
+      "name": "Depuis Thonon-les-Bains",
+      "description": "Départ depuis Thonon-les-Bains. 2 jours plus longs mais plus faciles pour rejoindre La Chapelle d'Abondance. Chemin progressif en vallée.",
+      "days": [1, 2]
+    },
+    {
+      "id": "B",
+      "name": "Depuis St-Gingolph",
+      "description": "Départ depuis St-Gingolph au bord du lac. 1 journée courte mais intense (+1750m), nuit au Refuge de la Dent d'Oche (2114m). Vue exceptionnelle sur le lac Léman.",
+      "days": [1, 2]
+    }
+  ],
   "days": [
     {
       "day": 1,
+      "variant": "A",
       "from": "Thonon-les-Bains",
       "from_coords": [46.3701, 6.4785],
-      "to": "Chevenoz",
-      "to_coords": [46.3146, 6.6136],
+      "to": "Le Crêt",
+      "to_coords": [46.34227, 6.63073],
       "distance_km": 25,
       "ascent_m": 1090,
       "descent_m": 545,
@@ -20,16 +35,17 @@
         { "name": "Nombreuses options", "location": "Thonon-les-Bains", "type": null, "off_route": false },
         { "name": "Hôtel", "location": "Armoy", "type": "hotel", "off_route": false },
         { "name": "L'Ermitage", "location": "Armoy", "type": "hotel", "off_route": false },
-        { "name": "Gîte", "location": "Chevenoz", "type": "gite", "off_route": false }
+        { "name": "Gîte", "location": "Chevenoz", "type": "gite", "off_route": true }
       ],
-      "notes": null
+      "notes": "Chevenoz est hors-itinéraire depuis Le Crêt (15-30 min à pied)."
     },
     {
       "day": 2,
-      "from": "Chevenoz",
-      "from_coords": [46.3146, 6.6136],
+      "variant": "A",
+      "from": "Le Crêt",
+      "from_coords": [46.34227, 6.63073],
       "to": "La Chapelle d'Abondance",
-      "to_coords": [46.2686, 6.7394],
+      "to_coords": [46.2956, 6.7877],
       "distance_km": 22,
       "ascent_m": 1730,
       "descent_m": 1625,
@@ -40,17 +56,60 @@
       "food_drink": "Restaurants aux Chalets de Bise. Nombreuses options à La Chapelle d'Abondance.",
       "accommodation": [
         { "name": "Refuge de la Dent d'Oche", "location": "Dent d'Oche", "type": "refuge", "off_route": true },
-        { "name": "Refuge des Chalets de Bise", "location": "Chalets de Bise", "type": "refuge", "off_route": false },
+        { "name": "Refuge de Bise", "location": "Col de Bise", "type": "refuge", "off_route": false },
         { "name": "Hôtels et gîtes", "location": "La Chapelle d'Abondance", "type": null, "off_route": false }
       ],
       "notes": null
     },
     {
+      "day": 1,
+      "variant": "B",
+      "gpx_file": "Part 10b - FR St Gingolph to Col de Bise (off route).gpx",
+      "from": "St-Gingolph",
+      "from_coords": [46.3932, 6.7931],
+      "to": "Refuge de la Dent d'Oche",
+      "to_coords": [46.3526, 6.72834],
+      "distance_km": 8.2,
+      "ascent_m": 1487,
+      "descent_m": 52,
+      "time_hours": 6,
+      "maps": ["3528 ET"],
+      "terrain": "Montée soutenue depuis le bord du lac. Sentiers forestiers puis alpages. Dernier tronçon raide avec chaîne sur passage rocheux exposé.",
+      "description": "Départ à pic depuis le bord du Lac Léman (375m). Journée courte en distance mais intense en dénivelé — la plus raide du Stage 1. Le sentier monte rapidement pour rejoindre les alpages puis le Col de Bise. Un embranchement hors-itinéraire mène au Refuge de la Dent d'Oche (+300m supplémentaires). Les derniers mètres sont équipés d'une chaîne sur un passage rocheux glissant par temps humide. Vue exceptionnelle sur le lac Léman et le Mont Blanc. Déconseillé par mauvais temps ou aux personnes sujettes au vertige.",
+      "food_drink": null,
+      "accommodation": [
+        { "name": "Refuge de la Dent d'Oche", "location": "Dent d'Oche", "type": "refuge", "off_route": false }
+      ],
+      "notes": "⚠ Distance et D+ n'incluent pas le détour depuis le Col de Bise jusqu'au refuge (+~300m D+, hors-itinéraire GR5, compter 45-60 min supplémentaires)."
+    },
+    {
+      "day": 2,
+      "variant": "B",
+      "gpx_file": "Part 10 - FR Reyvroz to Les Houches.gpx",
+      "from": "Refuge de la Dent d'Oche",
+      "from_coords": [46.3307, 6.7659],
+      "to": "La Chapelle d'Abondance",
+      "to_coords": [46.2956, 6.7877],
+      "distance_km": 5.4,
+      "ascent_m": 340,
+      "descent_m": 820,
+      "time_hours": 6.5,
+      "maps": ["3528 ET"],
+      "terrain": "Descente depuis le refuge vers le Col de Bise, puis tronçon commun avec la variante A.",
+      "description": "Descente du refuge vers le Col de Bise pour rejoindre le GR5 principal. À partir du Col de Bise, le parcours est identique à la variante A (Jour 2) : descente vers les Chalets de Bise puis La Chapelle d'Abondance. Journée plus courte que la variante A mais avec un dénivelé négatif important.",
+      "food_drink": "Restaurants aux Chalets de Bise. Nombreuses options à La Chapelle d'Abondance.",
+      "accommodation": [
+        { "name": "Refuge de Bise", "location": "Col de Bise", "type": "refuge", "off_route": false },
+        { "name": "Hôtels et gîtes", "location": "La Chapelle d'Abondance", "type": null, "off_route": false }
+      ],
+      "notes": "⚠ Distance et D+ calculés depuis le Col de Bise — n'incluent pas la descente du refuge au Col de Bise (hors-itinéraire, ~2km / ~300m D-)."
+    },
+    {
       "day": 3,
       "from": "La Chapelle d'Abondance",
-      "from_coords": [46.2686, 6.7394],
-      "to": "Châsery",
-      "to_coords": [46.237, 6.881],
+      "from_coords": [46.2956, 6.7877],
+      "to": "Chésery",
+      "to_coords": [46.19646, 6.81299],
       "distance_km": 20,
       "ascent_m": 1493,
       "descent_m": 545,
@@ -58,18 +117,18 @@
       "maps": ["3528 ET"],
       "terrain": "Chemin en bord de rivière, suivi de sentiers forestiers escarpés laissant place à des pentes plus ouvertes. Chemins et sentiers plus faciles en fin de journée.",
       "description": "Le Mont de Grange est une grande montagne qu'il faut une demi-journée pour contourner. La majeure partie de la montée est boisée et les vues limitées. Les pentes supérieures sont ouvertes et pâturées par des vaches ; un épaulement en altitude au-dessus de Lenleveur offre une variante par la crête vers le sommet, pour celles qui ont le temps et l'énergie. La seconde moitié du parcours emprunte de bons chemins, montant progressivement hors de France vers la Suisse.",
-      "food_drink": "Restaurant hors-itinéraire à Thollentar. Restaurants au Col de Bassachaux et au Refuge de Châsery.",
+      "food_drink": "Restaurant hors-itinéraire à Thollentar. Restaurants au Col de Bassachaux et au Refuge de Chésery.",
       "accommodation": [
         { "name": "Refuge de Trébentaz", "location": "Trébentaz", "type": "refuge", "off_route": true },
         { "name": "Refuge du Col de Bassachaux", "location": "Col de Bassachaux", "type": "refuge", "off_route": false },
-        { "name": "Refuge de Châsery", "location": "Châsery", "type": "refuge", "off_route": false }
+        { "name": "Refuge de Chésery", "location": "Chésery", "type": "refuge", "off_route": false }
       ],
       "notes": null
     },
     {
       "day": 4,
-      "from": "Châsery",
-      "from_coords": [46.237, 6.881],
+      "from": "Chésery",
+      "from_coords": [46.19646, 6.81299],
       "to": "Samoëns",
       "to_coords": [46.0761, 6.7222],
       "distance_km": 25,
