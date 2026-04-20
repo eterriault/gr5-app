@@ -176,6 +176,7 @@ const MapModule = {
           ${bivouac}
           ${h.notes ? `<br><em style="font-size:11px">${h.notes}</em>` : ''}
           ${unverif}
+          <br><a href="#" onclick="event.preventDefault();HebModule.showAndScrollTo('${h.id}')" style="color:#81c784;font-size:12px">Voir la fiche →</a>
         `, { maxWidth: 220 })
         .addTo(state.hebergeMarkers);
     });
@@ -951,7 +952,7 @@ const StagesModule = {
     const unverif = h.coords_verified === false
       ? `<br><span style="color:#ffa726;font-size:11px">⚠ Position approximative</span>` : '';
     const marker = L.marker([h.lat, h.lon], { icon: makeHebergeIcon(h) })
-      .bindPopup(`<strong>${h.nom}</strong><br>${h.altitude} m${h.off_route ? '<br><em>hors-itinéraire</em>' : ''}${unverif}`, { maxWidth: 180 })
+      .bindPopup(`<strong>${h.nom}</strong><br>${h.altitude} m${h.off_route ? '<br><em>hors-itinéraire</em>' : ''}${unverif}<br><a href="#" onclick="event.preventDefault();HebModule.showAndScrollTo('${h.id}')" style="color:#81c784;font-size:12px">Voir la fiche →</a>`, { maxWidth: 180 })
       .addTo(this._dayMap);
     return marker;
   },
@@ -1020,15 +1021,17 @@ const HebModule = {
       ? `<span class="heb-meta">Stage ${h.stage}${h.day != null ? ` · Jour ${h.day}` : ''}</span>` : '';
 
     const rows = [];
-    if (h.altitude)      rows.push(`<tr><td>Altitude</td><td>${h.altitude} m</td></tr>`);
-    if (h.places)        rows.push(`<tr><td>Places</td><td>${h.places}</td></tr>`);
-    if (h.ouverture)     rows.push(`<tr><td>Ouverture</td><td>${h.ouverture}</td></tr>`);
-    if (h.bivouac)       rows.push(`<tr><td>Bivouac</td><td>${h.bivouac}</td></tr>`);
-    if (h.demi_pension)  rows.push(`<tr><td>Demi-pension</td><td>${h.tarif_demi_pension ? h.tarif_demi_pension + ' €' : 'oui'}</td></tr>`);
-    if (h.telephone)     rows.push(`<tr><td>Téléphone</td><td><a href="tel:${h.telephone}">${h.telephone}</a>${h.telephone_resa ? ` · résa : <a href="tel:${h.telephone_resa}">${h.telephone_resa}</a>` : ''}</td></tr>`);
-    if (h.email)         rows.push(`<tr><td>Email</td><td><a href="mailto:${h.email}">${h.email}</a></td></tr>`);
-    if (h.site_web)      rows.push(`<tr><td>Site web</td><td><a href="${h.site_web}" target="_blank" rel="noopener">Ouvrir ↗</a></td></tr>`);
-    if (h.notes)         rows.push(`<tr><td colspan="2" class="heb-notes">${h.notes}</td></tr>`);
+    if (h.altitude)             rows.push(`<tr><td>Altitude</td><td>${h.altitude} m</td></tr>`);
+    if (h.km_depuis_thonon != null) rows.push(`<tr><td>Depuis Thonon</td><td>${h.km_depuis_thonon} km${h.km_hors_route != null ? ` <span class="heb-dim">(+ ${h.km_hors_route} km hors-itinéraire)</span>` : ''}</td></tr>`);
+    if (h.places)               rows.push(`<tr><td>Places</td><td>${h.places}</td></tr>`);
+    if (h.ouverture)            rows.push(`<tr><td>Ouverture</td><td>${h.ouverture}</td></tr>`);
+    if (h.bivouac != null)      rows.push(`<tr><td>Bivouac</td><td>${h.bivouac ? 'Toléré' : 'Non toléré'}</td></tr>`);
+    if (h.demi_pension != null) rows.push(`<tr><td>Demi-pension</td><td>${h.tarif_demi_pension != null ? h.tarif_demi_pension + ' €' : 'oui'}</td></tr>`);
+    if (h.tarif_repas_soir != null) rows.push(`<tr><td>Repas du soir</td><td>${h.tarif_repas_soir} €</td></tr>`);
+    if (h.telephone)            rows.push(`<tr><td>Téléphone</td><td><a href="tel:${h.telephone}">${h.telephone}</a>${h.telephone_resa ? ` · résa : <a href="tel:${h.telephone_resa}">${h.telephone_resa}</a>` : ''}</td></tr>`);
+    if (h.email)                rows.push(`<tr><td>Email</td><td><a href="mailto:${h.email}">${h.email}</a></td></tr>`);
+    if (h.site_web)             rows.push(`<tr><td>Site web</td><td><a href="${h.site_web}" target="_blank" rel="noopener">Ouvrir ↗</a></td></tr>`);
+    if (h.notes)                rows.push(`<tr><td colspan="2" class="heb-notes">${h.notes}</td></tr>`);
 
     return `
       <div class="heb-card" id="heb-${h.id}">
@@ -1071,6 +1074,7 @@ const DataModule = {
       state.hebergements = heberge.value;
       console.log(`[Data] ${state.hebergements.length} hébergements chargés.`);
       MapModule.showHebergements(state.hebergements);
+      HebModule.render(state.hebergements);
     }
     if (ravitail.status === 'fulfilled') {
       state.ravitaillement = ravitail.value;
@@ -1229,6 +1233,8 @@ const UIModule = {
     document.querySelectorAll('.nav-tab').forEach(t =>
       t.classList.toggle('active', t.dataset.tab === tabName)
     );
+
+    document.getElementById('day-detail-panel').classList.add('hidden');
 
     const panel = document.getElementById('content-panel');
 

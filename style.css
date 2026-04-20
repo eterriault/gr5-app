@@ -820,6 +820,104 @@ html, body {
   border-radius: 0 8px 8px 0;
 }
 
+/* ── Hébergements ───────────────────────────────────────────── */
+#heb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heb-card {
+  background: var(--surface-2);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid var(--border);
+}
+
+.heb-card-header {
+  margin-bottom: 10px;
+}
+
+.heb-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin-bottom: 6px;
+}
+
+.heb-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 4px;
+}
+
+.heb-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.heb-badge-type        { background: var(--surface-3); color: var(--on-surface-dim); }
+.heb-type-refuge       { background: rgba(46,125,50,0.35); color: #81c784; }
+.heb-type-gite         { background: rgba(21,101,192,0.35); color: #90caf9; }
+.heb-type-hotel        { background: rgba(123,31,162,0.35); color: #ce93d8; }
+.heb-badge-off         { background: rgba(255,111,0,0.25); color: #ffb74d; }
+.heb-badge-warn        { background: rgba(198,40,40,0.3);  color: #ef9a9a; }
+
+.heb-meta {
+  font-size: 11px;
+  color: var(--on-surface-dim);
+}
+
+.heb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.heb-table td {
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.heb-table td:first-child {
+  color: var(--on-surface-dim);
+  width: 40%;
+  padding-right: 8px;
+}
+
+.heb-table td:last-child {
+  color: var(--on-surface);
+}
+
+.heb-table tr:last-child td {
+  border-bottom: none;
+}
+
+.heb-table a {
+  color: var(--primary-light);
+  text-decoration: none;
+}
+
+.heb-card.heb-highlight {
+  outline: 2px solid var(--primary-light);
+  transition: outline 0.3s ease;
+}
+
+.heb-dim {
+  color: var(--on-surface-dim);
+  font-size: 11px;
+}
+
+.heb-notes {
+  color: var(--on-surface-dim) !important;
+  font-size: 12px;
+  line-height: 1.5;
+  padding-top: 8px !important;
+}
+
 /* ── Surcharges Leaflet ─────────────────────────────────────── */
 .leaflet-control-attribution {
   font-size: 9px !important;
