@@ -916,31 +916,26 @@ const StagesModule = {
       opacity: 0.9,
     }).addTo(this._dayMap);
 
-    // Refuges dans les bounds de la trace
+    // Correspond si h.day matche ce jour (ex: h.day=2 → jours 2A et 2B ; h.day="1B" → jour 1B seulement)
+    const matchesDay = h => {
+      if (h.day == null) return false;
+      if (typeof h.day === 'number') return h.day === day.day;
+      if (typeof h.day === 'string') {
+        const num = parseInt(h.day);
+        const variant = h.day.replace(/[0-9]/g, '');
+        return num === day.day && (!variant || variant === (day.variant ?? ''));
+      }
+      return false;
+    };
+
     const bounds = this._dayPolyline.getBounds().pad(0.15);
     const shownIds = new Set();
     state.hebergements
-      .filter(h => h.type === 'refuge' && bounds.contains([h.lat, h.lon]))
+      .filter(h => matchesDay(h) || bounds.contains([h.lat, h.lon]))
       .forEach(h => {
         shownIds.add(h.id);
         this._dayMarkers.push(this._addRefugeMarker(h));
       });
-
-    // Refuges listés dans day.accommodation mais hors bounds (ex: hors-itinéraire)
-    if (day?.accommodation) {
-      day.accommodation
-        .filter(a => a.type === 'refuge')
-        .forEach(a => {
-          const h = state.hebergements.find(
-            hh => hh.type === 'refuge' && !shownIds.has(hh.id) &&
-                  hh.nom.toLowerCase().includes(a.name.toLowerCase().split(' ').slice(-2).join(' ').toLowerCase())
-          );
-          if (h) {
-            shownIds.add(h.id);
-            this._dayMarkers.push(this._addRefugeMarker(h));
-          }
-        });
-    }
 
     setTimeout(() => {
       this._dayMap.invalidateSize();
