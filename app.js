@@ -996,12 +996,7 @@ const HebModule = {
       return;
     }
 
-    // Refuges en premier, puis gîtes, puis hôtels, puis le reste
-    const order = { refuge: 0, gite: 1, hotel: 2 };
-    const sorted = [...hebs].sort((a, b) => {
-      const o = (order[a.type] ?? 9) - (order[b.type] ?? 9);
-      return o !== 0 ? o : (a.stage ?? 99) - (b.stage ?? 99) || String(a.day).localeCompare(String(b.day));
-    });
+    const sorted = [...hebs].sort((a, b) => (a.km_depuis_thonon ?? 9999) - (b.km_depuis_thonon ?? 9999));
 
     container.innerHTML = sorted.map(h => this._buildCard(h)).join('');
   },
@@ -1164,6 +1159,118 @@ const Geo = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
+   MODULE RECHERCHE
+   ══════════════════════════════════════════════════════════════ */
+const SearchModule = {
+  _results: [],
+  _geoTimer: null,
+  _marker: null,
+
+  init() {
+    const input    = document.getElementById('search-input');
+    const dropdown = document.getElementById('search-dropdown');
+
+    input.addEventListener('input', () => {
+      clearTimeout(this._geoTimer);
+      const q = input.value.trim();
+      if (!q) { dropdown.classList.add('hidden'); return; }
+
+      const coords = this._parseCoords(q);
+      if (coords) {
+        this._show([{ kind: 'coords', lat: coords.lat, lon: coords.lon,
+          label: `📍 ${coords.lat.toFixed(5)}, ${coords.lon.toFixed(5)}` }]);
+        return;
+      }
+
+      const ql = q.toLowerCase();
+      const hebs = state.hebergements
+        .filter(h => h.nom.toLowerCase().includes(ql))
+        .slice(0, 5)
+        .map(h => ({ kind: 'heb', h,
+          label: h.nom,
+          sub: `${h.type} · km ${h.km_depuis_thonon}` }));
+
+      this._show(hebs);
+
+      if (q.length >= 3) {
+        this._geoTimer = setTimeout(() => this._geocode(q, hebs), 600);
+      }
+    });
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { input.value = ''; dropdown.classList.add('hidden'); input.blur(); }
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('#search-container')) dropdown.classList.add('hidden');
+    });
+  },
+
+  _parseCoords(q) {
+    const m = q.match(/^(-?\d{1,3}\.?\d*)[,\s]+(-?\d{1,3}\.?\d*)$/);
+    if (!m) return null;
+    const lat = parseFloat(m[1]), lon = parseFloat(m[2]);
+    if (lat < -90 || lat > 90 || lon < -180 || lon > 180) return null;
+    return { lat, lon };
+  },
+
+  async _geocode(q, existing) {
+    try {
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=3&countrycodes=fr,ch,it&accept-language=fr`;
+      const res  = await fetch(url);
+      const data = await res.json();
+      const geo  = data.map(r => ({
+        kind: 'geo',
+        lat: parseFloat(r.lat),
+        lon: parseFloat(r.lon),
+        label: r.display_name.split(',').slice(0, 2).join(',').trim(),
+      }));
+      this._show([...existing, ...geo]);
+    } catch { /* hors ligne */ }
+  },
+
+  _show(results) {
+    this._results = results;
+    const dropdown = document.getElementById('search-dropdown');
+    if (!results.length) { dropdown.classList.add('hidden'); return; }
+    dropdown.innerHTML = results.map((r, i) => `
+      <div class="search-result" data-i="${i}">
+        <span class="search-result-label search-result-type-${r.kind}">${r.label}</span>
+        ${r.sub ? `<span class="search-result-sub">${r.sub}</span>` : ''}
+      </div>`).join('');
+    dropdown.classList.remove('hidden');
+    dropdown.querySelectorAll('.search-result').forEach(el =>
+      el.addEventListener('click', () => this._select(this._results[+el.dataset.i]))
+    );
+  },
+
+  _select(r) {
+    const input = document.getElementById('search-input');
+    document.getElementById('search-dropdown').classList.add('hidden');
+    input.value = '';
+    input.blur();
+    UIModule.switchTab('carte');
+
+    if (r.kind === 'heb') {
+      MapModule.centerOn(r.h.lat, r.h.lon, 15);
+      state.hebergeMarkers.eachLayer(l => {
+        const ll = l.getLatLng();
+        if (Math.abs(ll.lat - r.h.lat) < 0.0001 && Math.abs(ll.lng - r.h.lon) < 0.0001)
+          l.openPopup();
+      });
+      return;
+    }
+
+    MapModule.centerOn(r.lat, r.lon, 14);
+    if (this._marker) state.map.removeLayer(this._marker);
+    this._marker = L.marker([r.lat, r.lon])
+      .addTo(state.map)
+      .bindPopup(r.label)
+      .openPopup();
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════════
    MODULE UI
    ══════════════════════════════════════════════════════════════ */
 const UIModule = {
@@ -1235,9 +1342,12 @@ const UIModule = {
 
     if (tabName === 'carte') {
       panel.classList.add('hidden');
+      document.getElementById('search-container').classList.remove('hidden');
       setTimeout(() => state.map.invalidateSize(), 50);
       return;
     }
+
+    document.getElementById('search-container').classList.add('hidden');
 
     panel.classList.remove('hidden');
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -1345,10 +1455,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('[GR5] MapModule OK');
   } catch (e) { console.error('[GR5] MapModule ERREUR :', e); }
 
+  // La carte est l'onglet actif au démarrage
+  document.getElementById('search-container').classList.remove('hidden');
+
   try {
     UIModule.init();
     console.log('[GR5] UIModule OK');
   } catch (e) { console.error('[GR5] UIModule ERREUR :', e); }
+
+  try {
+    SearchModule.init();
+    console.log('[GR5] SearchModule OK');
+  } catch (e) { console.error('[GR5] SearchModule ERREUR :', e); }
 
   try {
     GPSModule.start();
