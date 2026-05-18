@@ -696,6 +696,10 @@ const StagesModule = {
       group.className = 'stage-group';
       group.innerHTML = `<div class="stage-header">Stage ${stage.stage} — ${stage.name}</div>`;
 
+      if (stage.description || stage.scans?.length) {
+        group.appendChild(this._buildStageIntroCard(stage));
+      }
+
       // Group days by day number (variants share same day number)
       const byDayNum = new Map();
       stage.days.forEach(day => {
@@ -714,6 +718,39 @@ const StagesModule = {
 
       container.appendChild(group);
     });
+  },
+
+  _buildStageIntroCard(stage) {
+    const card = document.createElement('div');
+    card.className = 'stage-intro-card';
+
+    const header = document.createElement('div');
+    header.className = 'stage-intro-header';
+    header.innerHTML = `
+      <span>Présentation du stage</span>
+      <svg class="stage-intro-chevron" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+      </svg>`;
+
+    const body = document.createElement('div');
+    body.className = 'stage-intro-body hidden';
+
+    if (stage.description) {
+      const p = document.createElement('p');
+      p.className = 'stage-intro-text';
+      p.textContent = stage.description;
+      body.appendChild(p);
+    }
+
+    header.addEventListener('click', () => {
+      const open = !body.classList.contains('hidden');
+      body.classList.toggle('hidden', open);
+      card.classList.toggle('open', !open);
+    });
+
+    card.appendChild(header);
+    card.appendChild(body);
+    return card;
   },
 
   _buildDayCard(day) {

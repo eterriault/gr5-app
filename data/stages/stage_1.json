@@ -1,6 +1,7 @@
 {
   "stage": 1,
   "name": "Lac Léman to Les Houches",
+  "scans_dir": "dillon_scans/stage_1_lac_leman_to_les_houches",
   "variants": [
     {
       "id": "A",
@@ -160,7 +161,7 @@
       "time_hours": 8,
       "maps": ["3530 ET"],
       "terrain": "Marche facile en bord de rivière, puis échelles métalliques dans les Gorges des Tines. Montée en forêt vers l'alpage et hauts cols sur bons sentiers.",
-      "description": "La marche en bord de rivière mène à une montée assistée par des échelles dans les Gorges des Tines. Le sentier longe ensuite la spectaculaire Cascade du Rouget et les chutes jumelles de la Sauffaz et de la Pleureuse de la Sauffaz. La montée continue vers un agréable alpage menant au Refuge d'Anterne avec des aperçus du Mont Blanc. Certaines randonneuses s'arrêteront là ; d'autres continueront jusqu'au Refuge de Moëde Anterne par le Col d'Anterne.",
+      "description": "La marche en bord de rivière (~2h de vallée) mène à une montée assistée par des échelles dans les Gorges des Tines. Le sentier longe ensuite la spectaculaire Cascade du Rouget et les chutes jumelles de la Sauffaz et de la Pleureuse de la Sauffaz. Vient alors une longue grimpe de 1 100m de dénivelé pour gagner le plateau d'Anterne. La montée continue vers un agréable alpage menant au Refuge d'Anterne (~6h depuis Samoëns) avec des aperçus du Mont Blanc. Certaines randonneuses s'arrêteront là ; d'autres continueront jusqu'au Refuge de Moëde Anterne par le Col d'Anterne (+2h, +350m supplémentaires).",
       "food_drink": "Restaurants hors-itinéraire à Sixt-Fer-à-Cheval et Salvagny. Également à la Cascade du Rouget, à Lignon, au Refuge d'Anterne et au Refuge de Moëde Anterne.",
       "accommodation": [
         { "name": "Nombreuses options", "location": "Samoëns", "type": null, "off_route": false },
@@ -169,7 +170,7 @@
         { "name": "Refuge d'Anterne", "location": "Anterne", "type": "refuge", "off_route": false },
         { "name": "Refuge de Moëde Anterne", "location": "Moëde Anterne", "type": "refuge", "off_route": false }
       ],
-      "notes": null
+      "notes": "⚠ Le Topo Guide sous-estime la montée au Collet d'Anterne d'au moins 30 min à allure normale. Option de couper l'étape à Sixt-Fer-à-Cheval (hôtel/gîte) : nuit sur place, le lendemain ne fait plus que ~6h de marche. Possibilité de voir le Cirque du Fer-à-Cheval en taxi ou excursion depuis Sixt."
     },
     {
       "day": 6,
@@ -183,13 +184,15 @@
       "time_hours": 7,
       "maps": ["3530 ET"],
       "terrain": null,
-      "description": "L'objectif du jour est de gravir le Brévent, mais cela doit être évité si un orage est imminent ou s'il y a de la neige ou de la glace sur les pentes rocheuses et raides. Par mauvais temps, descendre dans la vallée jusqu'à Servoz, où bus et trains rejoignent Les Houches. Une fois engagée vers le Brévent, les seules options sont de continuer ou de faire demi-tour. Par beau temps, les vues sur le Mont Blanc sont sans égal — mais le sommet doit être partagé avec les touristes qui arrivent par téléphérique.",
+      "description": "L'objectif du jour est de gravir le Brévent, mais cela doit être évité si un orage est imminent ou s'il y a de la neige ou de la glace sur les pentes rocheuses et raides. Par mauvais temps, descendre dans la vallée jusqu'à Servoz, où bus et trains rejoignent Les Houches. Une fois engagée vers le Brévent, les seules options sont de continuer ou de faire demi-tour. Par beau temps, les vues sur le Mont Blanc sont sans égal — mais le sommet doit être partagé avec les touristes qui arrivent par téléphérique. Au Refuge de Bellachat, une bifurcation s'offre : à gauche pour descendre sur Chamonix (hors GR5, 2h30–3h), à droite pour rester sur le GR5 et descendre sur Les Houches (2h30–3h). Dans les deux cas, la vallée de Chamonix mérite une visite.",
       "food_drink": null,
       "accommodation": [
         { "name": "Refuge de Moëde Anterne", "location": "Moëde Anterne", "type": "refuge", "off_route": false },
+        { "name": "Refuge de Bellachat", "location": "Bellachat", "type": "refuge", "off_route": false },
+        { "name": "Nombreuses options", "location": "Chamonix", "type": null, "off_route": true },
         { "name": "Nombreuses options", "location": "Les Houches", "type": null, "off_route": false }
       ],
-      "notes": null
+      "notes": "Au Refuge de Bellachat, bifurcation clé : gauche → Chamonix (hors GR5) ; droite → Les Houches (GR5). Même si tu descends sur Les Houches, prends le bus ou le train pour Chamonix le même après-midi ou le lendemain — la vallée vaut le détour (téléphérique de l'Aiguille du Midi, Vallée Blanche)."
     }
   ]
 }

@@ -711,6 +711,47 @@ html, body {
   padding: 0 2px 8px;
 }
 
+.stage-intro-card {
+  background: var(--surface-2);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.stage-intro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-surface-dim);
+  user-select: none;
+}
+
+.stage-intro-chevron {
+  transition: transform 0.2s;
+  opacity: 0.6;
+}
+
+.stage-intro-card.open .stage-intro-chevron { transform: rotate(90deg); }
+
+.stage-intro-body {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border);
+}
+
+.stage-intro-body.hidden { display: none; }
+
+.stage-intro-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--on-surface);
+  margin: 12px 0;
+}
+
 .day-card {
   background: var(--surface-2);
   border-radius: 12px;
