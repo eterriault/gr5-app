@@ -17,7 +17,10 @@
     "coords_verified": true,
     "km_depuis_thonon": 35.4,
     "notes": "Géré par le CAF Léman. Accès : ~3h depuis parking Fétiuère. Dernier tronçon raide avec chaîne, glissant par temps humide. Déconseillé aux personnes sujettes au vertige. Vue exceptionnelle sur le Lac Léman et le Mont Blanc. Eau en vente sur place.",
-    "stage": 1, "day": "1B", "off_route": true, "km_hors_route": 0.7
+    "stage": 1,
+    "day": "1B",
+    "off_route": true,
+    "km_hors_route": 0.7
   },
   {
     "id": "h02",
@@ -39,13 +42,15 @@
     "coords_verified": true,
     "km_depuis_thonon": 40.2,
     "notes": "Construit en 1949. 4 dortoirs, sac de couchage obligatoire. Repas 19h (régimes sur demande). Ferme fromagère sur place. Pas de réseau mobile. Arrivée avant 18h. Déchets à remporter. Acompte 11€/pers/nuit non remboursable.",
-    "stage": 1, "day": 2, "off_route": false
+    "stage": 1,
+    "day": 2,
+    "off_route": false
   },
   {
     "id": "h11",
     "nom": "Hôtel les Chemins du Léman",
     "type": "hotel",
-    "lat": 46.37000,
+    "lat": 46.37,
     "lon": 6.78914,
     "altitude": null,
     "telephone": "04 50 72 10 77",
@@ -58,7 +63,9 @@
     "km_depuis_thonon": 37.7,
     "km_hors_route": 3.3,
     "notes": "Novel. 12 places en dortoir + 12 chambres (1/2/4 pers). Restaurant sur réservation (veille). Check-in dès 16h, check-out 10h30. Dortoir interdit après 22h. Annulation gratuite jusqu'à J-14. Francs suisses acceptés.",
-    "stage": 1, "day": "1B", "off_route": true
+    "stage": 1,
+    "day": "1B",
+    "off_route": true
   },
   {
     "id": "h12",
@@ -74,7 +81,9 @@
     "coords_verified": false,
     "km_depuis_thonon": 67.3,
     "notes": "Les Crosets, Suisse. ⚠ Rénovations en cours (statut incertain) — ouvert printemps selon commune, à confirmer avant. 40 places en dortoir.",
-    "stage": 1, "day": 4, "off_route": false
+    "stage": 1,
+    "day": 4,
+    "off_route": false
   },
   {
     "id": "h13",
@@ -90,7 +99,9 @@
     "coords_verified": true,
     "km_depuis_thonon": 70.6,
     "notes": "Champéry, Suisse. Ferme d'alpage : fondue, assiette Lapisa, fromages au feu de bois en été, sérac. Dortoirs (2, 3 et 8 places).",
-    "stage": 1, "day": 4, "off_route": false
+    "stage": 1,
+    "day": 4,
+    "off_route": false
   },
   {
     "id": "h14",
@@ -109,7 +120,9 @@
     "km_depuis_thonon": 76.0,
     "km_hors_route": 1.2,
     "notes": "Morzine. 5 chambres doubles uniquement (pas de dortoir). Pêche sur place. ~20 min de détour depuis le GR5 (Bonnevalette).",
-    "stage": 1, "day": 4, "off_route": true
+    "stage": 1,
+    "day": 4,
+    "off_route": true
   },
   {
     "id": "h15",
@@ -127,7 +140,9 @@
     "km_depuis_thonon": 77.1,
     "km_hors_route": 0.3,
     "notes": "2 dortoirs. Nuit seule 20€, repas du soir 25€.",
-    "stage": 1, "day": 4, "off_route": true
+    "stage": 1,
+    "day": 4,
+    "off_route": true
   },
   {
     "id": "h16",
@@ -148,14 +163,16 @@
     "coords_verified": true,
     "km_depuis_thonon": 79.4,
     "notes": "Col de la Golèse. Dortoirs et chambres privées (+12€/pers). Spécialités savoyardes.",
-    "stage": 1, "day": 4, "off_route": false
+    "stage": 1,
+    "day": 4,
+    "off_route": false
   },
   {
     "id": "h17",
     "nom": "Refuge de Bostan",
     "type": "refuge",
     "lat": 46.12343,
-    "lon": 6.77920,
+    "lon": 6.7792,
     "altitude": 1770,
     "telephone": "07 63 44 79 16",
     "email": "lerefugedebostan@gmail.com",
@@ -169,14 +186,16 @@
     "km_depuis_thonon": 79.0,
     "km_hors_route": 1.5,
     "notes": "Au-dessus de Samoëns (Les Allamands). Nuit seule 17€. Accès depuis parking Les Allamands (~1h45).",
-    "stage": 1, "day": 4, "off_route": true
+    "stage": 1,
+    "day": 4,
+    "off_route": true
   },
   {
     "id": "h18",
     "nom": "Refuge du Folly",
     "type": "refuge",
     "lat": 46.10294,
-    "lon": 6.77220,
+    "lon": 6.7722,
     "altitude": 1560,
     "telephone": "04 50 90 10 91",
     "email": "refugedufolly@gmail.com",
@@ -190,7 +209,9 @@
     "km_depuis_thonon": 83.4,
     "km_hors_route": 2.0,
     "notes": "Haut Giffre. Nuit seule 17€. 5 chambres (2–6 pers) + 3 dortoirs (10–24 pers). ~2h depuis Samoëns.",
-    "stage": 1, "day": 4, "off_route": true
+    "stage": 1,
+    "day": 4,
+    "off_route": true
   },
   {
     "id": "h19",
@@ -208,7 +229,9 @@
     "coords_verified": false,
     "km_depuis_thonon": 88.8,
     "notes": "710 route des Moulins, Samoëns. 4 chambres, cuisine professionnelle. 800m du centre village.",
-    "stage": 1, "day": 4, "off_route": false
+    "stage": 1,
+    "day": 4,
+    "off_route": false
   },
   {
     "id": "h03",
@@ -220,7 +243,9 @@
     "coords_verified": false,
     "km_depuis_thonon": 54.7,
     "notes": "Alpage non gardé sur le GR5. Eau disponible (bétail). Spot de bivouac informel. Coordonnées approximatives.",
-    "stage": 1, "day": 3, "off_route": false
+    "stage": 1,
+    "day": 3,
+    "off_route": false
   },
   {
     "id": "h04",
@@ -241,7 +266,9 @@
     "km_depuis_thonon": 53.0,
     "km_hors_route": 0.7,
     "notes": "Géré par Norbert et Marie-Pierre Thoule. Ferme agropastorale sur place. Zone Natura 2000 Mont de Grange. Douches eau chaude 3€. Pique-nique possible (9€). Acompte 9€/pers à la réservation.",
-    "stage": 1, "day": 3, "off_route": true
+    "stage": 1,
+    "day": 3,
+    "off_route": true
   },
   {
     "id": "h05",
@@ -261,7 +288,9 @@
     "km_depuis_thonon": 42.0,
     "km_hors_route": 3.0,
     "notes": "Géré par les Amis de la Nature. Cuisine équipée (bois + gaz), matelas et couvertures fournis, sac de couchage obligatoire. Réservation obligatoire (mairie Vacheresse). Hors-gardiennage possible via Isabelle Tagand (04 50 73 14 18), caution 100€. Pas de bougies.",
-    "stage": 1, "day": 2, "off_route": true
+    "stage": 1,
+    "day": 2,
+    "off_route": true
   },
   {
     "id": "h06",
@@ -278,7 +307,9 @@
     "coords_verified": true,
     "km_depuis_thonon": 64.9,
     "notes": "En Suisse. Refuge très basique. Eau gratuite en accès libre. Boissons et repas légers disponibles. Contact hors saison : +41 24 481 34 91.",
-    "stage": 1, "day": 3, "off_route": false
+    "stage": 1,
+    "day": 3,
+    "off_route": false
   },
   {
     "id": "h08",
@@ -296,14 +327,16 @@
     "coords_verified": true,
     "km_depuis_thonon": 45.8,
     "notes": "17 route des Moulins, La Chapelle-d'Abondance. 5 chambres. Repas sur réservation, pas de cuisine à disposition.",
-    "stage": 1, "day": 2, "off_route": false
+    "stage": 1,
+    "day": 2,
+    "off_route": false
   },
   {
     "id": "h09",
     "nom": "1861 Châtel Hostel",
     "type": "gite",
     "lat": 46.25059,
-    "lon": 6.81070,
+    "lon": 6.8107,
     "altitude": 1200,
     "telephone": "04 50 81 05 03",
     "email": "resa@1861chatelhostel.com",
@@ -315,7 +348,9 @@
     "km_depuis_thonon": 53.7,
     "km_hors_route": 1.4,
     "notes": "Dortoirs : 14 lits dès 18€, 6 lits dès 20€, 4 lits dès 25€. Chambre double/twin dès 47€, familiale 4 pers dès 90€. Petit-déjeuner disponible. Cuisine partagée, sauna, local vélos/skis. Navette depuis le centre de Châtel.",
-    "stage": 1, "day": 3, "off_route": true
+    "stage": 1,
+    "day": 3,
+    "off_route": true
   },
   {
     "id": "h10",
@@ -336,7 +371,9 @@
     "km_depuis_thonon": 59.1,
     "km_hors_route": 1.8,
     "notes": "3 bâtiments, 55 places. Tarif demi-pension hiver 70€ (été à confirmer). Accès depuis le parking du Lac des Plagnes (~1h à pied).",
-    "stage": 1, "day": 3, "off_route": true
+    "stage": 1,
+    "day": 3,
+    "off_route": true
   },
   {
     "id": "h07",
@@ -357,7 +394,9 @@
     "km_depuis_thonon": 62.9,
     "km_hors_route": 0.6,
     "notes": "Réservation obligatoire. Literie fournie (drap + couverture). Taxe de séjour 0.80€/pers/nuit. Supplément raclette ou pierrade 7€/pers. Arrhes 20% à la réservation. Route D228 fermée 10h-17h en juillet.",
-    "stage": 1, "day": 3, "off_route": true
+    "stage": 1,
+    "day": 3,
+    "off_route": true
   },
   {
     "id": "h21",
@@ -378,7 +417,9 @@
     "km_depuis_thonon": 94.7,
     "km_hors_route": 0.4,
     "notes": "Sixt-Fer-à-Cheval. 49 places en chambres 2–4 pers.",
-    "stage": 1, "day": 5, "off_route": false
+    "stage": 1,
+    "day": 5,
+    "off_route": false
   },
   {
     "id": "h22",
@@ -398,7 +439,9 @@
     "km_depuis_thonon": 97.7,
     "km_hors_route": 1.9,
     "notes": "Bivouac 40€ avec repas du soir + petit-déjeuner. Tente bulle (2 pers) 160€. Douche 3.50€. Draps 4€. Réservation téléphonique si <48h.",
-    "stage": 1, "day": 5, "off_route": true
+    "stage": 1,
+    "day": 5,
+    "off_route": true
   },
   {
     "id": "h23",
@@ -413,14 +456,16 @@
     "km_depuis_thonon": 100.1,
     "km_hors_route": 2.8,
     "notes": "Bivouac autorisé. ⚠ Prix 2026 pas encore publiés (site inaccessible à la collecte). À vérifier avant départ.",
-    "stage": 1, "day": 5, "off_route": true
+    "stage": 1,
+    "day": 5,
+    "off_route": true
   },
   {
     "id": "h24",
     "nom": "Refuge des Fonts",
     "type": "refuge",
     "lat": 46.021166,
-    "lon": 6.810890,
+    "lon": 6.81089,
     "altitude": null,
     "telephone": "04 50 34 12 41",
     "email": "refugedesfonts@gmail.com",
@@ -432,7 +477,9 @@
     "km_depuis_thonon": 105.2,
     "km_hors_route": 2.4,
     "notes": "Dortoirs 3–7 pers + chambre 2 pers (130€ demi-pension). Pique-nique 15€. Douche 3€. Panneaux solaires.",
-    "stage": 1, "day": 5, "off_route": true
+    "stage": 1,
+    "day": 5,
+    "off_route": true
   },
   {
     "id": "h25",
@@ -450,7 +497,9 @@
     "coords_verified": true,
     "km_depuis_thonon": 104.3,
     "notes": "Sixt-Passy. Bivouac gratuit (5€ suggéré). Couettes/oreillers fournis (pas de sac de couchage). Douche 4€. Arrivée avant 17h30, repas 19h. Chiens interdits. Pas de recharge téléphone.",
-    "stage": 1, "day": 5, "off_route": false
+    "stage": 1,
+    "day": 5,
+    "off_route": false
   },
   {
     "id": "h26",
@@ -468,7 +517,9 @@
     "km_depuis_thonon": 100.6,
     "km_hors_route": 2.6,
     "notes": "Cash/chèques uniquement (pas de CB). Repas midi sur réservation. En saison : contact téléphonique uniquement.",
-    "stage": 1, "day": 5, "off_route": true
+    "stage": 1,
+    "day": 5,
+    "off_route": true
   },
   {
     "id": "h28",
@@ -494,7 +545,7 @@
     "id": "h29",
     "nom": "Camping Le Giffre",
     "type": "camping",
-    "lat": 46.0770,
+    "lat": 46.077,
     "lon": 6.7186,
     "altitude": 654,
     "telephone": "04 50 34 41 92",
@@ -503,7 +554,9 @@
     "km_depuis_thonon": 89.5,
     "km_hors_route": 0.5,
     "notes": "1064 Route du Lac aux Dames, Samoëns. En bord de Giffre, ~700m du centre village. À ~500m du GR5 sur la route vers Sixt.",
-    "stage": 1, "day": 4, "off_route": false
+    "stage": 1,
+    "day": 4,
+    "off_route": false
   },
   {
     "id": "h30",
@@ -518,7 +571,9 @@
     "coords_verified": true,
     "km_depuis_thonon": 92.0,
     "notes": "184 route du Pelly, Cirque du Fer à Cheval. Directement sur le GR5 avant la montée vers l'Anterne. Référencé sur le-gr5.com. Emplacement 2 pers ~12€/j.",
-    "stage": 1, "day": 5, "off_route": false
+    "stage": 1,
+    "day": 5,
+    "off_route": false
   },
   {
     "id": "h31",
@@ -534,7 +589,9 @@
     "km_depuis_thonon": 88.5,
     "km_hors_route": 3.0,
     "notes": "69 route des Hottes, Verchaix. ~3 km au nord-ouest de Samoëns, hors du GR5 principal.",
-    "stage": 1, "day": 4, "off_route": true
+    "stage": 1,
+    "day": 4,
+    "off_route": true
   },
   {
     "id": "h32",
@@ -552,7 +609,9 @@
     "coords_verified": true,
     "km_depuis_thonon": 121.5,
     "notes": "Sur le GR5 entre le Brévent et Les Houches (descente).",
-    "stage": 1, "day": 6, "off_route": false
+    "stage": 1,
+    "day": 6,
+    "off_route": false
   },
   {
     "id": "h33",
@@ -571,14 +630,16 @@
     "coords_verified": true,
     "km_depuis_thonon": 129.0,
     "notes": "1474 Montée de Coupeau, Les Houches. À 1120m, au-dessus du village, côté ensoleillé.",
-    "stage": 1, "day": 6, "off_route": false
+    "stage": 1,
+    "day": 6,
+    "off_route": false
   },
   {
     "id": "h34",
     "nom": "Gîte Michel Fagot",
     "type": "gite",
-    "lat": 45.8880,
-    "lon": 6.8000,
+    "lat": 45.888,
+    "lon": 6.8,
     "altitude": 1000,
     "telephone": "04 50 54 42 28",
     "telephone_resa": "06 75 31 27 41",
@@ -590,13 +651,15 @@
     "coords_verified": false,
     "km_depuis_thonon": 130.5,
     "notes": "2 Allée des Sorbiers, Les Houches. Ancien bâtiment scolaire du village. Dortoirs de 4–8 places.",
-    "stage": 1, "day": 6, "off_route": false
+    "stage": 1,
+    "day": 6,
+    "off_route": false
   },
   {
     "id": "h35",
     "nom": "Auberge de Jeunesse HI Chamonix",
     "type": "gite",
-    "lat": 45.9080,
+    "lat": 45.908,
     "lon": 6.8544,
     "altitude": null,
     "telephone": "04 50 53 14 52",
@@ -608,7 +671,9 @@
     "km_depuis_thonon": 130.5,
     "km_hors_route": 7.0,
     "notes": "127 Montée J. Balmat, Les Pélerins d'en Haut, Chamonix. Accessible par téléphérique depuis le Brévent (Plan Praz) ou bus V1 depuis Les Houches (~20 min).",
-    "stage": 1, "day": 6, "off_route": true
+    "stage": 1,
+    "day": 6,
+    "off_route": true
   },
   {
     "id": "h36",
@@ -629,7 +694,9 @@
     "km_depuis_thonon": 130.5,
     "km_hors_route": 8.0,
     "notes": "45 route de la Frasse, Chamonix. Refuge d'alpinisme historique (depuis 1929). Dortoirs de 4, 6 ou 8 lits. Accessible par téléphérique depuis le Brévent ou bus V1 depuis Les Houches.",
-    "stage": 1, "day": 6, "off_route": true
+    "stage": 1,
+    "day": 6,
+    "off_route": true
   },
   {
     "id": "h37",
@@ -647,7 +714,9 @@
     "km_depuis_thonon": 130.5,
     "km_hors_route": 7.0,
     "notes": "6 route des Moussoux, Chamonix. Budget. À 30m du téléphérique du Brévent (Plan Praz). Paiement cash/chèque uniquement. Accessible par téléphérique depuis le Brévent ou bus V1 depuis Les Houches.",
-    "stage": 1, "day": 6, "off_route": true
+    "stage": 1,
+    "day": 6,
+    "off_route": true
   },
   {
     "id": "h38",
@@ -664,7 +733,9 @@
     "km_depuis_thonon": 133.0,
     "km_hors_route": 1.0,
     "notes": "74170 St-Gervais-Mont-Blanc. Sur la crête du Prarion, ~1 km de détour depuis le Col de Voza. Vue sur le Mont Blanc.",
-    "stage": 2, "day": 7, "off_route": true
+    "stage": 2,
+    "day": 7,
+    "off_route": true
   },
   {
     "id": "h27",
@@ -684,6 +755,192 @@
     "coords_verified": true,
     "km_depuis_thonon": 109.5,
     "notes": "⚠ Tu as indiqué 'fermé le 23 juin' — le site dit 'ouvert début juin'. À vérifier. Réserve naturelle de Passy, chiens interdits. CB acceptée. Couettes/oreillers fournis.",
-    "stage": 1, "day": 5, "off_route": false
+    "stage": 1,
+    "day": 5,
+    "off_route": false
+  },
+  {
+    "id": "h39",
+    "nom": "Refuge du Fioux",
+    "type": "refuge",
+    "lat": 45.87213,
+    "lon": 6.76065,
+    "altitude": 1505,
+    "telephone": "04 50 93 52 43",
+    "email": "c.botholier@gmail.com",
+    "site_web": null,
+    "places": 22,
+    "demi_pension": true,
+    "tarif_demi_pension": 62,
+    "ouverture": "30 mai – 20 septembre",
+    "bivouac": false,
+    "coords_verified": true,
+    "km_depuis_thonon": 134.0,
+    "notes": "4409 route de Bionnassay, 74170 Saint-Gervais-les-Bains. Pas de site web. Repas soir 19h, petit-déj 6h30-7h. Tarif 2026 : 62 €/pers tout compris (nuit + repas + petit-déj + douche). Pas de cuisine hôtes.",
+    "stage": 2,
+    "day": 7,
+    "off_route": false,
+    "telephone_resa": "06 81 90 26 65"
+  },
+  {
+    "id": "h40",
+    "nom": "Gîte-auberge de Bionnassay",
+    "type": "gite",
+    "lat": 45.865315,
+    "lon": 6.75576,
+    "altitude": 1320,
+    "telephone": "04 50 93 45 23",
+    "email": "contact@auberge-bionnassay.com",
+    "site_web": "https://www.auberge-bionnassay.com",
+    "places": 45,
+    "demi_pension": true,
+    "tarif_demi_pension": 55,
+    "ouverture": "1er juin – 27 septembre (fermé le lundi en juin et septembre)",
+    "bivouac": false,
+    "coords_verified": true,
+    "km_depuis_thonon": 136.0,
+    "notes": "3084 Route de Bionnassay, 74170 Saint-Gervais-les-Bains. 5 chambres (2–6 pers) + dortoir 23 places. Tarif dortoir 55 €/pers, chambre 65 €/pers. Réservation repas par tél. uniquement.",
+    "stage": 2,
+    "day": 7,
+    "off_route": false
+  },
+  {
+    "id": "h41",
+    "nom": "La Mélusine",
+    "type": "gite",
+    "lat": 45.88016,
+    "lon": 6.70785,
+    "altitude": 900,
+    "telephone": "04 50 47 73 94",
+    "email": "info@lamelusine.com",
+    "site_web": "http://www.lamelusine.com",
+    "places": 34,
+    "demi_pension": true,
+    "tarif_demi_pension": 79,
+    "ouverture": "Toute l'année",
+    "bivouac": false,
+    "coords_verified": true,
+    "km_depuis_thonon": null,
+    "km_hors_route": 3.1,
+    "notes": "49 chemin du Creux, 74170 Saint-Gervais-les-Bains. Margaux & Vincent Stievenart. 10 chambres 2–5 pers. Pension complète 99 €. Nuit + petit-déj seul 59 €. Fonctionne surtout en séjour groupe — vérifier disponibilité randonneur solo à la nuitée.",
+    "stage": 2,
+    "day": 7,
+    "off_route": true,
+    "tarif_repas_soir": 20
+  },
+  {
+    "id": "h42",
+    "nom": "Refuge de Miage",
+    "type": "refuge",
+    "lat": 45.83914,
+    "lon": 6.75993,
+    "altitude": 1560,
+    "telephone": "04 50 93 22 91",
+    "email": "refugedemiage@orange.fr",
+    "site_web": "https://www.refugemiage.com",
+    "places": 47,
+    "demi_pension": true,
+    "tarif_demi_pension": 60,
+    "ouverture": "1er mai – 20 septembre",
+    "bivouac": true,
+    "coords_verified": true,
+    "km_depuis_thonon": null,
+    "notes": "Chalets de Miage, St-Gervais-les-Bains. Sur variante Col de Tricot (jour 7a). Dortoirs 4/8/18 pl + chambres + chalets. Bivouac toléré (gratuit, toilettes + eau potable). CB non acceptée (espèces/chèque). Tarif demi-pension variable 50–70 € selon hébergement — appeler pour confirmer.",
+    "stage": 2,
+    "day": "7a",
+    "off_route": false,
+    "telephone_resa": "06 31 72 50 19",
+    "tarif_repas_soir": 20
+  },
+  {
+    "id": "h43",
+    "nom": "Auberge du Truc",
+    "type": "refuge",
+    "lat": 45.836214,
+    "lon": 6.749489,
+    "altitude": 1750,
+    "telephone": "04 50 93 12 48",
+    "email": "aubergedutruc@hotmail.fr",
+    "site_web": null,
+    "places": 28,
+    "demi_pension": true,
+    "tarif_demi_pension": 50,
+    "ouverture": "10 juin – 17 septembre",
+    "bivouac": false,
+    "coords_verified": true,
+    "km_depuis_thonon": null,
+    "notes": "Chalets du Truc, 74170 Saint-Gervais-les-Bains. Sur variante Col de Tricot (jour 7a). Gestionnaire : Jean-Philippe Bessat. Restaurant ouvert au public le midi ; dîner réservé aux hôtes (réservation obligatoire).",
+    "stage": 2,
+    "day": "7a",
+    "off_route": false,
+    "telephone_resa": "06 79 23 64 00",
+    "tarif_repas_soir": 20
+  },
+  {
+    "id": "h44",
+    "nom": "Auberge de jeunesse Les Contamines",
+    "type": "gite",
+    "lat": 45.806988,
+    "lon": 6.724483,
+    "altitude": 1200,
+    "telephone": "04 50 47 04 30",
+    "email": "contact@lacite-lescontamines.fr",
+    "site_web": "https://www.hifrance.org/auberges-de-jeunesse/les-contamines-montjoie/",
+    "places": 88,
+    "demi_pension": null,
+    "tarif_demi_pension": null,
+    "ouverture": "Hiver : 22 déc – 10 avril ; Été : 1er juin – 31 août",
+    "bivouac": false,
+    "coords_verified": false,
+    "km_depuis_thonon": 147.0,
+    "notes": "275 route de Notre-Dame-de-la-Gorge, 74170 Les Contamines-Montjoie. Affilié HI (Hostelling International). 33 chambres (2–6 lits). Tarifs non publiés en ligne. ⚠ Saison été se termine le 31 août — fermé en septembre pour les randonneurs tardifs. Coordonnées approximatives.",
+    "stage": 2,
+    "day": 7,
+    "off_route": false
+  },
+  {
+    "id": "h45",
+    "nom": "Chalet des Contamines",
+    "type": null,
+    "lat": 45.827,
+    "lon": 6.732,
+    "altitude": 1164,
+    "telephone": "04 50 47 00 88",
+    "email": "chaletdescontamines@ffcam.fr",
+    "site_web": "https://chaletdescontamines.ffcam.fr",
+    "places": 20,
+    "demi_pension": true,
+    "tarif_demi_pension": 56,
+    "ouverture": "5 juin – 19 septembre",
+    "bivouac": false,
+    "coords_verified": false,
+    "km_depuis_thonon": 147.0,
+    "notes": "22 Route du Plan du Moulin, 74170 Les Contamines-Montjoie. Géré par CAF Saint-Étienne (FFCAM). 4 dortoirs (4/6/8/8 pl). Tarif CAF membres : 46 €/demi-pension. Nuitée seule 19,50 € (public) / 9,75 € (membre). Sacs à viande obligatoires. CB non précisée. Coordonnées GPS non trouvées.",
+    "stage": 2,
+    "day": 7,
+    "off_route": false
+  },
+  {
+    "id": "h46",
+    "nom": "Gîte les Mélèzes",
+    "type": "gite",
+    "lat": 45.812558,
+    "lon": 6.727789,
+    "altitude": 1170,
+    "telephone": "09 80 89 22 18",
+    "email": "bourdeu.eric@gmail.com",
+    "site_web": null,
+    "places": 12,
+    "demi_pension": true,
+    "tarif_demi_pension": 85,
+    "ouverture": "15 juin – 14 septembre",
+    "bivouac": false,
+    "coords_verified": true,
+    "km_depuis_thonon": 147.0,
+    "notes": "220 chemin du Cugnon, 74170 Les Contamines-Montjoie. Eric & Juliette Bourdeu. 3 chambres doubles, 1 twin, 1 dortoir 4 pl. Tarif chambre 97,50 €/pers. Apéro offert à 18h45. Pique-nique 12 €. Arrivée max 18h.",
+    "stage": 2,
+    "day": 7,
+    "off_route": false,
+    "telephone_resa": "06 95 35 10 94"
   }
 ]

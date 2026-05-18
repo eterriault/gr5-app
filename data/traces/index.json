@@ -24,6 +24,13 @@
     "variant": "commun"
   },
   {
+    "filename": "stage_7a_houches_contamines_col_tricot.gpx",
+    "name": "Étape 7a — Les Houches → Les Contamines (variante Col de Tricot)",
+    "km_approx": 19,
+    "variant": "high",
+    "stage": "7a"
+  },
+  {
     "filename": "Part 11 -  FR Les Houches to Bessans.gpx",
     "name": "Part 11 — Les Houches → Bessans",
     "km_approx": 120,

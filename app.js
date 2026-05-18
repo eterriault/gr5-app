@@ -662,7 +662,7 @@ const StagesModule = {
     const stages = [];
     for (let i = 1; i <= 6; i++) {
       try {
-        const r = await fetch(`./data/stages/stage_${i}.json`);
+        const r = await fetch(`./data/stages/stage_${i}.json`, { cache: 'no-cache' });
         if (!r.ok) continue;
         const stage = await r.json();
         stages.push(stage);
@@ -1117,7 +1117,7 @@ const DataModule = {
   },
 
   async _fetchJSON(url) {
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status} — ${url}`);
     return res.json();
   },

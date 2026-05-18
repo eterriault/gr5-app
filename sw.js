@@ -8,7 +8,7 @@
 //   Open-Meteo API                  → network-first + fallback cache
 // ─────────────────────────────────────────────────────────────
 
-const VER           = 'v2';
+const VER           = 'v3';
 const CACHE_SHELL   = `gr5-shell-${VER}`;
 const CACHE_TILES   = `gr5-tiles-${VER}`;   // tuiles carte : peut devenir volumineux
 const CACHE_DATA    = `gr5-data-${VER}`;    // JSON + GPX
