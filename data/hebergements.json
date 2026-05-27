@@ -1233,5 +1233,27 @@
     "stage": 2,
     "day": 9,
     "off_route": false
+  },
+  {
+    "id": "h60",
+    "nom": "Camping Canopé",
+    "type": "camping",
+    "lat": 45.56903390547179,
+    "lon": 6.7402634417653395,
+    "altitude": null,
+    "telephone": null,
+    "email": null,
+    "site_web": null,
+    "places": null,
+    "demi_pension": false,
+    "tarif_demi_pension": null,
+    "ouverture": null,
+    "bivouac": false,
+    "coords_verified": true,
+    "km_depuis_thonon": null,
+    "notes": null,
+    "stage": 2,
+    "day": 9,
+    "off_route": false
   }
 ]

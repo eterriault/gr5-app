@@ -1,0 +1,226 @@
+{
+  "stage": 3,
+  "name": "Landry to Modane",
+  "description": "Le Stage 3 est le plus complexe de tout le GR5 : dès le Jour 11, le chemin se divise en deux options bien distinctes, et il faut choisir avant de partir.\n\n**Jour 10** : commun aux deux variantes — montée depuis Landry jusqu'au Refuge d'Entre-le-Lac dans le Parc National de la Vanoise.\n\n**Jours 11–13 : choix de variante**\n\n- **GR5 (itinéraire principal, Jours 11–15)** : continue vers Val d'Isère, franchit le Col de l'Iseran (2770m — le point le plus élevé de tout le GR5), puis parcourt la Vanoise méridionale sur trois longues journées jusqu'à Modane. 5 jours depuis Entre-le-Lac.\n\n- **GR55 (variante Vanoise, Jours 11–13)** : bifurque à Tignes-le-Lac via Val Claret, traverse le Parc National de la Vanoise par des vallées isolées (Col de la Leisse, Col de la Vanoise, Col de Chavière), et arrive à Modane 2 jours plus tôt. 3 jours depuis Entre-le-Lac. Paysages sauvages, bouquetins, vues sur les glaciers — mais refuges peu nombreux, à réserver très longtemps à l'avance.\n\n**Jours 14–15 : GR5 uniquement** — les randonneurs ayant pris le GR55 sont déjà à Modane.\n\nModane est à 4 heures de Paris par TGV (ligne Paris–Turin–Rome).",
+  "scans_dir": "dillon_scans/stage_3_landry_to_modane",
+  "scans": ["stage3-1.jpg"],
+  "variants": [
+    {
+      "id": "gr5",
+      "name": "GR5 — Col de l'Iseran (itinéraire principal)",
+      "description": "Itinéraire principal par Val d'Isère et le Col de l'Iseran (2770m), point culminant du GR5. Route majestueuse mais longue journée depuis Val d'Isère.",
+      "days": [11, 12, 13, 14, 15]
+    },
+    {
+      "id": "gr55",
+      "name": "GR55 — Variante Vanoise (haute route)",
+      "description": "Variante haute par le Parc National de la Vanoise. Bifurque à Tignes-le-Lac via Val Claret. 2 jours plus courte que le GR5. Paysages isolés, vues sur les glaciers, bouquetins et marmottes. Refuges à réserver bien à l'avance.",
+      "days": [11, 12, 13]
+    }
+  ],
+  "days": [
+    {
+      "day": 10,
+      "from": "Landry",
+      "from_coords": [45.56713, 6.71484],
+      "to": "Refuge d'Entre-le-Lac",
+      "to_coords": [45.488, 6.893],
+      "distance_km": 17,
+      "ascent_m": 1750,
+      "descent_m": 315,
+      "time_hours": 6,
+      "maps": ["3532 ET"],
+      "terrain": "Bons chemins et pistes depuis Landry. Sentiers pouvant être raides et accidentés sur les hauteurs, ou presque plats et faciles par endroits.",
+      "description": "Le GR5 depuis Landry montait autrefois par Montchavin, mais il a été dévié ces dernières années par Landry et Peisey. Certains randonneurs prennent le temps d'explorer les villages et séjournent au Chalet-Refuge de Rosuel. Les plus vaillants peuvent pousser jusqu'au Refuge du Col du Palet (Jour 11). Entre les deux, un court détour mène au Refuge d'Entre-le-Lac.",
+      "food_drink": "Restaurants à Peisey, Nancroix, Pont Baudin, Les Lanches (Luvette), Chalet-Refuge de Rosuel et Refuge d'Entre-le-Lac. Campings près de Pont Baudin, Chalet-Refuge de Rosuel et Refuge d'Entre-le-Lac.",
+      "accommodation": [
+        { "name": "Hôtels et chambres d'hôte", "location": "Peisey", "type": "hotel", "off_route": false },
+        { "name": "Gîte et camping", "location": "Pont Baudin", "type": "gite", "off_route": false },
+        { "name": "Chalet-Refuge de Rosuel", "location": "Rosuel", "type": "refuge", "off_route": false },
+        { "name": "Refuge d'Entre-le-Lac", "location": "Entre-le-Lac", "type": "refuge", "off_route": false }
+      ],
+      "notes": null
+    },
+    {
+      "day": 11,
+      "variant": "gr5",
+      "from": "Refuge d'Entre-le-Lac",
+      "from_coords": [45.488, 6.893],
+      "to": "Val d'Isère",
+      "to_coords": [45.448, 6.980],
+      "distance_km": 19,
+      "ascent_m": 1220,
+      "descent_m": 875,
+      "time_hours": 5.25,
+      "maps": ["3532 ET", "3633 ET"],
+      "terrain": "Montées et descentes doucement graduées avec quelques passages courts et raides. Bons sentiers de montagne, forêt vers la fin.",
+      "description": "On profite du Col du Palet, puis on traverse rapidement le développement ski surdimensionné de Tignes-le-Lac. Bien que tous les services y soient disponibles, la plupart des randonneurs préfèrent laisser la ville derrière eux. Le GR5 franchit ensuite un col intermédiaire facile, offrant une dernière chance de voir le Mont Blanc qui s'éloigne, puis descend sur Val d'Isère. Cette station évite les pires excès de Tignes, mais continue de s'étendre.",
+      "food_drink": "Refuge du Col du Palet. Hôtels à Tignes-le-Lac. Restaurants et hôtels à Val d'Isère.",
+      "accommodation": [
+        { "name": "Refuge du Col du Palet", "location": "Col du Palet", "type": "refuge", "off_route": false },
+        { "name": "Hôtels", "location": "Tignes-le-Lac", "type": "hotel", "off_route": false },
+        { "name": "Hôtels et camping", "location": "Val d'Isère", "type": "hotel", "off_route": false }
+      ],
+      "notes": null
+    },
+    {
+      "day": 11,
+      "variant": "gr55",
+      "from": "Refuge d'Entre-le-Lac",
+      "from_coords": [45.488, 6.893],
+      "to": "Refuge d'Entre Deux Eaux",
+      "to_coords": [45.370, 6.928],
+      "distance_km": 27,
+      "ascent_m": 1205,
+      "descent_m": 1240,
+      "time_hours": 8.5,
+      "maps": ["3532 ET", "3633 ET"],
+      "terrain": "Sentiers assez faciles sur les cols élevés, sauf s'ils sont enneigés, auquel cas l'orientation peut être délicate.",
+      "description": "Cette variante à travers la Vanoise quitte le GR5 le Jour 11 à Tignes-le-Lac, via Val Claret. La majeure partie de la journée se déroule dans le Parc National de la Vanoise — l'exception étant Val Claret, dont l'intrusion urbaine est distrayante, mais où l'on peut faire le plein de vivres. Les paysages sont magnifiques depuis le Col de la Leisse et dans le Vallon de la Leisse, mais à cette altitude la neige persiste jusqu'en été. Restez à l'affût des bouquetins, chamois, marmottes et aigles royaux.",
+      "food_drink": "Refuge du Col du Palet. Nombreuses options à Val Claret. Refuge de la Leisse. Refuge d'Entre Deux Eaux.",
+      "accommodation": [
+        { "name": "Refuge du Col du Palet", "location": "Col du Palet", "type": "refuge", "off_route": false },
+        { "name": "Hôtels", "location": "Val Claret", "type": "hotel", "off_route": false },
+        { "name": "Refuge de la Leisse", "location": "Vallon de la Leisse", "type": "refuge", "off_route": false },
+        { "name": "Refuge d'Entre Deux Eaux", "location": "Entre Deux Eaux", "type": "refuge", "off_route": false }
+      ],
+      "notes": null
+    },
+    {
+      "day": 12,
+      "variant": "gr55",
+      "gpx_file": "grr55-en-vanoise-de-tignes-a-modane.gpx",
+      "from": "Refuge d'Entre Deux Eaux",
+      "from_coords": [45.375, 6.875],
+      "to": "Pralognan-la-Vanoise",
+      "to_coords": [45.385, 6.727],
+      "distance_km": null,
+      "ascent_m": null,
+      "descent_m": null,
+      "time_hours": null,
+      "maps": ["3633 ET", "3534 OT"],
+      "terrain": "Col de la Vanoise (~2517m) puis descente sur Pralognan. Sentiers de haute montagne.",
+      "description": "⚠ Données à compléter — scan Dillon manquant. Le GR55 franchit le Col de la Vanoise depuis le Vallon de la Leisse, puis descend sur Pralognan-la-Vanoise, point de ravitaillement du Parc National de la Vanoise.",
+      "food_drink": "Refuge de la Leisse. Options à Pralognan-la-Vanoise.",
+      "accommodation": [
+        { "name": "Hôtels et gîtes", "location": "Pralognan-la-Vanoise", "type": "hotel", "off_route": false }
+      ],
+      "notes": "⚠ Scan Dillon manquant — distances, D+ et hébergements intermédiaires à compléter."
+    },
+    {
+      "day": 13,
+      "variant": "gr55",
+      "gpx_file": "grr55-en-vanoise-de-tignes-a-modane.gpx",
+      "from": "Pralognan-la-Vanoise",
+      "from_coords": [45.385, 6.727],
+      "to": "Modane",
+      "to_coords": [45.199, 6.661],
+      "distance_km": null,
+      "ascent_m": null,
+      "descent_m": null,
+      "time_hours": null,
+      "maps": ["3534 OT"],
+      "terrain": "Col de Chavière (~2796m) — col le plus élevé du GR55. Descente finale sur Modane.",
+      "description": "⚠ Données à compléter — scan Dillon manquant. Le GR55 franchit le Col de Chavière, le point culminant du GR55, avant une longue descente sur Modane via les hameaux de Polset et de Fourneaux.",
+      "food_drink": "Refuge de Péclet-Polset. Hôtels et camping à Fourneaux / Modane.",
+      "accommodation": [
+        { "name": "Refuge de Péclet-Polset", "location": "Polset", "type": "refuge", "off_route": false },
+        { "name": "Hôtels et camping", "location": "Fourneaux / Modane", "type": "hotel", "off_route": false }
+      ],
+      "notes": "⚠ Scan Dillon manquant — distances, D+ et hébergements intermédiaires à compléter. Gare SNCF de Modane : Paris en ~4h par TGV."
+    },
+    {
+      "day": 12,
+      "variant": "gr5",
+      "from": "Val d'Isère",
+      "from_coords": [45.448, 6.980],
+      "to": "Bessans",
+      "to_coords": [45.321, 6.992],
+      "distance_km": 25,
+      "ascent_m": 1360,
+      "descent_m": 1300,
+      "time_hours": 7.5,
+      "maps": ["3633 ET"],
+      "terrain": "Montée raide vers le Col de l'Iseran. Descente raide et rocailleuse vers un sentier balcon, puis piste jusqu'à la vallée.",
+      "description": "La route sur le Col de l'Iseran a été construite en 1937 et est l'une des plus élevées de France. L'ancienne route survivant comme sentier, le GR5 la suit. Le Col de l'Iseran (2770m) est le point le plus élevé atteint sur l'ensemble du GR5, et la route est souvent très fréquentée. La descente peut inclure un détour par Bonneval-sur-Arc (liaison avec la variante GR5E basse), mais l'itinéraire principal rejoint Bessans par un beau sentier balcon.",
+      "food_drink": "Restaurant au Col de l'Iseran. Nombreuses options hors-itinéraire à Bonneval-sur-Arc et à Bessans. Possible alpage et refuge hors-itinéraire au Villaron. Hôtels et gîte à Bessans.",
+      "accommodation": [
+        { "name": "Hôtels et refuges", "location": "Bonneval-sur-Arc", "type": "hotel", "off_route": true },
+        { "name": "Alpage et refuge", "location": "Le Villaron", "type": "refuge", "off_route": true },
+        { "name": "Hôtels et gîte", "location": "Bessans", "type": "hotel", "off_route": false }
+      ],
+      "notes": "⚠ Le Col de l'Iseran peut être enneigé et très fréquenté en été. Variante possible : quitter le GR5 à La Lenta, descendre sur Bonneval-sur-Arc (1808m, 1h), puis longer le GR5E jusqu'à Bessans le lendemain."
+    },
+    {
+      "day": 13,
+      "variant": "gr5",
+      "from": "Bessans",
+      "from_coords": [45.321, 6.992],
+      "to": "Refuge du Plan du Lac",
+      "to_coords": [45.302, 6.872],
+      "distance_km": 30,
+      "ascent_m": 1430,
+      "descent_m": 775,
+      "time_hours": 9.25,
+      "maps": ["3633 ET"],
+      "terrain": "Quelques montées raides, mais surtout pentes douces sur un sentier balcon dominant la vallée.",
+      "description": "Après une facile promenade le long de l'Arc, le GR5 remonte dans les montagnes. Un splendide sentier balcon longe la limite du Parc National de la Vanoise du Refuge de Vallonbrun au Refuge du Cuchet. De belles vues sur les sommets de la frontière franco-italienne, avec un aperçu sur le Col du Mont Cenis. L'itinéraire commence une longue traversée autour de la gorge profonde et rocailleuse du Doron, pénétrant au cœur de la Vanoise.",
+      "food_drink": "Refuge de Vallonbrun et Refuge du Plan du Lac.",
+      "accommodation": [
+        { "name": "Refuge de Vallonbrun", "location": "Vallonbrun", "type": "refuge", "off_route": false },
+        { "name": "Refuge du Cuchet", "location": "Cuchet", "type": "refuge", "off_route": false },
+        { "name": "Refuge du Plan du Lac", "location": "Plan du Lac", "type": "refuge", "off_route": false }
+      ],
+      "notes": "Le Refuge du Cuchet est non gardé."
+    },
+    {
+      "day": 14,
+      "variant": "gr5",
+      "from": "Refuge du Plan du Lac",
+      "from_coords": [45.302, 6.872],
+      "to": "Le Montana",
+      "to_coords": [45.269, 6.917],
+      "distance_km": 31,
+      "ascent_m": 1305,
+      "descent_m": 1520,
+      "time_hours": 10,
+      "maps": ["3633 ET", "3534 OT"],
+      "terrain": "Traversée d'une vallée profonde, puis succession de montées et descentes sur pentes rocailleuses élevées. Plus facile ensuite sur le sentier balcon.",
+      "description": "Longue et difficile journée. Ceux qui la trouvent trop exigeante peuvent s'arrêter au Refuge de l'Arpont et la diviser en deux étapes. On aperçoit souvent des glaciers pendant la journée, et le milieu du parcours est étonnamment élevé. Les premières pentes au-dessus du Doron peuvent être raides et pierreuses, mais elles deviennent bien plus faciles sur le sentier balcon dominant la vallée de l'Arc.",
+      "food_drink": "Hors-itinéraire à Entre Deux Eaux. Refuge de l'Arpont et Le Montana — attention au long tronçon sans ravitaillement entre les deux.",
+      "accommodation": [
+        { "name": "Refuge d'Entre Deux Eaux", "location": "Entre Deux Eaux", "type": "refuge", "off_route": true },
+        { "name": "Gîte d'alpage", "location": "Entre Deux Eaux", "type": "gite", "off_route": true },
+        { "name": "Refuge de l'Arpont", "location": "L'Arpont", "type": "refuge", "off_route": false },
+        { "name": "Refuge de Plan Sec", "location": "Le Montana", "type": "refuge", "off_route": false },
+        { "name": "Le Montana", "location": "Le Montana", "type": "gite", "off_route": false }
+      ],
+      "notes": "Long tronçon sans nourriture entre le Refuge de l'Arpont et Le Montana. Envisager de couper la journée en deux avec une nuit au Refuge de l'Arpont."
+    },
+    {
+      "day": 15,
+      "variant": "gr5",
+      "from": "Le Montana",
+      "from_coords": [45.269, 6.917],
+      "to": "Modane",
+      "to_coords": [45.199, 6.661],
+      "distance_km": 21,
+      "ascent_m": 625,
+      "descent_m": 1675,
+      "time_hours": 7,
+      "maps": ["3534 OT"],
+      "terrain": "Bons chemins puis sentiers accidentés sur pentes élevées et rugueuses. Longue descente forestière difficile avant route en ville.",
+      "description": "Le GR5 descend enfin du Parc National de la Vanoise vers Modane. D'abord un circuit autour d'une vallée latérale contenant deux réservoirs hydroélectriques, puis un beau sentier balcon offre une vue plongeante sur Modane. Une longue descente forestière tortueuse et difficile précède l'arrivée en ville. Peu de randonneurs ont un mot aimable pour Modane — ce n'est pas une destination touristique — mais elle dispose de tous les services nécessaires et d'une gare SNCF à 4 heures de Paris par TGV.",
+      "food_drink": "Refuge de Plan Sec, Refuge de la Fournache, Refuge de l'Aiguille Doran, Refuge de l'Orgère et Chalet d'Alpage de Polset — tous légèrement hors-itinéraire. Hôtels et camping à Fourneaux, près de Modane.",
+      "accommodation": [
+        { "name": "Refuge de Plan Sec", "location": "Plan Sec", "type": "refuge", "off_route": true },
+        { "name": "Refuge de la Fournache", "location": "La Fournache", "type": "refuge", "off_route": true },
+        { "name": "Refuge de l'Aiguille Doran", "location": "Aiguille Doran", "type": "refuge", "off_route": true },
+        { "name": "Refuge de l'Orgère", "location": "L'Orgère", "type": "refuge", "off_route": true },
+        { "name": "Chalet d'Alpage de Polset", "location": "Polset", "type": "refuge", "off_route": true },
+        { "name": "Hôtels et camping", "location": "Fourneaux / Modane", "type": "hotel", "off_route": false }
+      ],
+      "notes": "Gare SNCF de Modane : Paris en ~4h par TGV (ligne Paris–Turin–Rome). La gare est à environ 2 km à l'ouest du centre-ville."
+    }
+  ]
+}

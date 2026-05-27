@@ -294,6 +294,12 @@
           "off_route": false
         },
         {
+          "name": "Camping Canopé",
+          "location": "Landry",
+          "type": "camping",
+          "off_route": false
+        },
+        {
           "name": "Hôtel et camping",
           "location": "Landry",
           "type": null,

@@ -71,5 +71,11 @@
     "name": "Part 15a — GR5 St-Dalmas → Nice",
     "km_approx": 59,
     "variant": "nice"
+  },
+  {
+    "filename": "grr55-en-vanoise-de-tignes-a-modane.gpx",
+    "name": "GR55 — Tignes → Modane (variante Vanoise)",
+    "km_approx": 56,
+    "variant": "gr55"
   }
 ]
