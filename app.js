@@ -720,6 +720,17 @@ const StagesModule = {
     });
   },
 
+  _renderMarkdown(text) {
+    const bold = s => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    return text.split('\n\n').map(block => {
+      const lines = block.split('\n');
+      if (lines.every(l => l.startsWith('- '))) {
+        return `<ul>${lines.map(l => `<li>${bold(l.slice(2))}</li>`).join('')}</ul>`;
+      }
+      return `<p>${bold(lines.join('<br>'))}</p>`;
+    }).join('');
+  },
+
   _buildStageIntroCard(stage) {
     const card = document.createElement('div');
     card.className = 'stage-intro-card';
@@ -735,11 +746,24 @@ const StagesModule = {
     const body = document.createElement('div');
     body.className = 'stage-intro-body hidden';
 
+    if (stage.scans?.length && stage.scans_dir) {
+      const gallery = document.createElement('div');
+      gallery.className = 'stage-intro-gallery';
+      stage.scans.forEach(filename => {
+        const img = document.createElement('img');
+        img.src = `${stage.scans_dir}/${filename}`;
+        img.className = 'stage-intro-scan';
+        img.alt = filename;
+        gallery.appendChild(img);
+      });
+      body.appendChild(gallery);
+    }
+
     if (stage.description) {
-      const p = document.createElement('p');
-      p.className = 'stage-intro-text';
-      p.textContent = stage.description;
-      body.appendChild(p);
+      const desc = document.createElement('div');
+      desc.className = 'stage-intro-text';
+      desc.innerHTML = this._renderMarkdown(stage.description);
+      body.appendChild(desc);
     }
 
     header.addEventListener('click', () => {
@@ -790,7 +814,7 @@ const StagesModule = {
             <div class="variant-tabs">
               ${variants.map((v, i) => `
                 <button class="variant-tab${i === activeIdx ? ' active' : ''}" data-idx="${i}">
-                  ${v.variant ?? String(i + 1)}
+                  ${v.variant?.toUpperCase() ?? String(i + 1)}
                 </button>`).join('')}
             </div>
             <svg class="day-chevron" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
@@ -822,7 +846,7 @@ const StagesModule = {
 
   _openDetail(day) {
     // En-tête
-    const variantSuffix = day.variant ? ` (variante ${day.variant})` : '';
+    const variantSuffix = day.variant ? ` (${day.variant.toUpperCase()})` : '';
     document.getElementById('day-detail-title').textContent =
       `Jour ${day.day}${variantSuffix} — ${day.from} → ${day.to}`;
 
@@ -1417,8 +1441,8 @@ const UIModule = {
     document.getElementById('gpx-empty-msg')?.remove();
 
     // Trouve ou crée le groupe correspondant au variant
-    const LABELS = { commun: 'Tronc commun', menton: '→ Menton (GR52)', nice: '→ Nice (GR5)' };
-    const ORDER  = { commun: 0, nice: 1, menton: 2 };
+    const LABELS = { commun: 'Tronc commun', menton: '→ Menton (GR52)', nice: '→ Nice (GR5)', gr55: 'GR55 — Variante Vanoise', gr5e: 'GR5E — Chemin du Petit Bonheur' };
+    const ORDER  = { commun: 0, nice: 1, menton: 2, gr55: 3, gr5e: 4 };
     const variant = trace.variant ?? 'other';
     const groupId = `gpx-group-${variant}`;
 

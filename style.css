@@ -745,11 +745,41 @@ html, body {
 
 .stage-intro-body.hidden { display: none; }
 
+.stage-intro-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.stage-intro-scan {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+}
+
 .stage-intro-text {
   font-size: 13px;
   line-height: 1.6;
   color: var(--on-surface);
   margin: 12px 0;
+}
+
+.stage-intro-text p {
+  margin: 0 0 10px;
+}
+
+.stage-intro-text p:last-child {
+  margin-bottom: 0;
+}
+
+.stage-intro-text ul {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+
+.stage-intro-text li {
+  margin-bottom: 4px;
 }
 
 .day-card {

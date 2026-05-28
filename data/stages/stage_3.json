@@ -1,9 +1,11 @@
 {
   "stage": 3,
   "name": "Landry to Modane",
-  "description": "Le Stage 3 est le plus complexe de tout le GR5 : dès le Jour 11, le chemin se divise en deux options bien distinctes, et il faut choisir avant de partir.\n\n**Jour 10** : commun aux deux variantes — montée depuis Landry jusqu'au Refuge d'Entre-le-Lac dans le Parc National de la Vanoise.\n\n**Jours 11–13 : choix de variante**\n\n- **GR5 (itinéraire principal, Jours 11–15)** : continue vers Val d'Isère, franchit le Col de l'Iseran (2770m — le point le plus élevé de tout le GR5), puis parcourt la Vanoise méridionale sur trois longues journées jusqu'à Modane. 5 jours depuis Entre-le-Lac.\n\n- **GR55 (variante Vanoise, Jours 11–13)** : bifurque à Tignes-le-Lac via Val Claret, traverse le Parc National de la Vanoise par des vallées isolées (Col de la Leisse, Col de la Vanoise, Col de Chavière), et arrive à Modane 2 jours plus tôt. 3 jours depuis Entre-le-Lac. Paysages sauvages, bouquetins, vues sur les glaciers — mais refuges peu nombreux, à réserver très longtemps à l'avance.\n\n**Jours 14–15 : GR5 uniquement** — les randonneurs ayant pris le GR55 sont déjà à Modane.\n\nModane est à 4 heures de Paris par TGV (ligne Paris–Turin–Rome).",
+  "description": "Le Stage 3 est le plus complexe de tout le GR5 : dès le Jour 11, le chemin se divise en deux options bien distinctes, et il faut choisir avant de partir.\n\n**Jour 10** : commun à toutes les variantes — montée depuis Landry jusqu'au Refuge d'Entre-le-Lac dans le Parc National de la Vanoise.\n\n**Jours 11–13 : choix de variante**\n\n- **GR5 (itinéraire principal, Jours 11–15)** : continue vers Val d'Isère, franchit le Col de l'Iseran (2770m — le point le plus élevé de tout le GR5), puis parcourt la Vanoise méridionale sur trois longues journées jusqu'à Modane. 5 jours depuis Entre-le-Lac.\n\n- **GR55 (variante Vanoise, Jours 11–13)** : bifurque à Tignes-le-Lac via Val Claret, traverse le Parc National de la Vanoise par des vallées isolées (Col de la Leisse, Col de la Vanoise, Col de Chavière), et arrive à Modane 2 jours plus tôt. 3 jours depuis Entre-le-Lac. Paysages sauvages, bouquetins, vues sur les glaciers — mais refuges peu nombreux, à réserver très longtemps à l'avance.\n\n- **GR5E (variante basse Haute Maurienne, Jours 13–15)** : se rejoint depuis le GR5 à La Lenta (Jour 12) en descendant sur Bonneval-sur-Arc. Suit le Chemin du Petit Bonheur en vallée de l'Arc. Même durée que le GR5 principal. Idéale par mauvais temps ou en cas de fatigue — services dans chaque village.\n\n**Jours 14–15 : GR5 uniquement** — les randonneurs ayant pris le GR55 sont déjà à Modane.\n\nModane est à 4 heures de Paris par TGV (ligne Paris–Turin–Rome).",
   "scans_dir": "dillon_scans/stage_3_landry_to_modane",
-  "scans": ["stage3-1.jpg"],
+  "scans": [
+    "stage3_map.JPEG"
+  ],
   "variants": [
     {
       "id": "gr5",
@@ -16,6 +18,12 @@
       "name": "GR55 — Variante Vanoise (haute route)",
       "description": "Variante haute par le Parc National de la Vanoise. Bifurque à Tignes-le-Lac via Val Claret. 2 jours plus courte que le GR5. Paysages isolés, vues sur les glaciers, bouquetins et marmottes. Refuges à réserver bien à l'avance.",
       "days": [11, 12, 13]
+    },
+    {
+      "id": "gr5e",
+      "name": "GR5E — Variante basse (Haute Maurienne)",
+      "description": "Variante basse par la vallée de l'Arc (Haute Maurienne), aussi appelée Chemin du Petit Bonheur. Se rejoint depuis le GR5 à La Lenta (Jour 12) en descendant sur Bonneval-sur-Arc. Même durée totale que le GR5 principal. Idéale en cas de mauvais temps ou de fatigue — services dans chaque village.",
+      "days": [13, 14, 15]
     }
   ],
   "days": [
@@ -24,7 +32,7 @@
       "from": "Landry",
       "from_coords": [45.56713, 6.71484],
       "to": "Refuge d'Entre-le-Lac",
-      "to_coords": [45.488, 6.893],
+      "to_coords": [45.48056, 6.83871],
       "distance_km": 17,
       "ascent_m": 1750,
       "descent_m": 315,
@@ -45,7 +53,7 @@
       "day": 11,
       "variant": "gr5",
       "from": "Refuge d'Entre-le-Lac",
-      "from_coords": [45.488, 6.893],
+      "from_coords": [45.48056, 6.83871],
       "to": "Val d'Isère",
       "to_coords": [45.448, 6.980],
       "distance_km": 19,
@@ -66,10 +74,11 @@
     {
       "day": 11,
       "variant": "gr55",
+      "gpx_file": "gr55-j11-entre-le-lac-to-entre-deux-eaux.gpx",
       "from": "Refuge d'Entre-le-Lac",
-      "from_coords": [45.488, 6.893],
+      "from_coords": [45.48056, 6.83871],
       "to": "Refuge d'Entre Deux Eaux",
-      "to_coords": [45.370, 6.928],
+      "to_coords": [45.36660, 6.83921],
       "distance_km": 27,
       "ascent_m": 1205,
       "descent_m": 1240,
@@ -91,43 +100,47 @@
       "variant": "gr55",
       "gpx_file": "grr55-en-vanoise-de-tignes-a-modane.gpx",
       "from": "Refuge d'Entre Deux Eaux",
-      "from_coords": [45.375, 6.875],
-      "to": "Pralognan-la-Vanoise",
-      "to_coords": [45.385, 6.727],
-      "distance_km": null,
-      "ascent_m": null,
-      "descent_m": null,
-      "time_hours": null,
-      "maps": ["3633 ET", "3534 OT"],
-      "terrain": "Col de la Vanoise (~2517m) puis descente sur Pralognan. Sentiers de haute montagne.",
-      "description": "⚠ Données à compléter — scan Dillon manquant. Le GR55 franchit le Col de la Vanoise depuis le Vallon de la Leisse, puis descend sur Pralognan-la-Vanoise, point de ravitaillement du Parc National de la Vanoise.",
-      "food_drink": "Refuge de la Leisse. Options à Pralognan-la-Vanoise.",
+      "from_coords": [45.36660, 6.83921],
+      "to": "Refuge du Roc de la Pêche",
+      "to_coords": [45.32786, 6.69125],
+      "distance_km": 24,
+      "ascent_m": 950,
+      "descent_m": 1250,
+      "time_hours": 6.9,
+      "maps": ["3532 ET", "3633 ET"],
+      "terrain": "Montée relativement facile sur un col de haute montagne. Une descente raide est suivie d'une longue montée sur sentiers bien tracés.",
+      "description": "Le Col de la Leisse et le Col de la Vanoise sont empruntés depuis l'âge du Bronze pour traverser ces hautes montagnes. La traversée est magnifique et, pour un itinéraire de haute altitude, relativement facile, avec des refuges tout au long du parcours. La descente depuis le Col de la Vanoise offre des paysages saisissants et aboutit à la petite station de Pralognan-la-Vanoise. De bons sentiers remontent ensuite vers la montagne jusqu'au Refuge du Roc de la Pêche.",
+      "food_drink": "Refuge de la Col de la Vanoise. Nombreuses options à Pralognan. Restaurants aux Prioux et Refuge du Roc de la Pêche.",
       "accommodation": [
-        { "name": "Hôtels et gîtes", "location": "Pralognan-la-Vanoise", "type": "hotel", "off_route": false }
+        { "name": "Refuge de la Col de la Vanoise", "location": "Col de la Vanoise", "type": "refuge", "off_route": false },
+        { "name": "Hôtels et gîtes", "location": "Pralognan-la-Vanoise", "type": "hotel", "off_route": false },
+        { "name": "Refuge Le Repoju", "location": "Les Prioux", "type": "refuge", "off_route": false },
+        { "name": "Refuge du Roc de la Pêche", "location": "Roc de la Pêche", "type": "refuge", "off_route": false }
       ],
-      "notes": "⚠ Scan Dillon manquant — distances, D+ et hébergements intermédiaires à compléter."
+      "notes": null
     },
     {
       "day": 13,
       "variant": "gr55",
       "gpx_file": "grr55-en-vanoise-de-tignes-a-modane.gpx",
-      "from": "Pralognan-la-Vanoise",
-      "from_coords": [45.385, 6.727],
-      "to": "Modane",
-      "to_coords": [45.199, 6.661],
-      "distance_km": null,
-      "ascent_m": null,
-      "descent_m": null,
-      "time_hours": null,
-      "maps": ["3534 OT"],
-      "terrain": "Col de Chavière (~2796m) — col le plus élevé du GR55. Descente finale sur Modane.",
-      "description": "⚠ Données à compléter — scan Dillon manquant. Le GR55 franchit le Col de Chavière, le point culminant du GR55, avant une longue descente sur Modane via les hameaux de Polset et de Fourneaux.",
-      "food_drink": "Refuge de Péclet-Polset. Hôtels et camping à Fourneaux / Modane.",
+      "from": "Refuge du Roc de la Pêche",
+      "from_coords": [45.32786, 6.69125],
+      "to": "Modane / Fourneaux",
+      "to_coords": [45.20080, 6.68035],
+      "distance_km": 21,
+      "ascent_m": 950,
+      "descent_m": 1750,
+      "time_hours": 7,
+      "maps": ["3633 ET"],
+      "terrain": "Longue piste et sentier accidenté menant à un col élevé. La descente depuis les hauteurs vers l'alpage laisse place à la forêt puis à la marche en ville.",
+      "description": "Le Col de Chavière est le point culminant du GR55 et offre de vastes panoramas sur l'alpage, qui peut rester couvert de neige jusque tard en été. La descente graduelle vers Modane voit progressivement les flancs de montagne faire place aux alpages de Polset, avant une descente raide et sinueuse dans la forêt. Modane dispose de tous les services nécessaires et constitue un nœud de transport important dans la vallée de l'Arc.",
+      "food_drink": "Buvette à l'Alpage de Ritord. Restaurants au Refuge de Péclet-Polset et Chalet d'Alpage de Polset. Nombreuses options à Modane / Fourneaux.",
       "accommodation": [
         { "name": "Refuge de Péclet-Polset", "location": "Polset", "type": "refuge", "off_route": false },
+        { "name": "Chalet d'Alpage de Polset", "location": "Polset", "type": "refuge", "off_route": false },
         { "name": "Hôtels et camping", "location": "Fourneaux / Modane", "type": "hotel", "off_route": false }
       ],
-      "notes": "⚠ Scan Dillon manquant — distances, D+ et hébergements intermédiaires à compléter. Gare SNCF de Modane : Paris en ~4h par TGV."
+      "notes": "Le Col de Chavière (~2796m) est le col le plus élevé du GR55 — et le point le plus haut atteint dans tout le guide Dillon. Gare SNCF de Modane : Paris en ~4h par TGV (ligne Paris–Turin–Rome)."
     },
     {
       "day": 12,
@@ -149,7 +162,7 @@
         { "name": "Alpage et refuge", "location": "Le Villaron", "type": "refuge", "off_route": true },
         { "name": "Hôtels et gîte", "location": "Bessans", "type": "hotel", "off_route": false }
       ],
-      "notes": "⚠ Le Col de l'Iseran peut être enneigé et très fréquenté en été. Variante possible : quitter le GR5 à La Lenta, descendre sur Bonneval-sur-Arc (1808m, 1h), puis longer le GR5E jusqu'à Bessans le lendemain."
+      "notes": "⚠ Le Col de l'Iseran peut être enneigé et très fréquenté en été. Variante possible : quitter le GR5 à La Lenta, descendre sur Bonneval-sur-Arc (1808m, 1h), puis longer le GR5E jusqu'à Modane en 3 jours."
     },
     {
       "day": 13,
@@ -157,7 +170,7 @@
       "from": "Bessans",
       "from_coords": [45.321, 6.992],
       "to": "Refuge du Plan du Lac",
-      "to_coords": [45.302, 6.872],
+      "to_coords": [45.34601, 6.83744],
       "distance_km": 30,
       "ascent_m": 1430,
       "descent_m": 775,
@@ -174,12 +187,35 @@
       "notes": "Le Refuge du Cuchet est non gardé."
     },
     {
+      "day": 13,
+      "variant": "gr5e",
+      "gpx_file": "gr5e-bonneval-to-bramans.gpx",
+      "from": "Bonneval-sur-Arc",
+      "from_coords": [45.37447, 7.05305],
+      "to": "Lanslevillard",
+      "to_coords": [45.31031, 6.93725],
+      "distance_km": 20,
+      "ascent_m": 250,
+      "descent_m": 530,
+      "time_hours": 5,
+      "maps": ["3633 ET"],
+      "terrain": "Promenade facile en vallée sur sentiers en bord de rivière, sentiers forestiers et chemins de champs.",
+      "description": "Le GR5E quitte Bonneval-sur-Arc sur un sentier facile en bord de rivière, s'écartant de l'Arc pour traverser champs, bois et le hameau du Villaron. Après Bessans, le sentier emprunte souvent des pistes forestières, montant en altitude en passant par Chantelouve. Après une descente dans les champs, le sentier rejoint Lanslevillard et Lanslebourg. C'est une journée courte et facile qui laisse le temps d'apprécier les villages typiques de la Haute Maurienne et leurs toits de lauze.",
+      "food_drink": "Nombreuses options à Bessans et Lanslevillard.",
+      "accommodation": [
+        { "name": "Gîte", "location": "Le Villard", "type": "gite", "off_route": false },
+        { "name": "Hôtels et gîte", "location": "Bessans", "type": "hotel", "off_route": false },
+        { "name": "Hôtels et camping", "location": "Lanslevillard", "type": "hotel", "off_route": false }
+      ],
+      "notes": "Le GR5E se rejoint depuis le GR5 à La Lenta (Jour 12), en descendant sur Bonneval-sur-Arc (1808m, 1h). Aussi appelé Chemin du Petit Bonheur."
+    },
+    {
       "day": 14,
       "variant": "gr5",
       "from": "Refuge du Plan du Lac",
-      "from_coords": [45.302, 6.872],
+      "from_coords": [45.34601, 6.83744],
       "to": "Le Montana",
-      "to_coords": [45.269, 6.917],
+      "to_coords": [45.25133, 6.73278],
       "distance_km": 31,
       "ascent_m": 1305,
       "descent_m": 1520,
@@ -198,12 +234,36 @@
       "notes": "Long tronçon sans nourriture entre le Refuge de l'Arpont et Le Montana. Envisager de couper la journée en deux avec une nuit au Refuge de l'Arpont."
     },
     {
+      "day": 14,
+      "variant": "gr5e",
+      "gpx_file": "gr5e-bonneval-to-bramans.gpx",
+      "from": "Lanslevillard",
+      "from_coords": [45.31031, 6.93725],
+      "to": "Bramans",
+      "to_coords": [45.22418, 6.77559],
+      "distance_km": 17,
+      "ascent_m": 180,
+      "descent_m": 430,
+      "time_hours": 4.25,
+      "maps": ["3633 ET", "3634 OT"],
+      "terrain": "Promenade facile en vallée de village en village sur sentiers forestiers et chemins de champs.",
+      "description": "Journée facile en vallée, de village en village, en suivant le Chemin du Petit Bonheur le long de la Haute Maurienne. Le sentier traverse Lanslebourg puis longe forêts et alpages jusqu'à Termignon, avant de continuer vers Sollières-Envers et Bramans. Les villages traversés sont typiques de la région, avec leurs toits de pierre caractéristiques.",
+      "food_drink": "Nombreuses options à Lanslebourg. Hors-itinéraire à Termignon. Restaurant à Bramans.",
+      "accommodation": [
+        { "name": "Nombreuses options", "location": "Lanslebourg", "type": "hotel", "off_route": false },
+        { "name": "Options hors-itinéraire", "location": "Termignon", "type": "hotel", "off_route": true },
+        { "name": "Hôtel", "location": "Bramans", "type": "hotel", "off_route": false },
+        { "name": "Campings", "location": "Lanslebourg / Termignon / Sollières-Envers / Bramans", "type": "camping", "off_route": false }
+      ],
+      "notes": null
+    },
+    {
       "day": 15,
       "variant": "gr5",
       "from": "Le Montana",
-      "from_coords": [45.269, 6.917],
+      "from_coords": [45.25133, 6.73278],
       "to": "Modane",
-      "to_coords": [45.199, 6.661],
+      "to_coords": [45.20080, 6.68035],
       "distance_km": 21,
       "ascent_m": 625,
       "descent_m": 1675,
@@ -221,6 +281,28 @@
         { "name": "Hôtels et camping", "location": "Fourneaux / Modane", "type": "hotel", "off_route": false }
       ],
       "notes": "Gare SNCF de Modane : Paris en ~4h par TGV (ligne Paris–Turin–Rome). La gare est à environ 2 km à l'ouest du centre-ville."
+    },
+    {
+      "day": 15,
+      "variant": "gr5e",
+      "gpx_file": "chemin-du-petit-bonheur-ecot-modane-16823002.gpx",
+      "from": "Bramans",
+      "from_coords": [45.22418, 6.77559],
+      "to": "Modane / Fourneaux",
+      "to_coords": [45.20080, 6.68035],
+
+      "distance_km": 13,
+      "ascent_m": 350,
+      "descent_m": 500,
+      "time_hours": 3.25,
+      "maps": ["3534 OT"],
+      "terrain": "Chemins et pistes faciles à travers champs et forêt, terminant par une descente raide sur sentier forestier, puis marche en ville.",
+      "description": "Courte étape finale pouvant s'effectuer en matinée, laissant l'après-midi libre pour rejoindre le GR5 vers Valfréjus (Stage 4, Jour 16). Depuis Bramans, la montée dans la forêt offre des aperçus du Fort Victor-Emmanuel. Plus proche et facile d'accès, la Redoute Marie-Thérèse vaut le détour. Le GR5E monte jusqu'au domaine de La Norma avant de descendre sur Modane. Modane peut être évitée ou visitée pour ses nombreux services.",
+      "food_drink": "Restaurant au Fort Marie-Thérèse. Nombreuses options à La Norma et Modane.",
+      "accommodation": [
+        { "name": "Hôtels et camping", "location": "Fourneaux / Modane", "type": "hotel", "off_route": false }
+      ],
+      "notes": "Gare SNCF de Modane : Paris en ~4h par TGV (ligne Paris–Turin–Rome). Cette courte journée permet de rejoindre le Stage 4 (Jour 16 vers Valfréjus) dans l'après-midi."
     }
   ]
 }

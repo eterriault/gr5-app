@@ -77,5 +77,26 @@
     "name": "GR55 — Tignes → Modane (variante Vanoise)",
     "km_approx": 56,
     "variant": "gr55"
+  },
+  {
+    "filename": "gr55-j11-entre-le-lac-to-entre-deux-eaux.gpx",
+    "name": "GR55 J11 — Refuge d'Entre-le-Lac → Refuge d'Entre Deux Eaux",
+    "km_approx": 25,
+    "variant": "gr55"
+  },
+  {
+    "filename": "le-chemin-du-petit-bonheur.gpx",
+    "name": "GR5E — Chemin du Petit Bonheur (Bonneval-sur-Arc → Modane)",
+    "variant": "gr5e"
+  },
+  {
+    "filename": "chemin-du-petit-bonheur-ecot-modane-16823002.gpx",
+    "name": "GR5E — Chemin du Petit Bonheur (Écot → Modane)",
+    "variant": "gr5e"
+  },
+  {
+    "filename": "gr5e-bonneval-to-bramans.gpx",
+    "name": "GR5E — Chemin du Petit Bonheur (Bonneval-sur-Arc → Bramans)",
+    "variant": "gr5e"
   }
 ]
