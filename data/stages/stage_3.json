@@ -42,8 +42,9 @@
       "description": "Le GR5 depuis Landry montait autrefois par Montchavin, mais il a été dévié ces dernières années par Landry et Peisey. Certains randonneurs prennent le temps d'explorer les villages et séjournent au Chalet-Refuge de Rosuel. Les plus vaillants peuvent pousser jusqu'au Refuge du Col du Palet (Jour 11). Entre les deux, un court détour mène au Refuge d'Entre-le-Lac.",
       "food_drink": "Restaurants à Peisey, Nancroix, Pont Baudin, Les Lanches (Luvette), Chalet-Refuge de Rosuel et Refuge d'Entre-le-Lac. Campings près de Pont Baudin, Chalet-Refuge de Rosuel et Refuge d'Entre-le-Lac.",
       "accommodation": [
-        { "name": "Hôtels et chambres d'hôte", "location": "Peisey", "type": "hotel", "off_route": false },
+        { "name": "Hôtels et chambres d'hôte", "location": "Peisey-Nancroix", "type": "hotel", "off_route": false },
         { "name": "Gîte et camping", "location": "Pont Baudin", "type": "gite", "off_route": false },
+        { "name": "Ptit Refuge de Rosuel", "location": "Rosuel", "type": "refuge", "off_route": false },
         { "name": "Chalet-Refuge de Rosuel", "location": "Rosuel", "type": "refuge", "off_route": false },
         { "name": "Refuge d'Entre-le-Lac", "location": "Entre-le-Lac", "type": "refuge", "off_route": false }
       ],
