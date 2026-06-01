@@ -98,5 +98,17 @@
     "filename": "gr5e-bonneval-to-bramans.gpx",
     "name": "GR5E — Chemin du Petit Bonheur (Bonneval-sur-Arc → Bramans)",
     "variant": "gr5e"
+  },
+  {
+    "filename": "col-des-acles-col-de-l-echelle.gpx",
+    "name": "GR5B — Col des Acles / Col de l'Échelle (approximatif)",
+    "km_approx": 17,
+    "variant": "gr5b"
+  },
+  {
+    "filename": "gr5-nevache-briancon.gpx",
+    "name": "GR5C — Névache → Briançon (variante haute)",
+    "km_approx": 27,
+    "variant": "gr5c"
   }
 ]

@@ -1,0 +1,253 @@
+{
+  "stage": 4,
+  "name": "Modane to Ceillac",
+  "description": "Le Stage 4 traverse les Alpes du sud de Modane à Ceillac, franchissant la frontière administrative entre la Savoie et les Hautes-Alpes au Col de la Vallée Étroite (Jour 17). La route principale longe la belle Vallée de la Clarée avant de grimper vers Montgenèvre, puis descend sur Briançon. Au départ de Briançon, le GR5 remonte vers le Col des Ayes et entre dans le Parc Naturel Régional du Queyras pour rejoindre Ceillac.\n\nDeux variantes sont disponibles :\n\n- **GR5B (Jour 17a)** : belle variante en altitude qui quitte la Vallée Étroite pour une courte incursion en Italie avant de rejoindre Plampinet. Évite la Vallée de la Clarée. Comporte des roches instables — déconseillée par mauvais temps.\n\n- **GR5C (Jour 18a)** : relie Névache à Briançon par une haute route via la Crête de Peyrolle (Grand Peyrolle). Splendide par beau temps, très recommandée, mais crête exposée et inadaptée en cas de vent fort, neige ou verglas. Vertige rédhibitoire.\n\nBriançon et Modane sont les principaux hubs de transport. Ceillac a des liaisons limitées — prévoir à l'avance.",
+  "scans_dir": "dillon_scans/stage_4_modane_ceillac",
+  "scans": [
+    "stage_4_map.JPEG"
+  ],
+  "variants": [
+    {
+      "id": "gr5b",
+      "name": "GR5B — Variante haute (Vallée Étroite → Plampinet)",
+      "description": "Variante en altitude traversant des montagnes accidentées avec une courte incursion en Italie. Évite la Vallée de la Clarée et ses hébergements. Sentiers parfois instables (Sommet de Guiau) — à éviter par très mauvais temps.",
+      "days": [17]
+    },
+    {
+      "id": "gr5c",
+      "name": "GR5C — Variante haute (Névache → Briançon)",
+      "description": "Haute route de Névache à Briançon via la Crête de Peyrolle (Grand Peyrolle). Splendide par beau temps, très recommandée par rapport à la route principale. Crête exposée — déconseillée par vent fort, neige ou verglas. Vertige rédhibitoire.",
+      "days": [18]
+    }
+  ],
+  "days": [
+    {
+      "day": 16,
+      "from": "Modane / Fourneaux",
+      "from_coords": [45.2008, 6.68035],
+      "to": "Refuge du Thabor",
+      "to_coords": [45.13, 6.641],
+      "distance_km": 16,
+      "ascent_m": 1500,
+      "descent_m": 50,
+      "time_hours": 6.0,
+      "maps": ["3535 OT"],
+      "terrain": "Choix de montées forestières, puis une longue marche à travers une vallée où un sentier raide et des chemins plus faciles traversent des pentes herbeuses.",
+      "description": "Deux itinéraires de départ possibles : depuis Modane (plus long, 16 km, plus doux) ou depuis Fourneaux (13 km, montée plus raide). Les deux convergent à Valfréjus. Le GR5 continue jusqu'au Col de la Vallée Étroite, assez doux vers le sommet. Certains continuent directement, d'autres font le détour hors-itinéraire jusqu'au Refuge du Thabor (2592m).",
+      "food_drink": "Restaurants à Valfréjus. Refuge du Thabor.",
+      "accommodation": [
+        {
+          "name": "Hôtels et gîte",
+          "location": "Valfréjus",
+          "type": "hotel",
+          "off_route": false
+        },
+        {
+          "name": "Refuge du Thabor",
+          "location": "Col de la Vallée Étroite",
+          "type": "refuge",
+          "off_route": false
+        }
+      ],
+      "notes": "Depuis Fourneaux : 13 km / 5h45, montée raide. Depuis Modane : 16 km / 6h, montée plus douce. Les deux passent par Valfréjus."
+    },
+    {
+      "day": 17,
+      "variant": "gr5",
+      "from": "Refuge du Thabor",
+      "from_coords": [45.13, 6.641],
+      "to": "Plampinet",
+      "to_coords": [44.967, 6.649],
+      "distance_km": 21,
+      "ascent_m": 525,
+      "descent_m": 1545,
+      "time_hours": 6.5,
+      "maps": ["3535 OT"],
+      "terrain": "Descente douce à travers une vallée avec couvert forestier croissant. Montée raide vers un col herbeux, puis descente accidentée vers des sentiers en fond de vallée.",
+      "description": "La route principale traverse le Col de la Vallée Étroite, frontière franco-italienne marquant aussi la limite entre la Savoie et les Hautes-Alpes — accessible en voiture depuis l'Italie jusqu'au 21e siècle malgré l'annexion française. Le GR5 descend vers le large Col des Thures herbeux. Depuis la Vallée de la Clarée, la route rejoint Plampinet par un sentier forestier.",
+      "food_drink": "Restaurants dans la Vallée Étroite. Options hors-itinéraire autour de Névache. Restaurants à Plampinet.",
+      "accommodation": [
+        {
+          "name": "Refuges",
+          "location": "Vallée Étroite",
+          "type": "refuge",
+          "off_route": false
+        },
+        {
+          "name": "Auberges et chambres d'hôte",
+          "location": "Névache",
+          "type": "gite",
+          "off_route": true
+        },
+        {
+          "name": "Auberges et chambres d'hôte",
+          "location": "Plampinet",
+          "type": "gite",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    },
+    {
+      "day": 17,
+      "variant": "gr5b",
+      "gpx_file": "col-des-acles-col-de-l-echelle.gpx",
+      "from": "La Vallée Étroite",
+      "from_coords": [45.02718, 6.65276],
+      "to": "Plampinet",
+      "to_coords": [45.00819, 6.68291],
+      "distance_km": 22,
+      "ascent_m": 1315,
+      "descent_m": 1600,
+      "time_hours": 7.5,
+      "maps": ["3535 OT"],
+      "terrain": "Sentiers variant de doux et faciles à raides et pierreux. Le Sommet de Guiau comporte des roches friables — ses pentes ne doivent pas être traversées par très mauvais temps.",
+      "description": "Le GR5B est une belle variante en altitude, traversant des montagnes accidentées et faisant une courte incursion en Italie. La route évite la Vallée de la Clarée et ses hébergements, ce qui peut poser problème pour les ravitaillements. Les randonneurs parcourent une longue journée difficile depuis la Vallée Étroite jusqu'à Montgenèvre, puis doivent redescendre jusqu'à Plampinet pour la nuit avant de remonter le lendemain matin.",
+      "food_drink": "Restaurants à Plampinet.",
+      "accommodation": [
+        {
+          "name": "Auberges et chambres d'hôte",
+          "location": "Plampinet",
+          "type": "gite",
+          "off_route": false
+        }
+      ],
+      "notes": "⚠ Variante comportant des roches instables au Sommet de Guiau. Déconseillée par très mauvais temps ou en présence de neige et verglas. Voir carte page 178.\n\n⚠ Trace GPX approximative : la trace disponible ne couvre pas l'intégralité du GR5B et ne se raccorde pas exactement aux points de départ et d'arrivée. À utiliser comme référence générale uniquement — ne pas naviguer à la trace."
+    },
+    {
+      "day": 18,
+      "variant": "gr5",
+      "from": "Plampinet",
+      "from_coords": [44.967, 6.649],
+      "to": "Briançon",
+      "to_coords": [44.897, 6.631],
+      "distance_km": 27,
+      "ascent_m": 1350,
+      "descent_m": 1650,
+      "time_hours": 8.75,
+      "maps": ["3535 OT", "3536 OT"],
+      "terrain": "Bonnes pistes forestières et doux sentiers de montagne à la montée. Bons sentiers et longues pistes forestières à la descente.",
+      "description": "Depuis la Vallée de la Clarée, la hauteur est facilement gagnée par une piste forestière depuis Plampinet, puis depuis les Chalets des Acles. Des sentiers faciles traversent le Col de Dormillouse et le Col de la Lauze. La descente vers Montgenèvre emprunte de bons sentiers et pistes forestières, puis la route continue progressivement jusqu'à Briançon. Quiconque s'intéresse à l'histoire militaire appréciera l'exploration de Briançon.",
+      "food_drink": "Nombreuses options à Montgenèvre et Briançon.",
+      "accommodation": [
+        {
+          "name": "Nombreuses options",
+          "location": "Montgenèvre",
+          "type": "hotel",
+          "off_route": false
+        },
+        {
+          "name": "Gîtes",
+          "location": "Les Alberts, Vachette et Le Fontenil",
+          "type": "gite",
+          "off_route": true
+        },
+        {
+          "name": "Nombreuses options",
+          "location": "Briançon",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    },
+    {
+      "day": 18,
+      "variant": "gr5c",
+      "gpx_file": "gr5-nevache-briancon.gpx",
+      "from": "Névache",
+      "from_coords": [45.01808, 6.61996],
+      "to": "Briançon",
+      "to_coords": [44.89798, 6.63868],
+      "distance_km": 27.5,
+      "ascent_m": 1225,
+      "descent_m": 1670,
+      "time_hours": 8.0,
+      "maps": ["3535 OT", "3536 OT"],
+      "terrain": "Montée forestière jusqu'à un lac, ascension vers un col accidenté, puis marche facile sur pistes. Choix entre une descente facile ou une crête exposée menant à une descente raide et rocheuse, cédant la place à des sentiers forestiers en zigzag.",
+      "description": "Le GR5C quitte la route principale du GR5 à la Chapelle des Ames et reste en altitude. La variante inclut la Crête de Peyrolle (Grand Peyrolle), accidentée et exposée — à éviter par vent fort, neige ou verglas. Par beau temps, c'est une randonnée splendide, très recommandée par rapport à la route principale, avec des vues vastes et remarquables. Le vertige est rédhibitoire. Névache désigne les hameaux de Sallé, Le Cros et d'autres petits villages contigus dans la Vallée de la Clarée.",
+      "food_drink": "Café au Col de Granon. Nombreuses options à Briançon.",
+      "accommodation": [
+        {
+          "name": "Nombreuses options",
+          "location": "Briançon",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": "⚠ La Crête de Peyrolle est déconseillée par fort vent, neige ou verglas. Nécessite de ne pas avoir le vertige. En cas de doute, préférer la descente standard."
+    },
+    {
+      "day": 19,
+      "from": "Briançon",
+      "from_coords": [44.897, 6.631],
+      "to": "Brunissard",
+      "to_coords": [44.79374, 6.72655],
+      "distance_km": 22,
+      "ascent_m": 1425,
+      "descent_m": 860,
+      "time_hours": 6.0,
+      "maps": ["3536 OT", "3537 ET"],
+      "terrain": "Les faubourgs de la ville cèdent la place aux champs et à la forêt, avec une longue montée progressive vers un col élevé. De bons sentiers et pistes descendent.",
+      "description": "Le GR5 n'est pas direct en quittant Briançon, cherchant à éviter les routes passantes dans les faubourgs. Une vallée boisée mène à Villard St Pancrace, puis une longue piste en terre traverse une vallée forestière jusqu'aux Chalets des Ayes. Un sentier forestier monte vers le Col des Ayes, puis le GR5 entre dans le Parc Naturel Régional du Queyras et offre de beaux paysages jusqu'à Brunissard.",
+      "food_drink": "Buvette aux Chalets des Ayes. Restaurants à Brunissard.",
+      "accommodation": [
+        {
+          "name": "Gîte",
+          "location": "Villard St Pancrace",
+          "type": "gite",
+          "off_route": true
+        },
+        {
+          "name": "Camping",
+          "location": "Près de Brunissard",
+          "type": "camping",
+          "off_route": false
+        },
+        {
+          "name": "Gîte",
+          "location": "Brunissard",
+          "type": "gite",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    },
+    {
+      "day": 20,
+      "from": "Brunissard",
+      "from_coords": [44.79374, 6.72655],
+      "to": "Ceillac",
+      "to_coords": [44.674, 6.768],
+      "distance_km": 25,
+      "ascent_m": 1300,
+      "descent_m": 1410,
+      "time_hours": 7.75,
+      "maps": ["3537 ET"],
+      "terrain": "Routes, pistes et sentiers forestiers, avec quelques pentes ouvertes. Montée généralement douce, mais avec quelques descentes raides.",
+      "description": "Depuis Brunissard, les vues s'étendent jusqu'au Col Fromage et presque jusqu'au Col Girardin — deux jours de GR5 visibles d'un coup d'œil. Le Fort Queyras est à proximité. La route évite Ville-Vieille. Une longue vallée boisée monte facilement jusqu'au Col Fromage avant de rejoindre Ceillac par de bons sentiers.",
+      "food_drink": "Restaurants à La Chalp, Château-Queyras et Ceillac.",
+      "accommodation": [
+        {
+          "name": "Nombreuses options",
+          "location": "La Chalp",
+          "type": "hotel",
+          "off_route": false
+        },
+        {
+          "name": "Options diverses",
+          "location": "Arvieux, Souliers et Ville-Vieille",
+          "type": "hotel",
+          "off_route": true
+        },
+        {
+          "name": "Hôtel, gîte et camping",
+          "location": "Ceillac",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    }
+  ]
+}

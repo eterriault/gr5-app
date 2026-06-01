@@ -3,10 +3,7 @@
   "name": "Les Houches to Landry",
   "description": "Le Stage 2 offre deux choix de route dès le premier jour : la Route du Sel (itinéraire principal) par le Col de Voza et Les Contamines, et une variante haute par le Col de Tricot avec des vues spectaculaires sur les flancs du Mont Blanc. Le Col du Bonhomme peut conserver de la neige jusqu'au cœur de l'été. Les premiers jours sont fréquentés par les randonneurs du Tour du Mont Blanc. Au-delà du Col du Bonhomme, on entre dans le Beaufortain — célèbre pour ses vaches dorées et son fromage. Étape courte (3–4 jours), terminant à Landry qui dispose d'une gare permettant une arrivée ou un départ facile.\n\nLe Col de Voza est le premier col du GR5 après Les Houches. Depuis le col, une sortie hors-itinéraire de 30 min (200m D+, plein nord-ouest) mène à l'Hôtel du Prarion. Deux télécabines sont disponibles depuis Les Houches : l'une vers Bellevue (150m au-dessus du Col de Voza, à l'est), l'autre directement vers le Prarion. Par beau temps, le téléphérique du Prarion est recommandé pour l'ambiance et les panoramas.",
   "scans_dir": "dillon_scans/stage_2_les_houches_to_landry",
-  "scans": [
-    "stage-2-intro1.jpg",
-    "stage2-intro2.jpg"
-  ],
+  "scans": [],
   "variants": [
     {
       "id": "main",
