@@ -1,0 +1,144 @@
+{
+  "stage": 5,
+  "name": "Ceillac to Auron",
+  "description": "Le Stage 5 quitte le Parc Naturel Régional du Queyras et entre dans les Alpes de Haute-Provence en franchissant le Col Girardin (Jour 21). Les derniers sommets enneigés permanents ne sont plus très loin. La route descend dans une large vallée et emprunte une route. Le GR5 longe ensuite, de concert avec le GR56 (Tour de l'Ubaye), une succession de cols pour rejoindre Larche (Jour 22), proche de la frontière franco-italienne.\n\nAu départ de Larche, le GR5 gravit le raide et rocheux Pas de la Cavale pour entrer dans les Alpes Maritimes (Jour 23). Le GR5 et le GR56 se séparent au Col de la Colombière (Jour 24), d'où l'on descend sur St-Dalmas-le-Selvage avant de rejoindre Auron ou St-Étienne-de-Tinée.\n\nÀ partir du Pas de la Cavale, l'itinéraire longe entièrement la Vallée de la Tinée jusqu'à Nice. Les après-midis d'été sont souvent marqués par des orages soudains et spectaculaires dans les Alpes Maritimes — surveiller la météo.\n\nSt-Étienne-de-Tinée et Auron disposent toutes deux de liaisons régulières en bus vers Nice.",
+  "scans_dir": "dillon_scans/stage_5_ceillac_to_auron",
+  "scans": [
+    "stage5_map.jpeg"
+  ],
+  "variants": [],
+  "days": [
+    {
+      "day": 21,
+      "from": "Ceillac",
+      "from_coords": [44.674, 6.768],
+      "to": "La Barge / Maljasset",
+      "to_coords": [44.58575, 6.82548],
+      "distance_km": 16,
+      "ascent_m": 1100,
+      "descent_m": 865,
+      "time_hours": 5.75,
+      "maps": ["3537 ET", "3637 OT"],
+      "terrain": "Montée raide en forêt, puis montée plus douce longeant quelques lacs. Nouvelle montée raide vers un col, puis descente raide et caillouteuse dans une vallée encaissée.",
+      "description": "Journée courte mais physique, franchissant l'un des cols les plus élevés du GR5. Au Col Girardin, on quitte les Hautes-Alpes pour les Alpes de Haute-Provence. La descente amène dans la haute vallée de l'Ubaye. La Barge est le point d'arrivée du GR5, mais n'offre pas de services. Maljasset, légèrement hors itinéraire, est le seul endroit avec hébergements et restauration — un détour souvent indispensable. Les seules autres alternatives sont de prolonger jusqu'à St-Paul-sur-Ubaye ou Fouillouse.",
+      "food_drink": "Restaurant à Pied du Mélézet. Restaurants hors itinéraire à Maljasset.",
+      "accommodation": [
+        {
+          "name": "Hôtel",
+          "location": "Pied du Mélézet",
+          "type": "hotel",
+          "off_route": false
+        },
+        {
+          "name": "Refuge, gîte d'étape et maison d'hôte",
+          "location": "Maljasset",
+          "type": "refuge",
+          "off_route": true
+        }
+      ],
+      "notes": "La Barge est le point d'arrivée du GR5 mais sans services. Un détour à Maljasset (hors itinéraire) est généralement nécessaire pour les ravitaillements et l'hébergement. Il est aussi possible de prolonger jusqu'à St-Paul-sur-Ubaye ou Fouillouse."
+    },
+    {
+      "day": 22,
+      "from": "La Barge / Maljasset",
+      "from_coords": [44.58575, 6.82548],
+      "to": "Larche",
+      "to_coords": [44.45092, 6.84646],
+      "distance_km": 27,
+      "ascent_m": 1170,
+      "descent_m": 1395,
+      "time_hours": 8.25,
+      "maps": ["3537 ET", "3637 OT"],
+      "terrain": "Longue marche sur route en fond de vallée, suivie d'une montée raide en forêt et d'une ascension progressive à travers une vallée. Deux cols élevés reliés par un bon sentier et une piste. Descente herbeuse vers Larche.",
+      "description": "Situé entre le Parc Naturel Régional du Queyras et le Parc National du Mercantour, le paysage de cette journée reste exceptionnel malgré l'absence de protection officielle. Le principal inconvénient est la longue marche sur route à travers le Vallon de Maurin, avant de retrouver les sentiers de montagne. Une fois les cols franchis, des ruines militaires intéressantes ponctuent l'itinéraire — un fort a été construit à 2772m au sommet de la Tête de Viraysse. Larche, village proche de la frontière franco-italienne, possède un long passé transfrontalier entre la Provence et le Piémont.",
+      "food_drink": "Restaurants hors itinéraire à St-Paul-sur-Ubaye. Restaurants à Fouillouse et Larche.",
+      "accommodation": [
+        {
+          "name": "Hébergements",
+          "location": "St-Paul-sur-Ubaye",
+          "type": "hotel",
+          "off_route": true
+        },
+        {
+          "name": "Gîte",
+          "location": "Fouillouse",
+          "type": "gite",
+          "off_route": false
+        },
+        {
+          "name": "Hôtel, gîtes et camping",
+          "location": "Larche",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    },
+    {
+      "day": 23,
+      "from": "Larche",
+      "from_coords": [44.45092, 6.84646],
+      "to": "Bousieyas",
+      "to_coords": [44.32199, 6.86143],
+      "distance_km": 21,
+      "ascent_m": 1240,
+      "descent_m": 1035,
+      "time_hours": 7.0,
+      "maps": ["3538 ET", "3639 OT"],
+      "terrain": "Routes, pistes et sentiers remontant une vallée, le terrain devenant progressivement plus accidenté jusqu'au col. Descente raide et rocheuse, puis franchissement d'un col herbeux plus bas.",
+      "description": "Au départ de Larche, le GR5 entre dans le Parc National du Mercantour de manière spectaculaire, en remontant le Vallon de Lauzanier. De grandes dalles de grès et de calcaire cachent de charmants petits lacs, puis la route franchit le Pas de la Cavale. À partir de ce col, le GR5 longe entièrement la Vallée de la Tinée jusqu'à Nice. Les anciennes fortifications militaires jalonnent l'itinéraire, proche de la frontière franco-italienne tout au long de la journée. Le village de Larche (Colle della Maddalena en italien) a longtemps été un passage entre la Provence et le Piémont ; détruit par les troupes allemandes et italiennes en 1944, il a été entièrement reconstruit.",
+      "food_drink": "Restaurant-camping après Larche. Restaurant à Bousieyas.",
+      "accommodation": [
+        {
+          "name": "Camping",
+          "location": "Après Larche",
+          "type": "camping",
+          "off_route": false
+        },
+        {
+          "name": "Gîte, chambres d'hôte et camping sommaire",
+          "location": "Bousieyas",
+          "type": "gite",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    },
+    {
+      "day": 24,
+      "from": "Bousieyas",
+      "from_coords": [44.32199, 6.86143],
+      "to": "Auron",
+      "to_coords": [44.22738, 6.93165],
+      "distance_km": 26,
+      "ascent_m": 1265,
+      "descent_m": 1535,
+      "time_hours": 7.0,
+      "maps": ["3639 OT"],
+      "terrain": "Sentiers et pistes remontant facilement jusqu'à un col élevé, descente étroite et caillouteuse. Bon sentier vers un second col, puis descente raide et caillouteuse en forêt jusqu'à Auron.",
+      "description": "Les influences méditerranéennes s'affirment tout au long de la journée : le Col de la Colombière est élevé, mais sa descente vers St-Dalmas-le-Selvage est parfumée de bruyère et de lavande, animée par de grands lézards verts vifs inconnus plus au nord. Après une traversée plus douce par le Col d'Anelle, la Vallée de la Tinée s'enfonce profondément vers St-Étienne-de-Tinée — la chaleur peut être intense l'après-midi. La montée finale vers Auron peut s'avérer éprouvante en fin de journée. Le GR5 et le GR56 se séparent définitivement au Col de la Colombière.",
+      "food_drink": "Restaurants à St-Dalmas-le-Selvage, St-Étienne-de-Tinée et Auron.",
+      "accommodation": [
+        {
+          "name": "Gîte et chambres d'hôte",
+          "location": "St-Dalmas-le-Selvage",
+          "type": "gite",
+          "off_route": false
+        },
+        {
+          "name": "Nombreuses options et camping",
+          "location": "St-Étienne-de-Tinée",
+          "type": "hotel",
+          "off_route": false
+        },
+        {
+          "name": "Hôtels et camping",
+          "location": "Auron",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    }
+  ]
+}
