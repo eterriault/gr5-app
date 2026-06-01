@@ -217,6 +217,8 @@ html, body {
 }
 .map-btn svg { width: 22px; height: 22px; }
 .map-btn:active { transform: scale(0.92); background: var(--surface-3); }
+.map-btn-active { background: var(--primary); color: #fff; }
+.map-btn-active:active { background: var(--primary); }
 
 /* ── Navigation bas ─────────────────────────────────────────── */
 #bottom-nav {

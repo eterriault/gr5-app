@@ -80,6 +80,7 @@ const state = {
   ravitaillement: [],
   // Initialisé dans MapModule.init() pour éviter un crash si Leaflet charge en retard
   hebergeMarkers: null,
+  hebergementsVisible: true,
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1367,6 +1368,18 @@ const UIModule = {
     document.getElementById('btn-gpx-none').addEventListener('click', () => GPXModule.hideAll());
     document.getElementById('gpx-modal').addEventListener('click', e => {
       if (e.target === e.currentTarget) e.currentTarget.classList.add('hidden');
+    });
+
+    // ── Toggle hébergements ────────────────────────────────
+    document.getElementById('btn-toggle-heberge').addEventListener('click', () => {
+      state.hebergementsVisible = !state.hebergementsVisible;
+      if (state.hebergementsVisible) {
+        state.hebergeMarkers.addTo(state.map);
+      } else {
+        state.map.removeLayer(state.hebergeMarkers);
+      }
+      document.getElementById('btn-toggle-heberge')
+        .classList.toggle('map-btn-active', state.hebergementsVisible);
     });
 
     // ── Import fichier GPX ─────────────────────────────────
