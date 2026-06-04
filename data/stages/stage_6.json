@@ -1,0 +1,168 @@
+{
+  "stage": 6,
+  "name": "Auron to Nice — GR5",
+  "description": "Le Stage 6 est l'étape finale du GR5, confinée dans la complexe Vallée de la Tinée — dont le nom vient des Ectinis, une tribu ligure celtique qui occupait autrefois la région. Ce n'est pas une simple marche en fond de vallée : les montagnes restent omniprésentes, et l'itinéraire traverse plusieurs fois la Tinée profonde et boisée avant de franchir les sauvages Gorges de la Vésubie. Les sommets sont nettement plus bas, les toits de tuiles rouges et la végétation méditerranéenne annoncent la proximité de la mer.\n\nLa chaleur peut être intense en plein été — descendre sur Nice peut ressembler à entrer dans un four. Nice vaut la peine d'être explorée : ville riche en histoire et en culture. Le GR5 se termine officiellement de façon abrupte sur une place animée, loin de la mer — la plupart des marcheurs souhaitent finir les pieds dans l'eau sur la Promenade des Anglais.\n\n⚠ Au Jour 27, une note dans le livre signale la possibilité de basculer sur le GR52 depuis St-Dalmas pour rejoindre Menton (Stage 7) plutôt que Nice.",
+  "scans_dir": "dillon_scans/stage_6_auron_to_nice",
+  "scans": [
+    "stage6_map.jpeg"
+  ],
+  "variants": [],
+  "days": [
+    {
+      "day": 25,
+      "from": "Auron",
+      "from_coords": [44.22738, 6.93165],
+      "to": "Refuge de Longon",
+      "to_coords": [44.13925850230428, 7.046857644180363],
+      "distance_km": 31,
+      "ascent_m": 1795,
+      "descent_m": 1460,
+      "time_hours": 9.25,
+      "maps": ["3639 OT", "3640 OT", "3641 ET"],
+      "terrain": "Montée forestière et descente herbeuse vers Roya, puis longue montée dans une vallée accidentée traversant les larges flancs du Mont Mounier. Après le passage d'une vallée, montée par les Portes de Longon.",
+      "description": "Longue journée physique — ceux qui ont des doutes sur leur forme devraient adapter le programme, par exemple en passant une nuit à Roya pour diviser l'étape en deux. Le Mont Mounier, qui abritait autrefois un observatoire et un refuge, est un sommet large, exposé et caillouteux. C'est le dernier grand sommet du GR5 et il est souvent pris dans les orages d'après-midi des Alpes-Maritimes.",
+      "food_drink": "Restaurant à Roya et au Refuge de Longon.",
+      "accommodation": [
+        {
+          "name": "Gîte",
+          "location": "Roya",
+          "type": "gite",
+          "off_route": false
+        },
+        {
+          "name": "Refuge de Longon",
+          "location": "Portes de Longon",
+          "type": "refuge",
+          "off_route": false
+        }
+      ],
+      "notes": "Journée longue et exigeante (31 km, 9h15). Option de scinder en deux nuits en s'arrêtant à Roya. Le Mont Mounier est exposé aux orages d'après-midi — surveiller la météo."
+    },
+    {
+      "day": 26,
+      "from": "Refuge de Longon",
+      "from_coords": [44.13925850230428, 7.046857644180363],
+      "to": "St Dalmas",
+      "to_coords": [44.06564, 7.20310],
+      "distance_km": 27,
+      "ascent_m": 1080,
+      "descent_m": 1675,
+      "time_hours": 7.75,
+      "maps": ["3641 ET"],
+      "terrain": "Longue traversée d'une vallée profonde et boisée, suivant de bons sentiers et pistes de village en village.",
+      "description": "La journée entière traverse la profonde Vallée de la Tinée boisée. La descente initiale emprunte un chemin muletier accidenté puis une piste forestière. De Roure à St-Sauveur-sur-Tinée, un ancien chemin muletier précède une longue route sinueuse. La montée de St-Sauveur à Rimplas suit une piste taillée dans l'ardoise friable, puis de vieux sentiers relient les villages jusqu'à St-Dalmas. À St-Dalmas (1290m), liaison possible vers Nice par bus Lignes d'Azur.",
+      "food_drink": "Restaurants à St-Sauveur-sur-Tinée, Rimplas, La Bolline et St-Dalmas.",
+      "accommodation": [
+        {
+          "name": "Hôtel, gîte et camping",
+          "location": "St-Sauveur-sur-Tinée",
+          "type": "hotel",
+          "off_route": false
+        },
+        {
+          "name": "Hôtel",
+          "location": "Rimplas",
+          "type": "hotel",
+          "off_route": false
+        },
+        {
+          "name": "Hôtel et chambres d'hôte",
+          "location": "La Bolline",
+          "type": "hotel",
+          "off_route": false
+        },
+        {
+          "name": "Chambres d'hôte",
+          "location": "La Roche",
+          "type": "gite",
+          "off_route": false
+        },
+        {
+          "name": "Hôtel, chambres d'hôte, gîtes et camping",
+          "location": "St-Dalmas",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": "St-Dalmas (1290m) : hôtel, chambres d'hôte, camping, commerces, restaurants et musée. Bus Lignes d'Azur vers Nice.\n\n⚠ C'est ici que le GR5 et le GR52 se séparent : ceux qui souhaitent finir à Menton (Stage 7) bifurquent à St-Dalmas."
+    },
+    {
+      "day": 27,
+      "from": "St Dalmas",
+      "from_coords": [44.06564, 7.20310],
+      "to": "Utelle",
+      "to_coords": [43.91702, 7.24761],
+      "distance_km": 29,
+      "ascent_m": 1055,
+      "descent_m": 1525,
+      "time_hours": 8.5,
+      "maps": ["3641 ET"],
+      "terrain": "Montée sur flancs de montagne boisés et ouverts, d'abord sur sentiers et pistes puis sur routes. Sentiers accidentés vers la fin, bien tracés malgré les pentes raides et rocheuses.",
+      "description": "Longue journée sans possibilité de raccourcis ni d'hébergement intermédiaire. La montée se fait tôt dans la journée et la plupart des pistes et sentiers sont faciles malgré les flancs raides et accidentés, bien aménagés. Le village perché d'Utelle reste caché jusqu'à la descente finale. Au Col des Moulines (1921m), vue sur la Méditerranée et Nice.",
+      "food_drink": "Restaurants à Utelle.",
+      "accommodation": [
+        {
+          "name": "Gîte et auberge de ferme",
+          "location": "Utelle",
+          "type": "gite",
+          "off_route": false
+        }
+      ],
+      "notes": "Longue journée sans hébergement intermédiaire ni accès routier permettant de s'y arrêter. La totalité de la montée est en début de journée."
+    },
+    {
+      "day": 28,
+      "from": "Utelle",
+      "from_coords": [43.91702, 7.24761],
+      "to": "Aspremont",
+      "to_coords": [43.78466, 7.24379],
+      "distance_km": 25,
+      "ascent_m": 900,
+      "descent_m": 1220,
+      "time_hours": 6.75,
+      "maps": ["3741 ET", "3742 OT"],
+      "terrain": "Chemin partiellement pavé sur des pentes calcaires, parmi chênes, pins, genévriers et arbustes méditerranéens. Descente dans les Gorges de la Vésubie (point le plus bas du GR5), puis montée raide vers des villages fortifiés perchés.",
+      "description": "Deux sorties possibles d'Utelle : l'itinéraire principal (25 km, 6h45) suit un chemin partiellement pavé sur des pentes calcaires ; une variante (28 km, 7h45) monte à l'église de pèlerinage de la Madone d'Utelle avant de rejoindre l'itinéraire principal. Après la descente dans les Gorges de la Vésubie — le point le plus bas atteint sur tout le GR5 — une montée raide conduit au village fortifié perché de Levens, puis à Aspremont.",
+      "food_drink": "Bar près du Pont du Cros. Restaurants à Levens, Ste-Claire et Aspremont.",
+      "accommodation": [
+        {
+          "name": "Hôtels",
+          "location": "Levens",
+          "type": "hotel",
+          "off_route": false
+        },
+        {
+          "name": "Hôtel",
+          "location": "Aspremont",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": "Variante par la Madone d'Utelle : +3 km, +1h — 28 km / 7h45 / +1205m D+."
+    },
+    {
+      "day": 29,
+      "from": "Aspremont",
+      "from_coords": [43.78466, 7.24379],
+      "to": "Nice",
+      "to_coords": [43.696, 7.271],
+      "distance_km": 13,
+      "ascent_m": 210,
+      "descent_m": 720,
+      "time_hours": 4.25,
+      "maps": ["3742 OT"],
+      "terrain": "Pentes arides du Mont Chauve suivies d'une descente progressive dans la ville.",
+      "description": "Journée courte et facile, mais potentiellement très chaude après tant de jours en altitude. Les pentes arides du Mont Chauve cèdent la place à une descente progressive vers Nice. Le GR5 se termine officiellement de façon abrupte sur une place animée, loin de la mer — la plupart des marcheurs souhaitent terminer sur la Promenade des Anglais. Nice vaut la peine d'être explorée en détail.",
+      "food_drink": "Nombreux restaurants à Nice.",
+      "accommodation": [
+        {
+          "name": "Nombreuses options",
+          "location": "Nice",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    }
+  ]
+}
