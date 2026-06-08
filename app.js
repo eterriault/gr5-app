@@ -1265,7 +1265,7 @@ const OfflineModule = {
       await this._fetchBatch(gpxUrls, () => {});
 
       // ── 2. Tuiles de carte le long de toutes les traces ──────────────────────
-      const ZOOMS = [12, 13, 14];
+      const ZOOMS = [12, 13, 14, 15, 16, 17, 18];
       const tileSet = new Set();
 
       for (const trace of state.traces) {
