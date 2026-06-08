@@ -1221,6 +1221,87 @@ const Geo = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
+   MODULE TÉLÉCHARGEMENT HORS-LIGNE
+   ══════════════════════════════════════════════════════════════ */
+const OfflineModule = {
+
+  // Convertit lat/lon → coordonnées tuile Web Mercator (PM = même grille qu'OSM)
+  _tile(lat, lon, z) {
+    const n      = 1 << z;
+    const x      = Math.floor((lon + 180) / 360 * n);
+    const latRad = lat * Math.PI / 180;
+    const y      = Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n);
+    return `${z}/${x}/${y}`;
+  },
+
+  _tileUrl(key) {
+    const [z, x, y] = key.split('/');
+    return `https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0`
+      + `&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image%2Fpng`
+      + `&TILEMATRIXSET=PM&TILEMATRIX=${z}&TILEROW=${y}&TILECOL=${x}`;
+  },
+
+  async _fetchBatch(urls, onProgress) {
+    const BATCH = 10;
+    let done = 0;
+    for (let i = 0; i < urls.length; i += BATCH) {
+      await Promise.allSettled(
+        urls.slice(i, i + BATCH).map(u => fetch(u).catch(() => {}))
+      );
+      done = Math.min(i + BATCH, urls.length);
+      onProgress(done, urls.length);
+    }
+  },
+
+  async prefetchAll() {
+    const btn = document.getElementById('btn-offline-download');
+    btn.disabled = true;
+    btn.classList.add('map-btn-downloading');
+
+    try {
+      // ── 1. Fichiers GPX (les JSON sont déjà précachés par le SW à l'install) ──
+      UIModule.toast('Téléchargement des traces GPX…');
+      const gpxUrls = state.traces.map(t => `./data/traces/${t.filename}`);
+      await this._fetchBatch(gpxUrls, () => {});
+
+      // ── 2. Tuiles de carte le long de toutes les traces ──────────────────────
+      const ZOOMS = [12, 13, 14];
+      const tileSet = new Set();
+
+      for (const trace of state.traces) {
+        for (const pt of trace.points) {
+          for (const z of ZOOMS) {
+            tileSet.add(this._tile(pt.lat, pt.lon, z));
+          }
+        }
+      }
+
+      const tileUrls = [...tileSet].map(k => this._tileUrl(k));
+      const total    = tileUrls.length;
+
+      UIModule.toast(`Téléchargement des tuiles… 0 / ${total}`);
+      await this._fetchBatch(tileUrls, (done, tot) => {
+        if (done % 100 === 0 || done === tot) {
+          UIModule.toast(`Tuiles… ${done} / ${tot}`);
+        }
+      });
+
+      UIModule.toast(`✓ ${total} tuiles et toutes les données en cache hors-ligne.`);
+      btn.classList.remove('map-btn-downloading');
+      btn.classList.add('map-btn-done');
+      btn.title = 'Données hors-ligne à jour';
+
+    } catch (err) {
+      console.error('[Offline]', err);
+      UIModule.toast('Erreur lors du téléchargement hors-ligne.', 'error');
+      btn.classList.remove('map-btn-downloading');
+    } finally {
+      btn.disabled = false;
+    }
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════════
    MODULE RECHERCHE
    ══════════════════════════════════════════════════════════════ */
 const SearchModule = {
@@ -1368,6 +1449,15 @@ const UIModule = {
     document.getElementById('btn-gpx-none').addEventListener('click', () => GPXModule.hideAll());
     document.getElementById('gpx-modal').addEventListener('click', e => {
       if (e.target === e.currentTarget) e.currentTarget.classList.add('hidden');
+    });
+
+    // ── Téléchargement hors-ligne ──────────────────────────
+    document.getElementById('btn-offline-download').addEventListener('click', () => {
+      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        OfflineModule.prefetchAll();
+      } else {
+        UIModule.toast('Service Worker non actif — ouvrez l\'app avec une connexion, puis réessayez.', 'error');
+      }
     });
 
     // ── Toggle hébergements ────────────────────────────────

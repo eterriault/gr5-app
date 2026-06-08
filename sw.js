@@ -3,19 +3,18 @@
 //
 // Stratégies de cache :
 //   App shell (HTML/CSS/JS/Leaflet) → cache-first
-//   Tuiles OSM                      → cache-first permanent
-//   Données statiques (JSON/GPX)    → cache-first
-//   Open-Meteo API                  → network-first + fallback cache
+//   Tuiles IGN / OSM               → cache-first permanent
+//   Données statiques (JSON/GPX)   → cache-first
+//   Open-Meteo API                 → network-first + fallback cache
 // ─────────────────────────────────────────────────────────────
 
-const VER           = 'v3';
+const VER           = 'v5';
 const CACHE_SHELL   = `gr5-shell-${VER}`;
-const CACHE_TILES   = `gr5-tiles-${VER}`;   // tuiles carte : peut devenir volumineux
-const CACHE_DATA    = `gr5-data-${VER}`;    // JSON + GPX
-const CACHE_WEATHER = `gr5-weather-${VER}`; // réponses Open-Meteo
+const CACHE_TILES   = `gr5-tiles-${VER}`;
+const CACHE_DATA    = `gr5-data-${VER}`;
+const CACHE_WEATHER = `gr5-weather-${VER}`;
 
 // ── Ressources précachées lors de l'installation ─────────────
-// Tout ce qui doit être disponible sans réseau dès le premier lancement
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -24,7 +23,15 @@ const PRECACHE_URLS = [
   './manifest.json',
   './data/hebergements.json',
   './data/ravitaillement.json',
-  // Leaflet depuis CDN — mis en cache lors du premier chargement avec WiFi
+  './data/traces/index.json',
+  './data/stages/stage_1.json',
+  './data/stages/stage_2.json',
+  './data/stages/stage_3.json',
+  './data/stages/stage_4.json',
+  './data/stages/stage_5.json',
+  './data/stages/stage_6.json',
+  './data/stages/stage_7.json',
+  // Leaflet depuis CDN
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
 ];
@@ -36,7 +43,6 @@ self.addEventListener('install', event => {
       .then(cache => cache.addAll(PRECACHE_URLS))
       .then(() => {
         console.log('[SW] Install — shell en cache.');
-        // Prend le contrôle immédiatement sans attendre le rechargement
         return self.skipWaiting();
       })
   );
@@ -60,15 +66,19 @@ self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Tuiles OSM (*.tile.openstreetmap.org) → cache-first permanent
-  // Les tuiles sont immuables : une fois en cache elles ne changent plus.
+  // Tuiles IGN (data.geopf.fr) → cache-first permanent
+  if (url.hostname === 'data.geopf.fr') {
+    event.respondWith(cacheFirst(request, CACHE_TILES));
+    return;
+  }
+
+  // Tuiles OSM (fallback / dev) → cache-first permanent
   if (url.hostname.endsWith('.tile.openstreetmap.org')) {
     event.respondWith(cacheFirst(request, CACHE_TILES));
     return;
   }
 
   // Open-Meteo API → network-first + fallback
-  // On veut toujours la météo la plus récente si réseau disponible.
   if (url.hostname === 'api.open-meteo.com') {
     event.respondWith(networkFirst(request, CACHE_WEATHER));
     return;
@@ -86,16 +96,10 @@ self.addEventListener('fetch', event => {
     event.respondWith(cacheFirst(request, CACHE_SHELL));
     return;
   }
-
-  // Tout le reste → réseau simple, pas de mise en cache
-  // (ex: icônes inline, requêtes navigateur internes)
 });
 
 /* ─────────────────────────────────────────────────────────────
    Stratégie cache-first
-   Retourne la version en cache si elle existe.
-   Sinon, tente le réseau, stocke la réponse, et la retourne.
-   En cas d'échec réseau sans cache → 503 explicite.
    ───────────────────────────────────────────────────────────── */
 async function cacheFirst(request, cacheName) {
   const cache  = await caches.open(cacheName);
@@ -104,7 +108,6 @@ async function cacheFirst(request, cacheName) {
 
   try {
     const response = await fetch(request);
-    // Ne stocke que les réponses réussies (pas les erreurs 4xx/5xx)
     if (response.ok) cache.put(request, response.clone());
     return response;
   } catch {
@@ -114,9 +117,6 @@ async function cacheFirst(request, cacheName) {
 
 /* ─────────────────────────────────────────────────────────────
    Stratégie network-first
-   Tente le réseau, met à jour le cache en cas de succès.
-   Si réseau indisponible, retourne la version en cache.
-   Utilisé pour les données qui changent (météo).
    ───────────────────────────────────────────────────────────── */
 async function networkFirst(request, cacheName) {
   const cache = await caches.open(cacheName);

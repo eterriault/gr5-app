@@ -1,0 +1,168 @@
+{
+  "stage": 7,
+  "name": "St Dalmas to Menton — GR52",
+  "description": "Le Stage 7 est la variante finale du GR52, qui bifurque du GR5 à St-Dalmas-le-Selvage pour rejoindre Menton plutôt que Nice. C'est une conclusion plus longue et plus montagnarde que le GR5, traversant le splendide Parc National du Mercantour.\n\nLe GR52 longe des pentes flanquées d'immenses blocs de granit. La faune est exceptionnelle : bouquetins, chamois et marmottes sont fréquents, et des loups sont présents dans la zone — généralement très discrets. La Vallée des Merveilles (Jour 29) est l'un des points forts de tout le trek : des milliers de gravures rupestres de l'âge du Bronze ont été taillées dans la roche polie par les glaciers. La zone est protégée — il est interdit de s'en approcher sans guide, sauf depuis les sentiers balisés.\n\nLa descente finale depuis Sospel jusqu'à Menton est longue et très raide par endroits. Une fois la mer atteinte, la marche dans les Alpes est terminée. Si les marcheurs n'ont pas prévu de rentrer directement, il reste à explorer Menton ou à prendre un bus ou un train depuis Menton.",
+  "scans_dir": "dillon_scans/stage_7_st-dalmas_to_menton",
+  "scans": [
+    "stage7_map.jpeg"
+  ],
+  "variants": [],
+  "days": [
+    {
+      "day": 27,
+      "from": "St Dalmas",
+      "from_coords": [44.06564, 7.20310],
+      "to": "Le Boréon",
+      "to_coords": [44.114, 7.288],
+      "distance_km": 22,
+      "ascent_m": 1450,
+      "descent_m": 1265,
+      "time_hours": 8.0,
+      "maps": ["3641 ET", "3741 OT"],
+      "terrain": "Montée forestière vers des pentes accidentées et un col élevé, puis descente plus facile vers des vallées boisées avec une route en fin de journée.",
+      "description": "Le GR52 monte régulièrement vers le nord pour traverser le Col du Barn et entrer dans le Parc National du Mercantour — les vues sur les montagnes proches de la frontière franco-italienne sont saisissantes. Les loups sont présents dans la zone (généralement très discrets mais repérés à l'occasion). Le GR52 croise le Col de Salése pour atteindre le hameau du Boréon. Du temps supplémentaire peut être consacré à explorer la réserve d'eau du Boréon avec ses hôtels.",
+      "food_drink": "Restaurants et gîte au Boréon.",
+      "accommodation": [
+        {
+          "name": "Hôtels et gîte",
+          "location": "Le Boréon",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    },
+    {
+      "day": 28,
+      "from": "Le Boréon",
+      "from_coords": [44.114, 7.288],
+      "to": "Refuge de Nice",
+      "to_coords": [44.104, 7.400],
+      "distance_km": 18,
+      "ascent_m": 1815,
+      "descent_m": 1060,
+      "time_hours": 7.25,
+      "maps": ["3741 OT"],
+      "terrain": "Sentiers forestiers au début, puis terrain rude et caillouteux. Très raide et très rocheux au Pas des Ladres. Très raide et très rocheux au Pas du Mont Colomb.",
+      "description": "Le GR52 monte à travers une vallée boisée jusqu'à un charmant lac, puis atteint les rugueux Pas des Ladres, très proche de la frontière franco-italienne. Les vues sont spectaculaires. Les marcheurs peuvent s'arrêter à la Madone de Fenestre (avec le Chalet-refuge et l'Hôtel des Pèlerins), puis ceux qui continuent franchissent le Pas du Mont Colomb, encore plus abrupt et rocheux, pour rejoindre le Refuge de Nice. La route a été révisée en 2010 pour inclure la Vallée des Merveilles.",
+      "food_drink": "La Madone de Fenestre et Refuge de Nice.",
+      "accommodation": [
+        {
+          "name": "Chalet-refuge et Hôtel des Pèlerins",
+          "location": "Madone de Fenestre",
+          "type": "refuge",
+          "off_route": false
+        },
+        {
+          "name": "Refuge de Nice",
+          "location": "Refuge de Nice",
+          "type": "refuge",
+          "off_route": false
+        }
+      ],
+      "notes": "Option de s'arrêter à la Madone de Fenestre (18 km / 7h15 / +1060m D+) plutôt que de continuer jusqu'au Refuge de Nice (20 km / 7h15 / +1160m D+)."
+    },
+    {
+      "day": 29,
+      "from": "Refuge de Nice",
+      "from_coords": [44.104, 7.400],
+      "to": "Refuge des Merveilles",
+      "to_coords": [44.057, 7.452],
+      "distance_km": 11,
+      "ascent_m": 685,
+      "descent_m": 785,
+      "time_hours": 5.0,
+      "maps": ["3741 OT"],
+      "terrain": "Pentes raides, rocheuses et caillouteuses traversant deux cols. Descente à travers la Vallée des Merveilles avec ses lacs et rochers.",
+      "description": "Courte journée en distance, mais qui prend du temps car le terrain est très raide et rocheux. Les paysages sont exceptionnels. La Vallée des Merveilles abrite des milliers de gravures rupestres de l'âge du Bronze sur les dalles polies par les glaciers — parmi les plus importants sites de ce type en Europe. L'accès aux gravures est strictement réglementé : il est interdit de s'en approcher sans guide agréé. En arrivant tôt au Refuge des Merveilles, il est possible de participer à une visite guidée.",
+      "food_drink": "Refuge des Merveilles.",
+      "accommodation": [
+        {
+          "name": "Refuge de Valmasque",
+          "location": "Refuge de Valmasque",
+          "type": "refuge",
+          "off_route": false
+        },
+        {
+          "name": "Refuge des Merveilles",
+          "location": "Vallée des Merveilles",
+          "type": "refuge",
+          "off_route": false
+        }
+      ],
+      "notes": "⚠ Les gravures rupestres de la Vallée des Merveilles sont protégées. Il est interdit de s'en approcher sans guide agréé — renseignements auprès du refuge. Arriver tôt permet de participer à une visite guidée."
+    },
+    {
+      "day": 30,
+      "from": "Refuge des Merveilles",
+      "from_coords": [44.057, 7.452],
+      "to": "Camp d'Argent",
+      "to_coords": [44.002, 7.519],
+      "distance_km": 14,
+      "ascent_m": 550,
+      "descent_m": 430,
+      "time_hours": 4.5,
+      "maps": ["3741 OT", "3742 ET"],
+      "terrain": "Le GR52 serpente à travers la Vallée des Merveilles puis descend progressivement sur des pentes plus douces et rocheuses vers Camp d'Argent.",
+      "description": "Le GR52 longe initialement la Vallée des Merveilles, à deux jours de marche de sa précédente route par la Vallée des Merveilles jusqu'à Sospel — route que l'on peut encore emprunter. En 2010, la route a été modifiée pour inclure le Pic du Diable. La Vallée des Merveilles est particulièrement animée en été (nombreux visiteurs). Le Camp d'Argent dispose de deux hôtels.",
+      "food_drink": "Restaurant au Camp d'Argent.",
+      "accommodation": [
+        {
+          "name": "Hôtels",
+          "location": "Camp d'Argent",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    },
+    {
+      "day": 31,
+      "from": "Camp d'Argent",
+      "from_coords": [44.002, 7.519],
+      "to": "Sospel",
+      "to_coords": [43.878, 7.451],
+      "distance_km": 22,
+      "ascent_m": 550,
+      "descent_m": 1930,
+      "time_hours": 6.75,
+      "maps": ["3741 ET"],
+      "terrain": "Longue marche majoritairement en forêt sur une crête offrant de belles vues. Longue descente vers la ville historique de Sospel.",
+      "description": "La crête offre de belles vues. Une longue marche en forêt, en descente progressive, mène à la ville intéressante et historique de Sospel.",
+      "food_drink": "Restaurants à Sospel.",
+      "accommodation": [
+        {
+          "name": "Nombreuses options",
+          "location": "Sospel",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    },
+    {
+      "day": 32,
+      "from": "Sospel",
+      "from_coords": [43.878, 7.451],
+      "to": "Menton",
+      "to_coords": [43.776, 7.503],
+      "distance_km": 20,
+      "ascent_m": 1170,
+      "descent_m": 1520,
+      "time_hours": 7.25,
+      "maps": ["3741 ET", "3742 OT"],
+      "terrain": "Montée forestière longue et bien boisée enchaînant col sur col. Après un dernier col, descente très raide et caillouteuse vers la Méditerranée.",
+      "description": "La dernière journée du GR52. Une longue montée bien boisée de Sospel enchaîne les cols, avec des aperçus occasionnels de la Méditerranée. Après le dernier col, la descente finale sur Menton est très raide et nécessite une navigation attentive. Une fois en bas, la mer Méditerranée est atteinte et la marche dans les Alpes est terminée. Il reste à explorer Menton ou à trouver comment rentrer.",
+      "food_drink": "Restaurants à Garavan et Menton.",
+      "accommodation": [
+        {
+          "name": "Nombreuses options",
+          "location": "Menton",
+          "type": "hotel",
+          "off_route": false
+        }
+      ],
+      "notes": null
+    }
+  ]
+}

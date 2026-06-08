@@ -219,6 +219,9 @@ html, body {
 .map-btn:active { transform: scale(0.92); background: var(--surface-3); }
 .map-btn-active { background: var(--primary); color: #fff; }
 .map-btn-active:active { background: var(--primary); }
+.map-btn-done { background: var(--primary); color: #fff; }
+.map-btn-downloading { animation: btn-pulse 1s ease-in-out infinite; }
+@keyframes btn-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
 /* ── Navigation bas ─────────────────────────────────────────── */
 #bottom-nav {
