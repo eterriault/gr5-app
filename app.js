@@ -98,6 +98,7 @@ const MapModule = {
     L.tileLayer(CONFIG.tileUrl, {
       attribution: CONFIG.tileAttribution,
       maxZoom: CONFIG.maxZoom,
+      crossOrigin: 'anonymous',
     }).addTo(state.map);
 
     L.control.zoom({ position: 'topleft' }).addTo(state.map);
@@ -946,7 +947,7 @@ const StagesModule = {
         zoomControl: false,
         attributionControl: false,
       });
-      L.tileLayer(CONFIG.tileUrl, { maxZoom: CONFIG.maxZoom }).addTo(this._dayMap);
+      L.tileLayer(CONFIG.tileUrl, { maxZoom: CONFIG.maxZoom, crossOrigin: 'anonymous' }).addTo(this._dayMap);
       L.control.zoom({ position: 'topright' }).addTo(this._dayMap);
       L.control.scale({ position: 'bottomright', imperial: false }).addTo(this._dayMap);
 
@@ -1626,6 +1627,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     UIModule.init();
     console.log('[GR5] UIModule OK');
   } catch (e) { console.error('[GR5] UIModule ERREUR :', e); }
+
+  // Demander au navigateur de ne pas purger le cache sans permission explicite
+  if ('storage' in navigator && 'persist' in navigator.storage) {
+    const granted = await navigator.storage.persist();
+    UIModule.toast(granted
+      ? '✓ Stockage hors-ligne persistant accordé.'
+      : '⚠ Stockage hors-ligne non persistant — iOS peut effacer le cache.');
+  }
 
   try {
     SearchModule.init();
