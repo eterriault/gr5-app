@@ -1280,6 +1280,12 @@ const OfflineModule = {
     btn.disabled = true;
     btn.classList.add('map-btn-downloading');
 
+    // Empêcher l'écran de s'éteindre pendant le téléchargement
+    let wakeLock = null;
+    if ('wakeLock' in navigator) {
+      try { wakeLock = await navigator.wakeLock.request('screen'); } catch {}
+    }
+
     try {
       // ── 1. Fichiers GPX (les JSON sont déjà précachés par le SW à l'install) ──
       UIModule.toast('Téléchargement des traces GPX…');
@@ -1338,6 +1344,7 @@ const OfflineModule = {
       btn.classList.remove('map-btn-downloading');
     } finally {
       btn.disabled = false;
+      if (wakeLock) wakeLock.release();
     }
   },
 };
