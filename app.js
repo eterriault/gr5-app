@@ -84,6 +84,44 @@ const state = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
+   TILE LAYER AVEC FALLBACK ZOOM INFÉRIEUR (hors-ligne)
+   Quand une tuile est absente du cache, affiche la tuile du zoom
+   inférieur le plus proche recadrée sur la bonne zone.
+   ══════════════════════════════════════════════════════════════ */
+const FallbackTileLayer = L.TileLayer.extend({
+  createTile(coords, done) {
+    const tile = document.createElement('img');
+    tile.crossOrigin = 'anonymous';
+    tile.alt = '';
+    tile.setAttribute('role', 'presentation');
+    tile.onload = () => done(null, tile);
+    tile.onerror = () => this._fallback(tile, coords, coords.z - 1, done);
+    tile.src = this.getTileUrl(coords);
+    return tile;
+  },
+
+  _fallback(tile, orig, tryZ, done) {
+    if (tryZ < 8) { done(null, tile); return; }
+    const scale = 1 << (orig.z - tryZ);
+    const img   = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+      const ts = 256 / scale;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, (orig.x % scale) * ts, (orig.y % scale) * ts, ts, ts, 0, 0, 256, 256);
+      tile.onload = () => done(null, tile);
+      tile.onerror = null;
+      tile.src = canvas.toDataURL();
+    };
+    img.onerror = () => this._fallback(tile, orig, tryZ - 1, done);
+    img.src = this.getTileUrl({ x: Math.floor(orig.x / scale), y: Math.floor(orig.y / scale), z: tryZ });
+  },
+});
+
+/* ═══════════════════════════════════════════════════════════════
    MODULE CARTE
    ══════════════════════════════════════════════════════════════ */
 const MapModule = {
@@ -95,7 +133,7 @@ const MapModule = {
       attributionControl: true,
     });
 
-    L.tileLayer(CONFIG.tileUrl, {
+    new FallbackTileLayer(CONFIG.tileUrl, {
       attribution: CONFIG.tileAttribution,
       maxZoom: CONFIG.maxZoom,
       crossOrigin: 'anonymous',
@@ -947,7 +985,7 @@ const StagesModule = {
         zoomControl: false,
         attributionControl: false,
       });
-      L.tileLayer(CONFIG.tileUrl, { maxZoom: CONFIG.maxZoom, crossOrigin: 'anonymous' }).addTo(this._dayMap);
+      new FallbackTileLayer(CONFIG.tileUrl, { maxZoom: CONFIG.maxZoom, crossOrigin: 'anonymous' }).addTo(this._dayMap);
       L.control.zoom({ position: 'topright' }).addTo(this._dayMap);
       L.control.scale({ position: 'bottomright', imperial: false }).addTo(this._dayMap);
 
@@ -1293,7 +1331,7 @@ const OfflineModule = {
       await this._fetchBatch(gpxUrls, () => {});
 
       // ── 2. Tuiles de carte le long de toutes les traces ──────────────────────
-      const ZOOMS = [12, 13, 14, 15, 16, 17, 18];
+      const ZOOMS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
       const tileSet = new Set();
 
       for (const trace of state.traces) {
