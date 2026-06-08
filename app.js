@@ -1226,12 +1226,17 @@ const Geo = {
    ══════════════════════════════════════════════════════════════ */
 const OfflineModule = {
 
-  // Convertit lat/lon → coordonnées tuile Web Mercator (PM = même grille qu'OSM)
-  _tile(lat, lon, z) {
+  // Convertit lat/lon → [x, y] tuile Web Mercator
+  _tileXY(lat, lon, z) {
     const n      = 1 << z;
     const x      = Math.floor((lon + 180) / 360 * n);
     const latRad = lat * Math.PI / 180;
     const y      = Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n);
+    return [x, y];
+  },
+
+  _tile(lat, lon, z) {
+    const [x, y] = this._tileXY(lat, lon, z);
     return `${z}/${x}/${y}`;
   },
 
@@ -1243,14 +1248,30 @@ const OfflineModule = {
   },
 
   async _fetchBatch(urls, onProgress) {
-    const BATCH = 10;
-    let done = 0;
+    const BATCH = 4;
+    const DELAY = 50; // ms entre chaque batch — évite le rate limiting IGN
+    const failed = [];
+
     for (let i = 0; i < urls.length; i += BATCH) {
-      await Promise.allSettled(
-        urls.slice(i, i + BATCH).map(u => fetch(u).catch(() => {}))
+      const batch = urls.slice(i, i + BATCH);
+      const results = await Promise.allSettled(
+        batch.map(u => fetch(u).then(r => { if (!r.ok) throw r.status; }))
       );
-      done = Math.min(i + BATCH, urls.length);
-      onProgress(done, urls.length);
+      results.forEach((r, j) => { if (r.status === 'rejected') failed.push(batch[j]); });
+      onProgress(Math.min(i + BATCH, urls.length), urls.length, failed.length);
+      if (i + BATCH < urls.length) await new Promise(r => setTimeout(r, DELAY));
+    }
+
+    // Un retry pour les tuiles échouées (rate limit temporaire, etc.)
+    if (failed.length > 0) {
+      UIModule.toast(`Retry de ${failed.length} tuiles échouées…`);
+      await new Promise(r => setTimeout(r, 1000));
+      for (let i = 0; i < failed.length; i += BATCH) {
+        await Promise.allSettled(
+          failed.slice(i, i + BATCH).map(u => fetch(u).catch(() => {}))
+        );
+        await new Promise(r => setTimeout(r, DELAY));
+      }
     }
   },
 
@@ -1270,9 +1291,27 @@ const OfflineModule = {
       const tileSet = new Set();
 
       for (const trace of state.traces) {
-        for (const pt of trace.points) {
+        const pts = trace.points;
+        for (let i = 0; i < pts.length; i++) {
           for (const z of ZOOMS) {
-            tileSet.add(this._tile(pt.lat, pt.lon, z));
+            // Remplir tous les tuiles le long du segment (évite les trous entre points)
+            const [x1, y1] = this._tileXY(pts[i].lat, pts[i].lon, z);
+            const [x2, y2] = i + 1 < pts.length
+              ? this._tileXY(pts[i + 1].lat, pts[i + 1].lon, z)
+              : [x1, y1];
+            const steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1), 1);
+            for (let s = 0; s <= steps; s++) {
+              const t = s / steps;
+              const x = Math.round(x1 + (x2 - x1) * t);
+              const y = Math.round(y1 + (y2 - y1) * t);
+              // Buffer +1 tuile de chaque côté pour z17-18 (couvre ~150-300m hors sentier)
+              const buf = z >= 17 ? 1 : 0;
+              for (let dx = -buf; dx <= buf; dx++) {
+                for (let dy = -buf; dy <= buf; dy++) {
+                  tileSet.add(`${z}/${x + dx}/${y + dy}`);
+                }
+              }
+            }
           }
         }
       }
@@ -1281,9 +1320,10 @@ const OfflineModule = {
       const total    = tileUrls.length;
 
       UIModule.toast(`Téléchargement des tuiles… 0 / ${total}`);
-      await this._fetchBatch(tileUrls, (done, tot) => {
+      await this._fetchBatch(tileUrls, (done, tot, fails) => {
         if (done % 100 === 0 || done === tot) {
-          UIModule.toast(`Tuiles… ${done} / ${tot}`);
+          const failStr = fails > 0 ? ` (${fails} échecs)` : '';
+          UIModule.toast(`Tuiles… ${done} / ${tot}${failStr}`);
         }
       });
 
