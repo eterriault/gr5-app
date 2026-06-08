@@ -661,7 +661,7 @@ const StagesModule = {
 
   async loadAll() {
     const stages = [];
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 7; i++) {
       try {
         const r = await fetch(`./data/stages/stage_${i}.json`, { cache: 'no-cache' });
         if (!r.ok) continue;

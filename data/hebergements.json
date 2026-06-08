@@ -3045,7 +3045,7 @@
     "km_depuis_thonon": null,
     "notes": null,
     "stage": 7,
-    "day": null,
+    "day": 27,
     "off_route": false
   },
   {
@@ -3067,7 +3067,7 @@
     "km_depuis_thonon": null,
     "notes": null,
     "stage": 7,
-    "day": null,
+    "day": 28,
     "off_route": false
   },
   {
@@ -3089,7 +3089,7 @@
     "km_depuis_thonon": null,
     "notes": null,
     "stage": 7,
-    "day": null,
+    "day": 28,
     "off_route": false
   },
   {
@@ -3111,7 +3111,7 @@
     "km_depuis_thonon": null,
     "notes": "Madone de Fenestre.",
     "stage": 7,
-    "day": null,
+    "day": 28,
     "off_route": false
   },
   {
@@ -3133,7 +3133,7 @@
     "km_depuis_thonon": null,
     "notes": null,
     "stage": 7,
-    "day": null,
+    "day": 28,
     "off_route": false
   },
   {
@@ -3155,7 +3155,7 @@
     "km_depuis_thonon": null,
     "notes": null,
     "stage": 7,
-    "day": null,
+    "day": 29,
     "off_route": false
   },
   {
@@ -3177,7 +3177,7 @@
     "km_depuis_thonon": null,
     "notes": null,
     "stage": 7,
-    "day": null,
+    "day": 29,
     "off_route": false
   },
   {
@@ -3199,7 +3199,7 @@
     "km_depuis_thonon": null,
     "notes": null,
     "stage": 7,
-    "day": null,
+    "day": 29,
     "off_route": false
   },
   {
@@ -3221,7 +3221,7 @@
     "km_depuis_thonon": null,
     "notes": null,
     "stage": 7,
-    "day": null,
+    "day": 30,
     "off_route": false
   },
   {
@@ -3243,7 +3243,7 @@
     "km_depuis_thonon": null,
     "notes": "Sospel.",
     "stage": 7,
-    "day": null,
+    "day": 31,
     "off_route": false
   }
 ]
