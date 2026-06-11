@@ -128,6 +128,15 @@ const TileDB = (() => {
         req.onerror   = () => rej(req.error);
       });
     },
+    // Retourne un Set de toutes les clés — beaucoup plus rapide que N get() individuels
+    async getAllKeys() {
+      const db  = await open();
+      return new Promise((res, rej) => {
+        const req = db.transaction(STORE).objectStore(STORE).getAllKeys();
+        req.onsuccess = () => res(new Set(req.result));
+        req.onerror   = () => rej(req.error);
+      });
+    },
   };
 })();
 
@@ -1016,6 +1025,11 @@ const StagesModule = {
       }
     }
 
+    // Bouton téléchargement par jour
+    const btnDl = document.getElementById('btn-download-day');
+    btnDl.onclick = () => trace && OfflineModule.downloadForDay(trace.points,
+      `J${day.day} ${day.from}→${day.to}`);
+
     // Stats GPX (calculées depuis la trace)
     const gpxEl = document.getElementById('day-gpx-stats');
     if (trace && trace.points.length > 1) {
@@ -1377,7 +1391,7 @@ const OfflineModule = {
     }
   },
 
-  // Pour les tuiles : fetch → blob → IndexedDB (persistant, non purgeable)
+  // Télécharge une liste de clés tuiles manquantes dans IndexedDB
   async _downloadTiles(keys, onProgress) {
     const BATCH = 4;
     const DELAY = 50;
@@ -1387,7 +1401,6 @@ const OfflineModule = {
       const batch = keys.slice(i, i + BATCH);
       await Promise.allSettled(batch.map(async key => {
         try {
-          if (await TileDB.get(key)) return; // déjà en cache
           const r = await fetch(this._tileUrl(key));
           if (!r.ok) throw r.status;
           await TileDB.put(key, await r.blob());
@@ -1403,7 +1416,6 @@ const OfflineModule = {
       for (let i = 0; i < failed.length; i += BATCH) {
         await Promise.allSettled(failed.slice(i, i + BATCH).map(async key => {
           try {
-            if (await TileDB.get(key)) return;
             const r = await fetch(this._tileUrl(key));
             if (!r.ok) throw r.status;
             await TileDB.put(key, await r.blob());
@@ -1412,6 +1424,74 @@ const OfflineModule = {
         await new Promise(r => setTimeout(r, DELAY));
       }
     }
+  },
+
+  // Calcule les clés tuiles pour un tableau de points GPX
+  _tileKeysForPoints(points) {
+    const ZOOMS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+    const keys  = new Set();
+    for (let i = 0; i < points.length; i++) {
+      for (const z of ZOOMS) {
+        const [x1, y1] = this._tileXY(points[i].lat, points[i].lon, z);
+        const [x2, y2] = i + 1 < points.length
+          ? this._tileXY(points[i + 1].lat, points[i + 1].lon, z)
+          : [x1, y1];
+        const steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1), 1);
+        for (let s = 0; s <= steps; s++) {
+          const t = s / steps;
+          const x = Math.round(x1 + (x2 - x1) * t);
+          const y = Math.round(y1 + (y2 - y1) * t);
+          const buf = z >= 17 ? 1 : 0;
+          for (let dx = -buf; dx <= buf; dx++)
+            for (let dy = -buf; dy <= buf; dy++)
+              keys.add(`${z}/${x + dx}/${y + dy}`);
+        }
+      }
+    }
+    return [...keys];
+  },
+
+  // Télécharge les tuiles d'une seule journée (depuis le panneau jour)
+  async downloadForDay(points, label) {
+    const btn = document.getElementById('btn-download-day');
+    btn.disabled = true;
+
+    let wakeLock = null;
+    if ('wakeLock' in navigator) {
+      try { wakeLock = await navigator.wakeLock.request('screen'); } catch {}
+    }
+
+    try {
+      const keys = this._tileKeysForPoints(points);
+      await this._downloadMissing(keys, label);
+      UIModule.toast(`✓ ${label} disponible hors-ligne.`);
+    } catch (err) {
+      UIModule.toast('Erreur lors du téléchargement.', 'error');
+    } finally {
+      btn.disabled = false;
+      if (wakeLock) wakeLock.release();
+    }
+  },
+
+  // Point d'entrée commun : filtre les clés déjà en cache puis télécharge
+  async _downloadMissing(allKeys, label) {
+    UIModule.toast(`${label} — vérification du cache…`);
+    const cached  = await TileDB.getAllKeys();
+    const missing = allKeys.filter(k => !cached.has(k));
+
+    if (missing.length === 0) {
+      UIModule.toast(`✓ ${label} — déjà complet en cache.`);
+      return 0;
+    }
+
+    UIModule.toast(`${label} — ${missing.length} tuiles à télécharger…`);
+    await this._downloadTiles(missing, (done, tot, fails) => {
+      if (done % 50 === 0 || done === tot) {
+        const failStr = fails > 0 ? ` (${fails} échecs)` : '';
+        UIModule.toast(`${label} ${done}/${tot}${failStr}`);
+      }
+    });
+    return missing.length;
   },
 
   async prefetchAll() {
@@ -1431,49 +1511,13 @@ const OfflineModule = {
       const gpxUrls = state.traces.map(t => `./data/traces/${t.filename}`);
       await this._fetchBatch(gpxUrls, () => {});
 
-      // ── 2. Tuiles de carte le long de toutes les traces ──────────────────────
-      const ZOOMS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-      const tileSet = new Set();
+      // ── 2. Tuiles de carte (toutes les traces, tous les zooms) ──────────────
+      const allPoints = state.traces.flatMap(t => t.points);
+      const allKeys   = this._tileKeysForPoints(allPoints);
+      await this._downloadMissing(allKeys, 'Tuiles');
 
-      for (const trace of state.traces) {
-        const pts = trace.points;
-        for (let i = 0; i < pts.length; i++) {
-          for (const z of ZOOMS) {
-            // Remplir tous les tuiles le long du segment (évite les trous entre points)
-            const [x1, y1] = this._tileXY(pts[i].lat, pts[i].lon, z);
-            const [x2, y2] = i + 1 < pts.length
-              ? this._tileXY(pts[i + 1].lat, pts[i + 1].lon, z)
-              : [x1, y1];
-            const steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1), 1);
-            for (let s = 0; s <= steps; s++) {
-              const t = s / steps;
-              const x = Math.round(x1 + (x2 - x1) * t);
-              const y = Math.round(y1 + (y2 - y1) * t);
-              // Buffer +1 tuile de chaque côté pour z17-18 (couvre ~150-300m hors sentier)
-              const buf = z >= 17 ? 1 : 0;
-              for (let dx = -buf; dx <= buf; dx++) {
-                for (let dy = -buf; dy <= buf; dy++) {
-                  tileSet.add(`${z}/${x + dx}/${y + dy}`);
-                }
-              }
-            }
-          }
-        }
-      }
-
-      const tileKeys = [...tileSet];
-      const total    = tileKeys.length;
-
-      UIModule.toast(`Téléchargement des tuiles… 0 / ${total}`);
-      await this._downloadTiles(tileKeys, (done, tot, fails) => {
-        if (done % 100 === 0 || done === tot) {
-          const failStr = fails > 0 ? ` (${fails} échecs)` : '';
-          UIModule.toast(`Tuiles… ${done} / ${tot}${failStr}`);
-        }
-      });
-
-      const cached = await TileDB.count();
-      UIModule.toast(`✓ ${cached} tuiles en IndexedDB — carte disponible hors-ligne.`);
+      const total = await TileDB.count();
+      UIModule.toast(`✓ ${total} tuiles en IndexedDB — carte disponible hors-ligne.`);
       btn.classList.remove('map-btn-downloading');
       btn.classList.add('map-btn-done');
       btn.title = 'Données hors-ligne à jour';
@@ -1688,6 +1732,7 @@ const UIModule = {
       t.classList.toggle('active', t.dataset.tab === tabName)
     );
 
+    document.getElementById('map-controls').classList.toggle('hidden', tabName !== 'carte');
     document.getElementById('day-detail-panel').classList.add('hidden');
 
     const panel = document.getElementById('content-panel');

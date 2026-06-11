@@ -200,6 +200,7 @@ html, body {
   gap: 10px;
   z-index: 900;
 }
+#map-controls.hidden { display: none; }
 
 .map-btn {
   width: 46px;
