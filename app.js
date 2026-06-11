@@ -84,42 +84,125 @@ const state = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   TILE LAYER AVEC FALLBACK ZOOM INFÉRIEUR (hors-ligne)
-   Quand une tuile est absente du cache, affiche la tuile du zoom
-   inférieur le plus proche recadrée sur la bonne zone.
+   INDEXEDDB — stockage persistant des tuiles de carte
+   Contrairement au Cache Storage du SW, IndexedDB n'est pas purgé
+   arbitrairement par iOS — traité comme données utilisateur.
    ══════════════════════════════════════════════════════════════ */
-const FallbackTileLayer = L.TileLayer.extend({
-  createTile(coords, done) {
-    const tile = document.createElement('img');
-    tile.crossOrigin = 'anonymous';
-    tile.alt = '';
-    tile.setAttribute('role', 'presentation');
-    tile.onload = () => done(null, tile);
-    tile.onerror = () => this._fallback(tile, coords, coords.z - 1, done);
-    tile.src = this.getTileUrl(coords);
-    return tile;
-  },
+const TileDB = (() => {
+  const DB_NAME = 'gr5-tiles';
+  const STORE   = 'tiles';
+  let _db = null;
 
-  _fallback(tile, orig, tryZ, done) {
-    if (tryZ < 8) { done(null, tile); return; }
-    const scale = 1 << (orig.z - tryZ);
-    const img   = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = canvas.height = 256;
-      const ctx = canvas.getContext('2d');
-      const ts = 256 / scale;
-      ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(img, (orig.x % scale) * ts, (orig.y % scale) * ts, ts, ts, 0, 0, 256, 256);
-      tile.onload = () => done(null, tile);
-      tile.onerror = null;
-      tile.src = canvas.toDataURL();
-    };
-    img.onerror = () => this._fallback(tile, orig, tryZ - 1, done);
-    img.src = this.getTileUrl({ x: Math.floor(orig.x / scale), y: Math.floor(orig.y / scale), z: tryZ });
-  },
-});
+  async function open() {
+    if (_db) return _db;
+    return new Promise((res, rej) => {
+      const req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = e => e.target.result.createObjectStore(STORE);
+      req.onsuccess  = e => { _db = e.target.result; res(_db); };
+      req.onerror    = ()  => rej(req.error);
+    });
+  }
+
+  return {
+    async get(key) {
+      const db  = await open();
+      return new Promise((res, rej) => {
+        const req = db.transaction(STORE).objectStore(STORE).get(key);
+        req.onsuccess = () => res(req.result);
+        req.onerror   = () => rej(req.error);
+      });
+    },
+    async put(key, blob) {
+      const db  = await open();
+      return new Promise((res, rej) => {
+        const req = db.transaction(STORE, 'readwrite').objectStore(STORE).put(blob, key);
+        req.onsuccess = () => res();
+        req.onerror   = () => rej(req.error);
+      });
+    },
+    async count() {
+      const db  = await open();
+      return new Promise((res, rej) => {
+        const req = db.transaction(STORE).objectStore(STORE).count();
+        req.onsuccess = () => res(req.result);
+        req.onerror   = () => rej(req.error);
+      });
+    },
+  };
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   TILE LAYER AVEC FALLBACK ZOOM INFÉRIEUR (hors-ligne)
+   Lit les tuiles depuis IndexedDB. Si absente, fetch réseau et
+   stocke. En cas d'échec, affiche le zoom inférieur recadré.
+   ══════════════════════════════════════════════════════════════ */
+let FallbackTileLayer;
+function getFallbackTileLayer() {
+  if (!FallbackTileLayer) {
+    FallbackTileLayer = L.TileLayer.extend({
+
+      createTile(coords, done) {
+        const tile = document.createElement('img');
+        tile.alt = '';
+        tile.setAttribute('role', 'presentation');
+        const key = `${coords.z}/${coords.x}/${coords.y}`;
+        TileDB.get(key)
+          .then(blob => blob
+            ? this._showBlob(tile, blob, () => done(null, tile),
+                             () => this._fallback(tile, coords, coords.z - 1, done))
+            : this._fetchAndCache(tile, coords, key, done))
+          .catch(() => this._fetchAndCache(tile, coords, key, done));
+        return tile;
+      },
+
+      _showBlob(tile, blob, onload, onerror) {
+        const url = URL.createObjectURL(blob);
+        tile.onload  = () => { URL.revokeObjectURL(url); onload(); };
+        tile.onerror = () => { URL.revokeObjectURL(url); onerror(); };
+        tile.src = url;
+      },
+
+      _fetchAndCache(tile, coords, key, done) {
+        fetch(this.getTileUrl(coords))
+          .then(r => { if (!r.ok) throw r.status; return r.blob(); })
+          .then(blob => {
+            TileDB.put(key, blob).catch(() => {});
+            this._showBlob(tile, blob, () => done(null, tile),
+                           () => this._fallback(tile, coords, coords.z - 1, done));
+          })
+          .catch(() => this._fallback(tile, coords, coords.z - 1, done));
+      },
+
+      _fallback(tile, orig, tryZ, done) {
+        if (tryZ < 8) { done(null, tile); return; }
+        const scale  = 1 << (orig.z - tryZ);
+        const fbKey  = `${tryZ}/${Math.floor(orig.x / scale)}/${Math.floor(orig.y / scale)}`;
+        TileDB.get(fbKey)
+          .then(blob => {
+            if (!blob) { this._fallback(tile, orig, tryZ - 1, done); return; }
+            const url = URL.createObjectURL(blob);
+            const img = new Image();
+            img.onload = () => {
+              URL.revokeObjectURL(url);
+              const canvas = document.createElement('canvas');
+              canvas.width = canvas.height = 256;
+              const ctx = canvas.getContext('2d');
+              const ts  = 256 / scale;
+              ctx.imageSmoothingQuality = 'high';
+              ctx.drawImage(img, (orig.x % scale) * ts, (orig.y % scale) * ts, ts, ts, 0, 0, 256, 256);
+              tile.onload = () => done(null, tile);
+              tile.onerror = null;
+              tile.src = canvas.toDataURL();
+            };
+            img.onerror = () => { URL.revokeObjectURL(url); this._fallback(tile, orig, tryZ - 1, done); };
+            img.src = url;
+          })
+          .catch(() => this._fallback(tile, orig, tryZ - 1, done));
+      },
+    });
+  }
+  return FallbackTileLayer;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    MODULE CARTE
@@ -133,7 +216,7 @@ const MapModule = {
       attributionControl: true,
     });
 
-    new FallbackTileLayer(CONFIG.tileUrl, {
+    new (getFallbackTileLayer())(CONFIG.tileUrl, {
       attribution: CONFIG.tileAttribution,
       maxZoom: CONFIG.maxZoom,
       crossOrigin: 'anonymous',
@@ -985,7 +1068,7 @@ const StagesModule = {
         zoomControl: false,
         attributionControl: false,
       });
-      new FallbackTileLayer(CONFIG.tileUrl, { maxZoom: CONFIG.maxZoom, crossOrigin: 'anonymous' }).addTo(this._dayMap);
+      new (getFallbackTileLayer())(CONFIG.tileUrl, { maxZoom: CONFIG.maxZoom, crossOrigin: 'anonymous' }).addTo(this._dayMap);
       L.control.zoom({ position: 'topright' }).addTo(this._dayMap);
       L.control.scale({ position: 'bottomright', imperial: false }).addTo(this._dayMap);
 
@@ -1285,29 +1368,47 @@ const OfflineModule = {
       + `&TILEMATRIXSET=PM&TILEMATRIX=${z}&TILEROW=${y}&TILECOL=${x}`;
   },
 
+  // Pour les fichiers GPX : fetch simple via SW (Cache Storage)
   async _fetchBatch(urls, onProgress) {
     const BATCH = 4;
-    const DELAY = 50; // ms entre chaque batch — évite le rate limiting IGN
+    for (let i = 0; i < urls.length; i += BATCH) {
+      await Promise.allSettled(urls.slice(i, i + BATCH).map(u => fetch(u).catch(() => {})));
+      onProgress(Math.min(i + BATCH, urls.length), urls.length);
+    }
+  },
+
+  // Pour les tuiles : fetch → blob → IndexedDB (persistant, non purgeable)
+  async _downloadTiles(keys, onProgress) {
+    const BATCH = 4;
+    const DELAY = 50;
     const failed = [];
 
-    for (let i = 0; i < urls.length; i += BATCH) {
-      const batch = urls.slice(i, i + BATCH);
-      const results = await Promise.allSettled(
-        batch.map(u => fetch(u).then(r => { if (!r.ok) throw r.status; }))
-      );
-      results.forEach((r, j) => { if (r.status === 'rejected') failed.push(batch[j]); });
-      onProgress(Math.min(i + BATCH, urls.length), urls.length, failed.length);
-      if (i + BATCH < urls.length) await new Promise(r => setTimeout(r, DELAY));
+    for (let i = 0; i < keys.length; i += BATCH) {
+      const batch = keys.slice(i, i + BATCH);
+      await Promise.allSettled(batch.map(async key => {
+        try {
+          if (await TileDB.get(key)) return; // déjà en cache
+          const r = await fetch(this._tileUrl(key));
+          if (!r.ok) throw r.status;
+          await TileDB.put(key, await r.blob());
+        } catch { failed.push(key); }
+      }));
+      onProgress(Math.min(i + BATCH, keys.length), keys.length, failed.length);
+      if (i + BATCH < keys.length) await new Promise(r => setTimeout(r, DELAY));
     }
 
-    // Un retry pour les tuiles échouées (rate limit temporaire, etc.)
     if (failed.length > 0) {
       UIModule.toast(`Retry de ${failed.length} tuiles échouées…`);
       await new Promise(r => setTimeout(r, 1000));
       for (let i = 0; i < failed.length; i += BATCH) {
-        await Promise.allSettled(
-          failed.slice(i, i + BATCH).map(u => fetch(u).catch(() => {}))
-        );
+        await Promise.allSettled(failed.slice(i, i + BATCH).map(async key => {
+          try {
+            if (await TileDB.get(key)) return;
+            const r = await fetch(this._tileUrl(key));
+            if (!r.ok) throw r.status;
+            await TileDB.put(key, await r.blob());
+          } catch {}
+        }));
         await new Promise(r => setTimeout(r, DELAY));
       }
     }
@@ -1360,18 +1461,19 @@ const OfflineModule = {
         }
       }
 
-      const tileUrls = [...tileSet].map(k => this._tileUrl(k));
-      const total    = tileUrls.length;
+      const tileKeys = [...tileSet];
+      const total    = tileKeys.length;
 
       UIModule.toast(`Téléchargement des tuiles… 0 / ${total}`);
-      await this._fetchBatch(tileUrls, (done, tot, fails) => {
+      await this._downloadTiles(tileKeys, (done, tot, fails) => {
         if (done % 100 === 0 || done === tot) {
           const failStr = fails > 0 ? ` (${fails} échecs)` : '';
           UIModule.toast(`Tuiles… ${done} / ${tot}${failStr}`);
         }
       });
 
-      UIModule.toast(`✓ ${total} tuiles et toutes les données en cache hors-ligne.`);
+      const cached = await TileDB.count();
+      UIModule.toast(`✓ ${cached} tuiles en IndexedDB — carte disponible hors-ligne.`);
       btn.classList.remove('map-btn-downloading');
       btn.classList.add('map-btn-done');
       btn.title = 'Données hors-ligne à jour';

@@ -8,11 +8,11 @@
 //   Open-Meteo API                 → network-first + fallback cache
 // ─────────────────────────────────────────────────────────────
 
-const VER           = 'v5';
+const VER           = 'v6';
 const CACHE_SHELL   = `gr5-shell-${VER}`;
-const CACHE_TILES   = `gr5-tiles-${VER}`;
 const CACHE_DATA    = `gr5-data-${VER}`;
 const CACHE_WEATHER = `gr5-weather-${VER}`;
+// Les tuiles sont maintenant stockées dans IndexedDB (TileDB) — plus dans le Cache Storage
 
 // ── Ressources précachées lors de l'installation ─────────────
 const PRECACHE_URLS = [
@@ -50,7 +50,7 @@ self.addEventListener('install', event => {
 
 /* ── activate : nettoyage des anciens caches ─────────────────── */
 self.addEventListener('activate', event => {
-  const current = new Set([CACHE_SHELL, CACHE_TILES, CACHE_DATA, CACHE_WEATHER]);
+  const current = new Set([CACHE_SHELL, CACHE_DATA, CACHE_WEATHER]);
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(keys.filter(k => !current.has(k)).map(k => {
@@ -66,17 +66,7 @@ self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Tuiles IGN (data.geopf.fr) → cache-first permanent
-  if (url.hostname === 'data.geopf.fr') {
-    event.respondWith(cacheFirst(request, CACHE_TILES));
-    return;
-  }
-
-  // Tuiles OSM (fallback / dev) → cache-first permanent
-  if (url.hostname.endsWith('.tile.openstreetmap.org')) {
-    event.respondWith(cacheFirst(request, CACHE_TILES));
-    return;
-  }
+  // Tuiles IGN et OSM → gérées par IndexedDB dans app.js, pas par le SW
 
   // Open-Meteo API → network-first + fallback
   if (url.hostname === 'api.open-meteo.com') {
